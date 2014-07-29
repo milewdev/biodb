@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140726023905) do
+ActiveRecord::Schema.define(version: 20140729160332) do
 
   create_table "jobs", force: true do |t|
     t.string   "company"
@@ -21,5 +21,7 @@ ActiveRecord::Schema.define(version: 20140726023905) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "jobs", ["company", "title", "start_date"], name: "index_jobs_on_company_and_title_and_start_date", unique: true
 
 end

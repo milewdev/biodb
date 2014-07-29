@@ -3,6 +3,7 @@ require 'test_helper'
 class JobsControllerTest < ActionController::TestCase
   setup do
     @job = jobs(:one)
+    @update = { company: "company", title: "title", start_date: DateTime.now, end_date: DateTime.now }
   end
 
   test "should get index" do
@@ -18,7 +19,7 @@ class JobsControllerTest < ActionController::TestCase
 
   test "should create job" do
     assert_difference('Job.count') do
-      post :create, job: { company: @job.company, end_date: @job.end_date, start_date: @job.start_date, title: @job.title }
+      post :create, job: @update
     end
 
     assert_redirected_to job_path(assigns(:job))
@@ -35,7 +36,7 @@ class JobsControllerTest < ActionController::TestCase
   end
 
   test "should update job" do
-    patch :update, id: @job, job: { company: @job.company, end_date: @job.end_date, start_date: @job.start_date, title: @job.title }
+    patch :update, id: @job, job: @update
     assert_redirected_to job_path(assigns(:job))
   end
 
