@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140729160332) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "jobs", force: true do |t|
     t.string   "company"
     t.string   "title"
@@ -22,6 +25,6 @@ ActiveRecord::Schema.define(version: 20140729160332) do
     t.datetime "updated_at"
   end
 
-  add_index "jobs", ["company", "title", "start_date"], name: "index_jobs_on_company_and_title_and_start_date", unique: true
+  add_index "jobs", ["company", "title", "start_date"], name: "index_jobs_on_company_and_title_and_start_date", unique: true, using: :btree
 
 end
