@@ -25,6 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant_config|
     Install   :Git                                        # source is on github
     Install   :GitHubForMac
     Install   :Homebrew                                   # needed to install ruby
+    Install   :PostgreSQL, "92"                           # must be installed before Bundle :Install is run
     Install   :Ruby, "2.1.2"
     Install   :Bundler
     Git       :Clone, PROJECT_GITHUB_URL, PROJECT_VM_DIR    
