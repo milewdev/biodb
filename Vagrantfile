@@ -28,6 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant_config|
     Install   :PostgreSQL, "92"                           # must be installed before Bundle :Install is run
     Install   :Ruby, "2.1.2"
     Install   :Bundler
+    Install   :HerokuToolbelt                             # production runs on heroku
     Git       :Clone, PROJECT_GITHUB_URL, PROJECT_VM_DIR    
     Bundle    :Install, PROJECT_VM_DIR
     Reboot    :Vm
