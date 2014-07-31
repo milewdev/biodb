@@ -29,6 +29,9 @@ gem 'spring',        group: :development
 # See https://coveralls.io/docs/ruby
 gem 'coveralls', require: false
 
+# See https://github.com/seattlerb/minitest-focus
+gem 'minitest-focus'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

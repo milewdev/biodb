@@ -59,6 +59,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (5.4.0)
+    minitest-focus (1.1.0)
+      minitest (>= 4, < 6)
     multi_json (1.10.1)
     netrc (0.7.7)
     pg (0.17.1)
@@ -141,6 +143,7 @@ DEPENDENCIES
   coveralls
   jbuilder (~> 2.0)
   jquery-rails
+  minitest-focus
   pg
   rails (= 4.1.4)
   rails_12factor
