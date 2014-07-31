@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2193845273">
+    <data-source source="LOCAL" name="Rails biodb: development" uuid="6efa4458-d753-4371-b047-7ba3ba51df49">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:biodb_development</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails biodb: test" uuid="232dac29-adf1-4ff1-aa1c-a81b0ee001bd">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:biodb_test</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

@@ -1,7 +1,12 @@
 class Job < ActiveRecord::Base
+  
+  # relationships
+  has_many :skills, dependent: :destroy
 
+  # cleansing
   before_validation :strip_leading_and_trailing_whitespace
 
+  # validation
   validates :company,
     length: { in: 2..100 },
     uniqueness: { scope: [:title, :start_date], case_sensitive: false, message: "- this job already exists (same company, title, and start date)" }

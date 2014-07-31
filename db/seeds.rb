@@ -9,9 +9,15 @@
 # Jobs
 Job.delete_all
 
-Job.create!(
+job = Job.create!(
   company: "Acme Software Inc.", 
   title: "Ruby Cutter", 
   start_date: DateTime.strptime("2014-06-21", "%Y-%m-%d"), 
   end_date: DateTime.strptime("2014-07-26", "%Y-%m-%d")
+)
+
+Skill.create!(
+  job_id: job,
+  name: "C++",
+  group: "language"
 )
