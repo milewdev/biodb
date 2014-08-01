@@ -13,6 +13,9 @@ class Job < ActiveRecord::Base
 
   validates :title,
     length: { in: 2..100 }
+    
+  validates :synopsis,
+    length: { maximum: 10_000 }
 
   validates :start_date,
     presence: true
@@ -24,9 +27,12 @@ class Job < ActiveRecord::Base
 
   protected
 
+  # TODO: rename method to cleanse
   def strip_leading_and_trailing_whitespace
+    # TODO: extract method strip_leading_and_trailing_whitespace
     self.company = self.company.sub(/\A\s+/, '').sub(/\s+\z/, '') if attribute_present?(:company)
     self.title = self.title.sub(/\A\s+/, '').sub(/\s+\z/, '') if attribute_present?(:title)
+    self.synopsis = self.synopsis.sub(/\A\s+/, '').sub(/\s+\z/, '') if attribute_present?(:synopsis)
   end
   
   def start_date_must_be_before_end_date

@@ -3,7 +3,7 @@ require 'test_helper'
 describe Job do
   describe "when company, title, and start date are not unique" do
     let(:dup_job) do
-      data = {company: "company", title: "title", start_date: Date.new(2014,01,13), end_date: Date.new(2014,01,14)}
+      data = {company: "company", title: "title", synopsis: "synopsis", start_date: Date.new(2014,01,13), end_date: Date.new(2014,01,14)}
       Job.create(data)  # the original
       Job.create(data)  # the duplicate
     end
@@ -156,6 +156,61 @@ describe Job do
     end
   end
   
+  describe "synopsis" do
+    describe "when it is missing" do
+      let(:job) { Job.create({synopsis: nil}) }
+      it "does not create any errors" do
+        job.errors[:synopsis].must_be_empty
+      end
+    end
+
+    describe "when it is empty" do
+      let(:job) { Job.create({synopsis: ""}) }
+      it "does not create any errors" do
+        job.errors[:synopsis].must_be_empty
+      end
+    end
+    
+    describe "when it is blank" do
+      let(:job) { Job.create({synopsis: " " * 100})}
+      it "does not create any errors" do
+        job.errors[:synopsis].must_be_empty
+      end
+      
+      it "is converted to an empty string" do
+        job.synopsis.must_equal ""
+      end
+    end
+
+    describe "when it is 10,000 characters" do
+      let(:job) { Job.create({synopsis: "a" * 10_000}) }
+      it "does not create any errors" do
+        job.errors[:synopsis].must_be_empty
+      end
+    end
+
+    describe "when it has leading whitespace" do
+      let(:job) { Job.create({synopsis: " \t\na"}) }
+      it "strips the leading whitespace" do
+        job.synopsis.must_equal "a"
+      end
+    end
+
+    describe "when it has trailing whitespace" do
+      let(:job) { Job.create({synopsis: "a \t\n"}) }
+      it "strips the trailing whitespace" do
+        job.synopsis.must_equal "a"
+      end
+    end
+
+    describe "when it is 10,001 characters" do
+      let(:job) { Job.create({synopsis: "a" * 10_001}) }
+      it "creates the error: is too long" do
+        job.errors[:synopsis].must_include "is too long (maximum is 10000 characters)"
+      end
+    end
+  end
+
   describe "start_date" do
     describe "when it is missing" do
       let(:job) { Job.create }

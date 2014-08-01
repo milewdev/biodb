@@ -3,7 +3,7 @@ require 'test_helper'
 class JobsControllerTest < ActionController::TestCase
   setup do
     @job = jobs(:one)
-    @update = { company: "company", title: "title", start_date: DateTime.now, end_date: DateTime.now }
+    @update = { company: "company", title: "title", synopsis: "synopsis", start_date: DateTime.now, end_date: DateTime.now }
   end
 
   test "should get index" do

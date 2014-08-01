@@ -5,7 +5,8 @@
     <tr>
       <th>Company</th>
       <th>Title</th>
-	  <th>Skills</th>
+      <th>Synopsis</th>
+      <th>Skills</th>
       <th>Start date</th>
       <th>End date</th>
       <th colspan="3"></th>
@@ -17,7 +18,8 @@
       <tr>
         <td><%= job.company %></td>
         <td><%= job.title %></td>
-		<td><%= (job.skills.map {|skill| skill.name} ).join(', ') %></td>
+        <td><%= job.synopsis %></td>
+        <td><%= (job.skills.map {|skill| skill.name} ).join(', ') %></td>
         <td><%= job.start_date %></td>
         <td><%= job.end_date %></td>
         <td><%= link_to 'Show', job %></td>
