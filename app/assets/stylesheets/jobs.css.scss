@@ -2,10 +2,38 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#content {
-//  background-color: #eeeeee;
+body {
+  font-family: Garamond;
+}
+
+#editor {
+  border-style: none;
+  height: 190px;
+  resize: none;
+  width: 45em;
 }
 
 #drawing {
-  background-color: #eeeeee;
+  height: 190px;
+}
+
+table#jobs {
+  border-collapse: collapse;            // remove spaces between cells
+  border-spacing: 0;
+  
+  th {
+    font-weight: inherit;               // do not bold the column headings
+  }
+  
+  th, td {
+    border: 1px solid #eee;             // thin, light borders around the table cells
+    padding: 0.6em;
+    
+    input[type='text'] {
+      border-style: none;
+      font: inherit;
+      margin: 0;
+      padding: 0;
+    }
+  }
 }

@@ -1,35 +1,3 @@
-g_jobs = null
-g_offset = null
-g_target = null
-
-mousedown_handler = (event) ->
-  g_target = find_target_job(event, g_jobs)
-  if g_target
-    coords = g_target.coords
-    g_offset = {x_offset: event.offsetX - coords.x, y_offset: event.offsetY - coords.y}
-  
-# TODO: only install this when dragging
-mousemove_handler = (event) ->
-  if g_target
-    g_target.coords.x = event.offsetX - g_offset.x_offset
-    draw_job_bars(g_jobs)
-  
-mouseup_handler = (event) ->
-  g_target = null
-  
-find_target_job = (event, jobs) ->
-  target_job = null
-  for job in jobs
-    if is_target(event, job)
-      target_job = job
-  target_job
-      
-is_target = (event, job) ->
-  x = event.offsetX
-  y = event.offsetY
-  coords = job.coords
-  (coords.x <= x) and (x <= coords.x + coords.width) and (coords.y <= y) and (y <= coords.y + coords.height)
-
 milliseconds_to_days = (milliseconds) ->
   ((((milliseconds  / 1000) / 60) / 60) / 24)
   
@@ -54,9 +22,29 @@ draw_job_descriptions = (jobs) ->
   draw_job_description(job) for job in jobs
   
 draw_job_description = (job) ->
-  text = "#{job.company}, #{job.synopsis}, #{job.title}<br>#{job.start_date} to #{job.end_date} (#{job.duration_in_days} days)"
-  $('#content').append "<p>#{text}</p>"
+  $('tbody#editor').append(
+    "<tr data-job-id='#{job.id}'>" +
+      "<td><input type='text' id='company' value='#{job.company}'></input></td>" +
+      "<td><input type='text' id='title' value='#{job.title}'></input></td>" +
+      "<td><input type='text' id='start_date' value='#{job.start_date}'></input></td>" +
+      "<td><input type='text' id='end_date' value='#{job.end_date}'></input></td>" +
+    "</tr>"
+  )
 
+input_key_press = (event) ->
+  tr = $(event.target).parent().parent()
+  job_id = tr.data('job-id')
+  company = tr.find('input#company').val()
+  title = tr.find('input#title').val()
+  start_date = tr.find('input#start_date').val()
+  end_date = tr.find('input#end_date').val()
+  # alert "#{job_id}, #{company}, #{title}, #{start_date}, #{end_date}"
+  $.ajax(
+    url: "/jobs/#{job_id}.json",
+    type: 'PATCH',
+    data: { job: { company: company, title: title, start_date: start_date, end_date: end_date } }
+  )
+  
 draw_job_bars = (jobs) ->
   canvas = $('#drawing')[0]
   context = canvas.getContext('2d')
@@ -74,14 +62,14 @@ clear_drawing = (canvas, context) ->
   context.restore()
   
 display_data = (jobs) ->
-  g_jobs = jobs
   calc_job_durations(jobs)
   calc_all_job_coordinates(jobs)
   draw_job_descriptions(jobs)
   draw_job_bars(jobs)
+  
+bind_handlers = ->
+  $(document).on('input', 'tbody#editor input[type="text"]', input_key_press )
 
 $(document).ready -> 
-  $('#drawing')[0].addEventListener('mousedown', mousedown_handler, false)
-  window.addEventListener('mousemove', mousemove_handler, false)
-  window.addEventListener('mouseup', mouseup_handler, false)
+  bind_handlers()
   $.ajax(url: '/jobs/everything.json').done(display_data)
