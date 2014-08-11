@@ -22,27 +22,24 @@ draw_job_descriptions = (jobs) ->
   draw_job_description(job) for job in jobs
   
 draw_job_description = (job) ->
-  $('tbody#editor').append(
-    "<tr data-job-id='#{job.id}'>" +
-      "<td><input type='text' id='company' value='#{job.company}'></input></td>" +
-      "<td><input type='text' id='title' value='#{job.title}'></input></td>" +
-      "<td><input type='text' id='start_date' value='#{job.start_date}'></input></td>" +
-      "<td><input type='text' id='end_date' value='#{job.end_date}'></input></td>" +
-    "</tr>"
-  )
+  tr = $('<tr></tr>')
+  $('tbody#editor').append(tr)
+  for field_name in ['company', 'title', 'start_date', 'end_date']
+    do (field_name) ->        # ensure field_name is not shared among the field closures
+      td = $('<td></td>')
+      tr.append(td)
+      input = $("<input type='text' id='#{field_name}' value='#{job[field_name]}'></input>")
+      input.on('input', (event) -> input_key_press(job, field_name, event) )
+      td.append(input)
 
-input_key_press = (event) ->
-  tr = $(event.target).parent().parent()
-  job_id = tr.data('job-id')
-  company = tr.find('input#company').val()
-  title = tr.find('input#title').val()
-  start_date = tr.find('input#start_date').val()
-  end_date = tr.find('input#end_date').val()
-  # alert "#{job_id}, #{company}, #{title}, #{start_date}, #{end_date}"
+input_key_press = (job, field_name, event) ->
+  value = $(event.target).val()
+  job_patch = {}
+  job_patch[field_name] = value
   $.ajax(
-    url: "/jobs/#{job_id}.json",
+    url: job.url,
     type: 'PATCH',
-    data: { job: { company: company, title: title, start_date: start_date, end_date: end_date } }
+    data: { job: job_patch }
   )
   
 draw_job_bars = (jobs) ->
@@ -67,9 +64,5 @@ display_data = (jobs) ->
   draw_job_descriptions(jobs)
   draw_job_bars(jobs)
   
-bind_handlers = ->
-  $(document).on('input', 'tbody#editor input[type="text"]', input_key_press )
-
 $(document).ready -> 
-  bind_handlers()
   $.ajax(url: '/jobs/everything.json').done(display_data)
