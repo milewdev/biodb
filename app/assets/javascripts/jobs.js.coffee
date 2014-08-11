@@ -29,7 +29,7 @@ draw_job_description = (jobs, job) ->                   # TODO: need to use a cl
     do (field_name) ->                                  # ensure field_name is not shared among the field closures
       td = $('<td></td>')
       tr.append(td)
-      input = $("<input type='text' id='#{field_name}' value='#{job[field_name]}'></input>")
+      input = $("<input type='text' value='#{job[field_name]}'></input>")
       input.on('input', (event) -> input_key_press(jobs, job, field_name, event) )
       td.append(input)
 
