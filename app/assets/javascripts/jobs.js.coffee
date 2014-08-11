@@ -19,28 +19,30 @@ calc_job_coordinates = (job, i) ->
   job.coords = {x: x, y: y, width: 100, height: 10}
     
 draw_job_descriptions = (jobs) ->
-  draw_job_description(job) for job in jobs
+  draw_job_description(jobs, job) for job in jobs
   
-draw_job_description = (job) ->
+draw_job_description = (jobs, job) ->                   # TODO: need to use a class to avoid passing 'jobs' around
   tr = $('<tr></tr>')
   $('tbody#editor').append(tr)
   for field_name in ['company', 'title', 'start_date', 'end_date']
-    do (field_name) ->        # ensure field_name is not shared among the field closures
+    do (field_name) ->                                  # ensure field_name is not shared among the field closures
       td = $('<td></td>')
       tr.append(td)
       input = $("<input type='text' id='#{field_name}' value='#{job[field_name]}'></input>")
-      input.on('input', (event) -> input_key_press(job, field_name, event) )
+      input.on('input', (event) -> input_key_press(jobs, job, field_name, event) )
       td.append(input)
 
-input_key_press = (job, field_name, event) ->
+input_key_press = (jobs, job, field_name, event) ->     # TODO: need to use a class to avoid passing 'jobs' around
   value = $(event.target).val()
+  job[field_name] = value                               # update internal data structure
   job_patch = {}
   job_patch[field_name] = value
-  $.ajax(
+  $.ajax(                                               # update server
     url: job.url,
     type: 'PATCH',
     data: { job: job_patch }
   )
+  display_graph(jobs)                                   # update display (use observer pattern? overkill perhaps)
   
 draw_job_bars = (jobs) ->
   canvas = $('#drawing')[0]
@@ -59,9 +61,12 @@ clear_drawing = (canvas, context) ->
   context.restore()
   
 display_data = (jobs) ->
+  draw_job_descriptions(jobs)
+  display_graph(jobs)
+  
+display_graph = (jobs) ->
   calc_job_durations(jobs)
   calc_all_job_coordinates(jobs)
-  draw_job_descriptions(jobs)
   draw_job_bars(jobs)
   
 $(document).ready -> 
