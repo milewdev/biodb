@@ -15,8 +15,9 @@ calc_all_job_coordinates = (jobs) ->
 
 calc_job_coordinates = (job, i) ->
   x = milliseconds_to_days((new Date(job.start_date)).getTime() - (new Date(2010,1,1)).getTime()) / 10
+  width = milliseconds_to_days((new Date(job.end_date)).getTime() - (new Date(job.start_date)).getTime()) / 10
   y = 10 + (20 * i)
-  job.coords = {x: x, y: y, width: 100, height: 10}
+  job.coords = {x: x, y: y, width: width, height: 10}
     
 draw_job_descriptions = (jobs) ->
   draw_job_description(jobs, job) for job in jobs
