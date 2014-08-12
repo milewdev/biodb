@@ -12,8 +12,7 @@ Job.delete_all
 job = Job.create!(
   company: "Acme Software Inc.", 
   title: "Ruby Cutter", 
-  start_date: DateTime.strptime("2014-06-21", "%Y-%m-%d"), 
-  end_date: DateTime.strptime("2014-07-26", "%Y-%m-%d")
+  when: "2014"
 )
 
 Skill.create!(

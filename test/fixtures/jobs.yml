@@ -4,12 +4,10 @@ one:
   company: MyString1
   title: MyString1
   synopsis: a synopsis
-  start_date: 2014-07-25
-  end_date: 2014-07-25
+  when: 2014
 
 two:
   company: MyString2
   title: MyString2
   synopsis: a different synopsis
-  start_date: 2014-07-26
-  end_date: 2014-07-26
+  when: 2015

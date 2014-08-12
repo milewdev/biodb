@@ -5,17 +5,22 @@ calc_job_durations = (jobs) ->
   calc_job_duration(job) for job in jobs
   
 calc_job_duration = (job) ->
-  start_date = new Date(job.start_date)
-  end_date = new Date(job.end_date)
-  duration_in_milliseconds = end_date.getTime() - start_date.getTime()
-  job.duration_in_days = milliseconds_to_days(duration_in_milliseconds)
+  # start_date = new Date(job.start_date)
+  # end_date = new Date(job.end_date)
+  # duration_in_milliseconds = end_date.getTime() - start_date.getTime()
+  # job.duration_in_days = milliseconds_to_days(duration_in_milliseconds)
+  # TODO: implement this
+  job.duration_in_days = 100
     
 calc_all_job_coordinates = (jobs) ->
   calc_job_coordinates(job, i) for job, i in jobs
 
 calc_job_coordinates = (job, i) ->
-  x = milliseconds_to_days((new Date(job.start_date)).getTime() - (new Date(2010,1,1)).getTime()) / 10
-  width = milliseconds_to_days((new Date(job.end_date)).getTime() - (new Date(job.start_date)).getTime()) / 10
+  # x = milliseconds_to_days((new Date(job.start_date)).getTime() - (new Date(2010,1,1)).getTime()) / 10
+  # width = milliseconds_to_days((new Date(job.end_date)).getTime() - (new Date(job.start_date)).getTime()) / 10
+  # TODO: implement this
+  x = 10
+  width = 50
   y = 10 + (10 * i)
   job.coords = {x: x, y: y, width: width, height: 6}
     
@@ -27,7 +32,7 @@ draw_job_description = (jobs, job) ->                   # TODO: need to use a cl
   row = $('<tr></tr>')
   row.data('job', job)
   $('#editor').append(row)
-  for field_name in ['company', 'title', 'start_date', 'end_date']
+  for field_name in ['company', 'title', 'when']
     do (field_name) ->                                  # ensure field_name is not shared among the field closures
       td = $('<td></td>')
       row.append(td)

@@ -8,8 +8,7 @@ class Job < ActiveRecord::Base
 
   # validation
   validates :company,
-    length: { maximum: 100 },
-    uniqueness: { scope: [:title, :start_date], case_sensitive: false, message: "- this job already exists (same company, title, and start date)" }
+    length: { maximum: 100 }
 
   validates :title,
     length: { maximum: 100 }
@@ -17,13 +16,11 @@ class Job < ActiveRecord::Base
   validates :synopsis,
     length: { maximum: 10_000 }
 
-  validates :start_date,
+  validates :when,
     presence: false
 
-  validates :end_date,
-    presence: false
-    
-  validate :start_date_must_be_before_end_date
+  # TODO: date validation in 'when' field
+  # validate :when
 
   protected
 
@@ -33,11 +30,7 @@ class Job < ActiveRecord::Base
     self.company = self.company.sub(/\A\s+/, '').sub(/\s+\z/, '') if attribute_present?(:company)
     self.title = self.title.sub(/\A\s+/, '').sub(/\s+\z/, '') if attribute_present?(:title)
     self.synopsis = self.synopsis.sub(/\A\s+/, '').sub(/\s+\z/, '') if attribute_present?(:synopsis)
-  end
-  
-  def start_date_must_be_before_end_date
-    return unless attribute_present?(:start_date) and attribute_present?(:end_date)
-    self.errors.add(:base, "end date cannot be before start date") if self.end_date < self.start_date
+    self.when = self.when.sub(/\A\s+/, '').sub(/\s+\z/, '') if attribute_present?(:when)
   end
 
 end

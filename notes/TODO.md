@@ -8,8 +8,8 @@
 - Add achievements / what you did (e.g. analyzed data, wrote requirements doc, wrote conversion program, etc.)
 - Only update the server every n seconds
 - Horizontal bar graph that lists companies on the y-axis and a date range on the x-axis
-- Combine 'start date' and 'end date' into 'when'
-- Implement job add
+- [done] Combine 'start date' and 'end date' into 'when'
+- [done] Implement job add
 - Implement job delete
 - Highlight (e.g. yellow background) the currently edited row
 - Implement undo/redo; persisted? what is the unit of undo? character level or field level?

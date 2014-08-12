@@ -3,7 +3,7 @@ class JobsController < ApplicationController
 
   # GET /jobs/everything.json
   def everything
-    @jobs = Job.order(:start_date)
+    @jobs = Job.order(:company)
   end
 
   # GET /jobs
@@ -74,6 +74,6 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      params.require(:job).permit(:company, :title, :synopsis, :start_date, :end_date)
+      params.require(:job).permit(:company, :title, :synopsis, :when)
     end
 end
