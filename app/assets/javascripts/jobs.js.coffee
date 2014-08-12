@@ -52,6 +52,7 @@ input_key_press = (jobs, job, field_name, event) ->     # TODO: need to use a cl
       type: 'PATCH',
       data: { job: job_patch }
     )
+    display_graph(jobs)                                 # update display (use observer pattern? overkill perhaps)
   else
     $.ajax(
       url: '/jobs.json',                                # TODO: can we get this from somewhere, e.g. job.url
@@ -61,8 +62,8 @@ input_key_press = (jobs, job, field_name, event) ->     # TODO: need to use a cl
       job.id = added_job_data.id 
       job.url = added_job_data.url
       jobs.push(job)
+      display_graph(jobs)                               # update display (use observer pattern? overkill perhaps)
     )
-  display_graph(jobs)                                   # update display (use observer pattern? overkill perhaps)
   check_new_row(jobs, event)
   
 check_new_row = (jobs, event) ->
@@ -78,6 +79,7 @@ check_new_row = (jobs, event) ->
         delete job.url
         index = $.inArray(job, jobs)
         jobs.splice(index, 1) unless index == -1
+        display_graph(jobs)                             # update display (use observer pattern? overkill perhaps)
       remove_last_row()
       
 delete_job = (job) ->
