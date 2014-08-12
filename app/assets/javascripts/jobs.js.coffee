@@ -21,15 +21,17 @@ calc_job_coordinates = (job, i) ->
     
 draw_job_descriptions = (jobs) ->
   draw_job_description(jobs, job) for job in jobs
+  draw_job_description(jobs, {})                        # TODO: rethink how to add blank row
   
 draw_job_description = (jobs, job) ->                   # TODO: need to use a class to avoid passing 'jobs' around
   tr = $('<tr></tr>')
-  $('tbody#editor').append(tr)
+  $('#editor').append(tr)
   for field_name in ['company', 'title', 'start_date', 'end_date']
     do (field_name) ->                                  # ensure field_name is not shared among the field closures
       td = $('<td></td>')
       tr.append(td)
-      input = $("<input type='text' value='#{job[field_name]}'></input>")
+      value = job[field_name] or ""
+      input = $("<input type='text' value='#{value}'></input>")
       input.on('input', (event) -> input_key_press(jobs, job, field_name, event) )
       td.append(input)
 
@@ -38,12 +40,60 @@ input_key_press = (jobs, job, field_name, event) ->     # TODO: need to use a cl
   job[field_name] = value                               # update internal data structure
   job_patch = {}
   job_patch[field_name] = value
-  $.ajax(                                               # update server
-    url: job.url,
-    type: 'PATCH',
-    data: { job: job_patch }
-  )
+  if job.id                                             # existing job
+    $.ajax(                                             # update server
+      url: job.url,
+      type: 'PATCH',
+      data: { job: job_patch }
+    )
+  else
+    $.ajax(
+      url: '/jobs.json',                                # TODO: can we get this from somewhere, e.g. job.url
+      type: 'POST',
+      data: { job: job_patch }
+    ).done( (added_job_data) ->                         # TODO: this will not work; need to wait until we get response before submitting updates
+      job.id = added_job_data.id 
+      job.url = added_job_data.url
+    )
   display_graph(jobs)                                   # update display (use observer pattern? overkill perhaps)
+  check_new_row(jobs, event)
+  
+check_new_row = (jobs, event) ->
+  row = get_row(event)
+  if is_last_row(row)
+    add_blank_row(jobs) unless is_row_empty(row)
+  else if is_second_last_row(row) 
+    remove_last_row() if is_row_empty(row)
+    
+get_row = (event) ->
+  input = $(event.target)
+  td = input.parent()
+  tr = td.parent()
+  tr
+  
+is_last_row = (tr) ->
+  table = tr.parent()
+  tr_last = $(table.find('tr:last'))
+  same = tr_last.is(tr)
+  same
+  
+is_second_last_row = (tr) ->
+  table = tr.parent()
+  tr_second_last = $(table.find('tr:last').prev())
+  same = tr_second_last.is(tr)
+  same
+  
+is_row_empty = (tr) ->
+  for input in tr.find('input')
+    if $(input).val().trim().length > 0
+      return false
+  return true
+  
+add_blank_row = (jobs) ->
+  draw_job_description(jobs, {})                        # TODO: rethink how to add blank row
+  
+remove_last_row = ->
+  $('#editor tr:last').remove()
   
 draw_job_bars = (jobs) ->
   canvas = $('#drawing')[0]

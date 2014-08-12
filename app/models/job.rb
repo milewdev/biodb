@@ -8,20 +8,20 @@ class Job < ActiveRecord::Base
 
   # validation
   validates :company,
-    length: { in: 2..100 },
+    length: { in: 1..100 },
     uniqueness: { scope: [:title, :start_date], case_sensitive: false, message: "- this job already exists (same company, title, and start date)" }
 
   validates :title,
-    length: { in: 2..100 }
+    length: { maximum: 100 }
     
   validates :synopsis,
     length: { maximum: 10_000 }
 
   validates :start_date,
-    presence: true
+    presence: false
 
   validates :end_date,
-    presence: true
+    presence: false
     
   validate :start_date_must_be_before_end_date
 
