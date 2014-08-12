@@ -46,13 +46,14 @@ input_key_press = (jobs, job, field_name, event) ->     # TODO: need to use a cl
   job[field_name] = value                               # update internal data structure
   job_patch = {}
   job_patch[field_name] = value
-  if job.id                                             # existing job
+  if check_new_row(jobs, event)
+    # do nothing
+  else if job.id                                        # existing job
     $.ajax(                                             # update server
       url: job.url,
       type: 'PATCH',
       data: { job: job_patch }
     )
-    display_graph(jobs)                                 # update display (use observer pattern? overkill perhaps)
   else
     $.ajax(
       url: '/jobs.json',                                # TODO: can we get this from somewhere, e.g. job.url
@@ -63,8 +64,7 @@ input_key_press = (jobs, job, field_name, event) ->     # TODO: need to use a cl
       job.url = added_job_data.url
     )
     jobs.push(job)
-    display_graph(jobs)                                 # update display (use observer pattern? overkill perhaps)
-  check_new_row(jobs, event)
+  display_graph(jobs)                                   # update display (use observer pattern? overkill perhaps)
   
 check_new_row = (jobs, event) ->
   row = get_row(event)
@@ -72,6 +72,7 @@ check_new_row = (jobs, event) ->
     add_blank_row(jobs) unless is_row_empty(row)
   else if is_second_last_row(row) 
     if is_row_empty(row)
+      remove_last_row()
       job = row.data('job')
       if job.id
         delete_job(job)
@@ -79,8 +80,8 @@ check_new_row = (jobs, event) ->
         delete job.url
         index = $.inArray(job, jobs)
         jobs.splice(index, 1) unless index == -1
-        display_graph(jobs)                             # update display (use observer pattern? overkill perhaps)
-      remove_last_row()
+        return true
+  return false
       
 delete_job = (job) ->
   $.ajax(
