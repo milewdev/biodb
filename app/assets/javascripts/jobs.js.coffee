@@ -61,9 +61,9 @@ input_key_press = (jobs, job, field_name, event) ->     # TODO: need to use a cl
     ).done( (added_job_data) ->                         # TODO: this will not work; need to wait until we get response before submitting updates
       job.id = added_job_data.id 
       job.url = added_job_data.url
-      jobs.push(job)
-      display_graph(jobs)                               # update display (use observer pattern? overkill perhaps)
     )
+    jobs.push(job)
+    display_graph(jobs)                                 # update display (use observer pattern? overkill perhaps)
   check_new_row(jobs, event)
   
 check_new_row = (jobs, event) ->
