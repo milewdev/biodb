@@ -16,3 +16,4 @@
 - Do we need version control? i.e. what did you change last month?  How to decide where the version changes occur
 - Feature to only show last e.g. ten years worth of data?
 - Implement job duplicate? Or row cut/copy & paste?
+- Design validation scheme: validate on client but should invalid data be stored in the db?

@@ -24,12 +24,13 @@ draw_job_descriptions = (jobs) ->
   draw_job_description(jobs, {})                        # TODO: rethink how to add blank row
   
 draw_job_description = (jobs, job) ->                   # TODO: need to use a class to avoid passing 'jobs' around
-  tr = $('<tr></tr>')
-  $('#editor').append(tr)
+  row = $('<tr></tr>')
+  row.data('job', job)
+  $('#editor').append(row)
   for field_name in ['company', 'title', 'start_date', 'end_date']
     do (field_name) ->                                  # ensure field_name is not shared among the field closures
       td = $('<td></td>')
-      tr.append(td)
+      row.append(td)
       value = job[field_name] or ""
       input = $("<input type='text' value='#{value}'></input>")
       input.on('input', (event) -> input_key_press(jobs, job, field_name, event) )
@@ -54,6 +55,7 @@ input_key_press = (jobs, job, field_name, event) ->     # TODO: need to use a cl
     ).done( (added_job_data) ->                         # TODO: this will not work; need to wait until we get response before submitting updates
       job.id = added_job_data.id 
       job.url = added_job_data.url
+      jobs.push(job)
     )
   display_graph(jobs)                                   # update display (use observer pattern? overkill perhaps)
   check_new_row(jobs, event)
@@ -63,7 +65,21 @@ check_new_row = (jobs, event) ->
   if is_last_row(row)
     add_blank_row(jobs) unless is_row_empty(row)
   else if is_second_last_row(row) 
-    remove_last_row() if is_row_empty(row)
+    if is_row_empty(row)
+      job = row.data('job')
+      if job.id
+        delete_job(job)
+        delete job.id
+        delete job.url
+        index = $.inArray(job, jobs)
+        jobs.splice(index, 1) unless index == -1
+      remove_last_row()
+      
+delete_job = (job) ->
+  $.ajax(
+    url: job.url,
+    type: 'DELETE'
+  )
     
 get_row = (event) ->
   input = $(event.target)
