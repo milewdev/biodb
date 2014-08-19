@@ -35,6 +35,12 @@ gem 'minitest-spec-rails', group: :test
 # See https://github.com/seattlerb/minitest-focus
 gem 'minitest-focus', group: :test
 
+# See https://github.com/ordinaryzelig/capybara_minitest_spec
+gem 'capybara_minitest_spec', group: :test
+
+# for headless js testing
+# gem 'capybara-webkit', group: :test
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -47,7 +53,7 @@ gem 'minitest-focus', group: :test
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-# Heroku
+# See https://devcenter.heroku.com/articles/getting-started-with-rails4#heroku-gems
 gem 'rails_12factor', group: :production
 
 ruby '2.1.2'

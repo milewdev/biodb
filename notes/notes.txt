@@ -1,0 +1,1 @@
+Capybara cheat sheet: https://gist.github.com/zhengjia/428105
