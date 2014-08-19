@@ -29,6 +29,9 @@ gem 'spring',        group: :development
 # See https://coveralls.io/docs/ruby
 gem 'coveralls', require: false
 
+# See https://github.com/metaskills/minitest-spec-rails
+gem 'minitest-spec-rails', group: :test
+
 # See https://github.com/seattlerb/minitest-focus
 gem 'minitest-focus'
 
