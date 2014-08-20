@@ -38,6 +38,9 @@ gem 'minitest-focus', group: :test
 # See https://github.com/ordinaryzelig/capybara_minitest_spec
 gem 'capybara_minitest_spec', group: :test
 
+# See https://github.com/freerange/mocha
+gem 'mocha', group: :test
+
 # for headless js testing
 # gem 'capybara-webkit', group: :test
 
