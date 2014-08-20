@@ -1,26 +1,55 @@
-Capybara (web site testing):
-  Docs: https://github.com/jnicklas/capybara
-  Using with minitest spec: https://github.com/ordinaryzelig/capybara_minitest_spec
-  Cheat sheet: https://gist.github.com/zhengjia/428105
-  Cheet sheet: https://github.com/SleepyDragon/dreamforge/wiki/Writing-Specifications-with-MiniTest::Spec
-
-Heroku (PaaS):
-  Installation: https://devcenter.heroku.com/articles/getting-started-with-rails4
+minitest:
+  Cheat sheet: http://mattsears.com/articles/2011/12/10/minitest-quick-reference
 
 minitest-spec-rails (using minitest spec with rails):
   https://github.com/metaskills/minitest-spec-rails
 
 General rails testing guide:
   http://guides.rubyonrails.org/testing.html
+  
+Capybara (web site testing):
+  Docs: https://github.com/jnicklas/capybara
+  Using with minitest spec: https://github.com/ordinaryzelig/capybara_minitest_spec
+  Cheat sheet: https://gist.github.com/zhengjia/428105
+  Cheat sheet: https://github.com/SleepyDragon/dreamforge/wiki/Writing-Specifications-with-MiniTest::Spec
 
-To launch the ruby debugger:
+Heroku (PaaS):
+  Installation: https://devcenter.heroku.com/articles/getting-started-with-rails4
 
-  use: 
-    require 'debug'
-    
-  example:
+To launch the ruby debugger, use "require 'debug'".  For example:
+
     def my_func
       x = 4
-      require 'debug'
+      require 'debug'   # debugger will launch in the console
       x = 2
     end
+
+Writing custom validators:
+  http://railscasts.com/episodes/211-validations-in-rails-3?view=asciicast
+
+Where to put tests for code in lib/
+  http://stackoverflow.com/a/800468
+
+Autoloading files in lib:
+  http://stackoverflow.com/a/19650564
+
+Do not use class instance variables in minitest 'before' blocks as they become visible to
+all 'before' blocks and therefore can cause cross-test contamination.  For example:
+
+  describe 'a' do
+    before do
+      @something = 42
+    end
+    it 'does a' do
+      # etc.
+    end
+  end
+  
+  describe 'b' do
+    before do
+      $stderr.puts @something   # oops: this prints 42
+    end
+    it 'does b' do
+      # etc.
+    end
+  end
