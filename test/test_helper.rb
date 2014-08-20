@@ -7,6 +7,9 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/spec'
 
+# See https://github.com/freerange/mocha#rails
+require 'mocha/mini_test'
+
 # See https://github.com/jnicklas/capybara#setup
 require 'capybara/rails'    
 
