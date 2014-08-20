@@ -1,1 +1,26 @@
-Capybara cheat sheet: https://gist.github.com/zhengjia/428105
+Capybara (web site testing):
+  Docs: https://github.com/jnicklas/capybara
+  Using with minitest spec: https://github.com/ordinaryzelig/capybara_minitest_spec
+  Cheat sheet: https://gist.github.com/zhengjia/428105
+  Cheet sheet: https://github.com/SleepyDragon/dreamforge/wiki/Writing-Specifications-with-MiniTest::Spec
+
+Heroku (PaaS):
+  Installation: https://devcenter.heroku.com/articles/getting-started-with-rails4
+
+minitest-spec-rails (using minitest spec with rails):
+  https://github.com/metaskills/minitest-spec-rails
+
+General rails testing guide:
+  http://guides.rubyonrails.org/testing.html
+
+To launch the ruby debugger:
+
+  use: 
+    require 'debug'
+    
+  example:
+    def my_func
+      x = 4
+      require 'debug'
+      x = 2
+    end
