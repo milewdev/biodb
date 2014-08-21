@@ -4,3 +4,4 @@ Map db exceptions to model errors
 Refactor fixtures: use better fixture names
 Remove uneeded methods from HomeController (e.g. index)
 Refactor sign_up_test.rb
+Test what happens when the sign up page and the sign in page are loaded in a browser when a user is already signed in

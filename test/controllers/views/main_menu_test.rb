@@ -3,6 +3,7 @@ require 'test_helper'
 class MainMenuTest < ActionDispatch::IntegrationTest
 
   # TODO: move these methods to somewhere common
+  # TODO: method should take user argument
   def sign_in
     sign_out    
     visit home_path
@@ -43,6 +44,11 @@ class MainMenuTest < ActionDispatch::IntegrationTest
     it 'has a sign out link' do
       within 'nav#main-menu' do
         page.must_have_link 'sign out'
+      end
+    end
+    it 'displays the user\'s email address' do
+      within 'nav#main-menu' do
+        page.must_have_content users(:one).email
       end
     end
   end
