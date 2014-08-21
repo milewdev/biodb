@@ -7,11 +7,37 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     before do
       visit '/'
     end
+
     it 'displays "home page"' do
       page.must_have_content 'home page'
     end
+
     it 'display the main menu' do
       page.must_have_selector 'nav#main-menu'
+    end
+  
+    describe 'when the user is not logged in' do
+      # TODO: how to assert that the user is not logged in here?
+      it 'has a sign up link' do
+        page.must_have_link 'sign up'
+      end
+    end
+    
+    describe 'when the user is logged in' do
+      it 'does not have a sign up link'
+    end
+  end
+  
+  describe 'the sign up link' do
+    describe 'when it is clicked' do
+      before do
+        visit '/'
+        click_link 'sign up'
+      end
+      
+      it 'displays the sign up page' do
+        current_path.must_equal new_user_path
+      end
     end
   end
   
@@ -19,11 +45,27 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     before do
       visit '/'
     end
+
     it 'has a link to the home page' do
       within 'nav#main-menu' do
         page.must_have_link 'Biodb'
       end
     end
+    
+    # describe 'when the user is logged in' do
+    #   before do
+    #     visit '/'
+    #     fill_in 'Email', :with => 'user@example.com'
+    #     fill_in 'Password', :with => 'password'
+    #     click_button 'Sign in'
+    #   end
+    #
+    #   it 'has a sign out link' do
+    #     within 'nav#main-menu' do
+    #       page.must_have_link 'Sign out'
+    #     end
+    #   end
+    # end
   end
 
 end
