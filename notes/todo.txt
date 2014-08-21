@@ -1,0 +1,1 @@
+Refactor email_format_validator_test.rb and password_format_validator_test.rb
