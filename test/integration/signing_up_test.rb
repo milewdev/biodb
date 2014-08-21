@@ -1,6 +1,5 @@
 require 'test_helper'
 
-
 # See https://github.com/metaskills/minitest-spec-rails#test-styles
 class IntegrationTest < ActionDispatch::IntegrationTest
 
