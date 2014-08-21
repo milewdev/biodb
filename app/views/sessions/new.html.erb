@@ -1,0 +1,20 @@
+<% if flash[:alert] %>
+  <p id='notice'><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_tag create_session_path do %>
+  <fieldset>
+    <legend>Please sign in</legend>
+    <div class="field">
+      <%= label_tag :email, 'Email:' %><br>
+      <%= text_field_tag :email, params[:email] %>
+    </div>
+    <div class="field">
+      <%= label_tag :password, 'Password:' %><br>
+      <%= password_field_tag :password, params[:password] %>
+    </div>
+    <div class="actions">
+      <%= submit_tag 'sign in' %>
+    </div>
+  </fieldset>
+<% end %>

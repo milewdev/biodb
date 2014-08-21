@@ -2,6 +2,20 @@ require 'test_helper'
 
 # See https://github.com/metaskills/minitest-spec-rails#test-styles
 class IntegrationTest < ActionDispatch::IntegrationTest
+  
+  def login
+    logout    
+    visit home_path
+    click_link 'sign in'
+    fill_in 'Email', :with => 'name1@company.com'
+    fill_in 'Password', :with => 'Password1234'
+    click_button 'sign in'
+  end
+  
+  def logout
+    visit home_path
+    click_link 'sign out' if page.has_link? 'sign out'
+  end
 
   describe 'the home page' do
     before do
@@ -21,10 +35,28 @@ class IntegrationTest < ActionDispatch::IntegrationTest
       it 'has a sign up link' do
         page.must_have_link 'sign up'
       end
+      
+      it 'has a sign in link' do
+        page.must_have_link 'sign in'
+      end
     end
     
     describe 'when the user is signed in' do
-      it 'does not have a sign up link'
+      before do
+        login
+      end
+      
+      after do
+        logout
+      end
+      
+      it 'does not have a sign up link' do
+        page.wont_have_link 'sign up'
+      end
+      
+      it 'does not have a sign in link' do
+        page.wont_have_link 'sign in'
+      end
     end
   end
   
@@ -37,6 +69,19 @@ class IntegrationTest < ActionDispatch::IntegrationTest
       
       it 'displays the sign up page' do
         current_path.must_equal new_user_path
+      end
+    end
+  end
+  
+  describe 'the sign in link' do
+    describe 'when it is clicked' do
+      before do
+        visit home_path
+        click_link 'sign in'
+      end
+      
+      it 'displays the sign in page' do
+        current_path.must_equal new_session_path
       end
     end
   end

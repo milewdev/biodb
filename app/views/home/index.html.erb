@@ -1,3 +1,10 @@
 <h1>home page</h1>
 
-<%= link_to 'sign up', new_user_path %>
+<% unless current_user %>
+  <%= link_to 'sign in', new_session_path %>
+  <%= link_to 'sign up', new_user_path %>
+<% end %>
+
+<% if current_user %>
+  <%= link_to 'sign out', delete_session_path, :method => :delete %>
+<% end %>
