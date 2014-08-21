@@ -44,4 +44,18 @@ describe EmailFormatValidator do
       errors[:email].must_be_empty
     end
   end
+  
+  describe 'when the email value is empty' do
+    let(:errors) do
+      errors = { email: [] }
+      object = mock()
+      object.stubs(:errors).returns(errors)
+      validator = EmailFormatValidator.new({attributes: 'anything'})
+      validator.validate_each(object, :email, '')
+      errors
+    end
+    it 'does not add any errors' do
+      errors[:email].must_be_empty
+    end
+  end
 end
