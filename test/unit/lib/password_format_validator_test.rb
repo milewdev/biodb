@@ -58,4 +58,18 @@ describe PasswordFormatValidator do
       errors[:password].must_be_empty
     end
   end
+  
+  describe 'when the password value is empty' do
+    let(:errors) do
+      errors = { password: [] }
+      object = mock()
+      object.stubs(:errors).returns(errors)
+      validator = PasswordFormatValidator.new({attributes: 'anything'})
+      validator.validate_each(object, :password, '')
+      errors
+    end
+    it 'does not add any errors' do
+      errors[:password].must_be_empty
+    end
+  end
 end
