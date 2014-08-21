@@ -5,7 +5,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
 
   describe 'the home page' do
     before do
-      visit '/'
+      visit home_path
     end
 
     it 'displays "home page"' do
@@ -31,7 +31,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   describe 'the sign up link' do
     describe 'when it is clicked' do
       before do
-        visit '/'
+        visit home_path
         click_link 'sign up'
       end
       
@@ -43,7 +43,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   
   describe 'the main menu' do
     before do
-      visit '/'
+      visit home_path
     end
 
     it 'has a link to the home page' do
@@ -54,7 +54,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     
     # describe 'when the user is logged in' do
     #   before do
-    #     visit '/'
+    #     visit home_path
     #     fill_in 'Email', :with => 'user@example.com'
     #     fill_in 'Password', :with => 'password'
     #     click_button 'Sign in'
