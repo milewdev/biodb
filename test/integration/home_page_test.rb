@@ -3,8 +3,8 @@ require 'test_helper'
 # See https://github.com/metaskills/minitest-spec-rails#test-styles
 class IntegrationTest < ActionDispatch::IntegrationTest
   
-  def login
-    logout    
+  def sign_in
+    sign_out    
     visit home_path
     click_link 'sign in'
     fill_in 'Email', :with => 'name1@company.com'
@@ -12,7 +12,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     click_button 'sign in'
   end
   
-  def logout
+  def sign_out
     click_link 'sign out' if page.has_link? 'sign out'
   end
 
@@ -42,11 +42,11 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     
     describe 'when the user is signed in' do
       before do
-        login
+        sign_in
       end
       
       after do
-        logout
+        sign_out
       end
       
       it 'does not have a sign up link' do
@@ -98,11 +98,11 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     
     describe 'when the user is signed in' do
       before do
-        login
+        sign_in
       end
       
       after do
-        logout
+        sign_out
       end
 
       it 'has a sign out link' do

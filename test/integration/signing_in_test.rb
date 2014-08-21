@@ -5,7 +5,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   
   describe 'signing in' do
     after do
-      # TODO: use logout
+      # TODO: use sign_in
       click_link 'sign out' if page.has_link? 'sign out'
     end
     
