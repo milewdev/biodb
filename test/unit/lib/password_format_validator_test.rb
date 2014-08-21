@@ -44,4 +44,18 @@ describe PasswordFormatValidator do
       errors[:password].must_include 'is too short (minimum is 10 characters)'
     end
   end
+  
+  describe 'when the password value is nil' do
+    let(:errors) do
+      errors = { password: [] }
+      object = mock()
+      object.stubs(:errors).returns(errors)
+      validator = PasswordFormatValidator.new({attributes: 'anything'})
+      validator.validate_each(object, :password, nil)
+      errors
+    end
+    it 'does not add any errors' do
+      errors[:password].must_be_empty
+    end
+  end
 end
