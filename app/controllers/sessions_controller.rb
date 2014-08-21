@@ -8,13 +8,12 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to home_path
     else
-      flash.now[:alert] = 'Invalid email and password'
+      flash.now[:alert] = 'Invalid email and/or password'
       render :new
     end
   end
 
   def destroy
-    # TODO: test this
     session[:user_id] = nil
     redirect_to home_path
   end

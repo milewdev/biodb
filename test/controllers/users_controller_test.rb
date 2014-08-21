@@ -1,5 +1,16 @@
 require 'test_helper'
 
+describe UsersController do
+  describe 'create' do
+    before do
+      post :create, user: { email: 'name3@company.com', password: 'Password1234', password_confirmation: 'Password1234' }
+    end
+    it 'signs in the created user' do
+      session[:user_id].must_equal assigns(:user).id
+    end
+  end
+end
+
 class UsersControllerTest < ActionController::TestCase
   setup do
     @user = users(:one)
@@ -18,7 +29,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: { email: 'name@company.com', password: 'Secret1234!', password_confirmation: 'Secret1234!' }
+      post :create, user: { email: 'name@company.com', password: 'Password1234', password_confirmation: 'Password1234' }
     end
 
     assert_redirected_to home_path
@@ -35,7 +46,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should update user" do
-    patch :update, id: @user, user: { email: @user.email, password: 'Secret1234!', password_confirmation: 'Secret1234!' }
+    patch :update, id: @user, user: { email: @user.email, password: 'Password1234', password_confirmation: 'Password1234' }
     assert_redirected_to user_path(assigns(:user))
   end
 

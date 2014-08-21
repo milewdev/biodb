@@ -53,3 +53,7 @@ all 'before' blocks and therefore can cause cross-test contamination.  For examp
       # etc.
     end
   end
+
+To run just one test file, use something like:
+
+  ruby -I"lib:test" test/controllers/sessions_controller_test.rb

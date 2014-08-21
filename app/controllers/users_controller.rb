@@ -28,6 +28,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        session[:user_id] = @user.id    # TODO: extact method e.g. remember_user(@user)
         format.html { redirect_to home_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
