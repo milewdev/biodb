@@ -16,14 +16,14 @@ class IntegrationTest < ActionDispatch::IntegrationTest
       page.must_have_selector 'nav#main-menu'
     end
   
-    describe 'when the user is not logged in' do
-      # TODO: how to assert that the user is not logged in here?
+    describe 'when the user is not signed in' do
+      # TODO: how to assert that the user is not signed in here?
       it 'has a sign up link' do
         page.must_have_link 'sign up'
       end
     end
     
-    describe 'when the user is logged in' do
+    describe 'when the user is signed in' do
       it 'does not have a sign up link'
     end
   end
@@ -52,7 +52,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
       end
     end
     
-    # describe 'when the user is logged in' do
+    # describe 'when the user is signed in' do
     #   before do
     #     visit home_path
     #     fill_in 'Email', :with => 'user@example.com'
