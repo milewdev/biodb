@@ -6,7 +6,6 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   describe 'signing up' do
     after do
       # TODO: use logout
-      visit '/'
       click_link 'sign out' if page.has_link? 'sign out'
     end
     

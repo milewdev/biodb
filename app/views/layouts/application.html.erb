@@ -12,6 +12,9 @@
     <nav id='main-menu'>
       <ul>
         <li><%= link_to 'Biodb', home_url %></li>
+        <% if current_user %>
+          <li><%= link_to 'sign out', delete_session_path, :method => :delete %></li>
+        <% end %>
       </ul>
     </nav>
   </header>

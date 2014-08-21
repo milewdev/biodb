@@ -13,7 +13,6 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   end
   
   def logout
-    visit home_path
     click_link 'sign out' if page.has_link? 'sign out'
   end
 
@@ -97,20 +96,21 @@ class IntegrationTest < ActionDispatch::IntegrationTest
       end
     end
     
-    # describe 'when the user is signed in' do
-    #   before do
-    #     visit home_path
-    #     fill_in 'Email', :with => 'user@example.com'
-    #     fill_in 'Password', :with => 'password'
-    #     click_button 'Sign in'
-    #   end
-    #
-    #   it 'has a sign out link' do
-    #     within 'nav#main-menu' do
-    #       page.must_have_link 'Sign out'
-    #     end
-    #   end
-    # end
+    describe 'when the user is signed in' do
+      before do
+        login
+      end
+      
+      after do
+        logout
+      end
+
+      it 'has a sign out link' do
+        within 'nav#main-menu' do
+          page.must_have_link 'sign out'
+        end
+      end
+    end
   end
 
 end
