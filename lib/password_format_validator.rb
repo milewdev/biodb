@@ -1,7 +1,7 @@
 class PasswordFormatValidator < ActiveModel::EachValidator
   def validate_each(object, attribute, value)
     return if value.nil?
-    if value and value.length < 10
+    if value.length < 10
       object.errors[attribute] << (options[:message] || 'is too short (minimum is 10 characters)')
     end
     unless ( value =~ /[a-z]/ and value =~ /[A-Z]/ and value =~ /[0-9]/ )
