@@ -2,7 +2,7 @@ require 'test_helper'
 
 
 # See https://github.com/metaskills/minitest-spec-rails#test-styles
-class IntegrationTest < ActionDispatch::IntegrationTest
+class SignUpTest < ActionDispatch::IntegrationTest
 
   describe 'a user signing up' do
     it '' do      
