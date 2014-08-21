@@ -1,2 +1,3 @@
 Refactor email_format_validator_test.rb and password_format_validator_test.rb
 Refactor email_format_validator.rb and password_format_validator.rb
+Map db exceptions to model errors
