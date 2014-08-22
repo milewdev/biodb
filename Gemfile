@@ -26,9 +26,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring', group: :development
 
-# See http://stackoverflow.com/a/21530677
-gem 'bootstrap-sass'
-
 # See https://coveralls.io/docs/ruby
 gem 'coveralls', require: false
 
