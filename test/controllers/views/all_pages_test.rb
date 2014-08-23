@@ -22,7 +22,7 @@ class AppPagesTest < ActionDispatch::IntegrationTest
       visit home_path
     end
 
-    it 'has a link to the home page' do
+    it 'must exist' do
       page.must_have_link 'Biodb'
     end
   
@@ -54,6 +54,17 @@ class AppPagesTest < ActionDispatch::IntegrationTest
     end
     it 'displays the user\'s email address' do
       page.must_have_content users(:one).email
+    end
+  end
+  
+  describe 'footer' do
+    before do
+      visit home_path
+    end
+    it 'must exist' do
+      within 'footer' do
+        page.must_have_content Time.now.year
+      end
     end
   end
   

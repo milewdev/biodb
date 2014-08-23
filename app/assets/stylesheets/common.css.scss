@@ -1,7 +1,7 @@
 /*
  * debugging
  */
-nav, nav ul, nav ul li {
+header, footer, nav, ul, li, p {
 //  border: 1px solid #fcc;
 }
 
@@ -60,5 +60,14 @@ body {
 body > header > nav {
   @extend %horizontal-menu;
   @extend %menu-links;
-  font-size: 80%;
+  font-size: 0.8rem;
+}
+
+body > footer {
+  border-top: 1px solid #ddd;
+  color: #bbb;
+  font-size: 0.7rem;
+  margin-top: 2em;
+  padding-top: 0.2em;
+  text-align: center;
 }

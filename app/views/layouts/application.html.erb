@@ -21,14 +21,16 @@
           <% end %>
         </ul>
       </nav>
-      <p>
-        <% if current_user %>
-          <%= current_user.email %>
-        <% end %>
-      </p>
+      <% if current_user %>
+        <%= current_user.email %>
+      <% end %>
     </header>
 
     <%= yield %>
+    
+    <footer>
+      &copy; milewgit <%= Time.now.year %>
+    </footer>
 
   </body>
 
