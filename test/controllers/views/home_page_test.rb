@@ -23,11 +23,14 @@ class HomePageTest < ActionDispatch::IntegrationTest
       page.must_have_content 'home page'
     end
     it 'displays the main menu' do
-      page.must_have_selector 'nav#main-menu'
+      page.must_have_link 'Biodb'
     end
   end
 
   describe 'when a user is not signed in' do
+    before do
+      visit home_path
+    end
     it 'has a sign up link' do
       page.must_have_link 'sign up'
     end

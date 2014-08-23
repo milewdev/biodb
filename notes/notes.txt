@@ -1,11 +1,14 @@
 minitest:
   Cheat sheet: http://mattsears.com/articles/2011/12/10/minitest-quick-reference
 
+
 minitest-spec-rails (using minitest spec with rails):
   https://github.com/metaskills/minitest-spec-rails
 
+
 General rails testing guide:
   http://guides.rubyonrails.org/testing.html
+
   
 Capybara (web site testing):
   Docs: https://github.com/jnicklas/capybara
@@ -13,8 +16,10 @@ Capybara (web site testing):
   Cheat sheet: https://gist.github.com/zhengjia/428105
   Cheat sheet: https://github.com/SleepyDragon/dreamforge/wiki/Writing-Specifications-with-MiniTest::Spec
 
+
 Heroku (PaaS):
   Installation: https://devcenter.heroku.com/articles/getting-started-with-rails4
+
 
 To launch the ruby debugger, use "require 'debug'".  For example:
 
@@ -24,14 +29,18 @@ To launch the ruby debugger, use "require 'debug'".  For example:
       x = 2
     end
 
+
 Writing custom validators:
   http://railscasts.com/episodes/211-validations-in-rails-3?view=asciicast
+
 
 Where to put tests for code in lib/
   http://stackoverflow.com/a/800468
 
+
 Autoloading files in lib:
   http://stackoverflow.com/a/19650564
+
 
 Do not use class instance variables in minitest 'before' blocks as they become visible to
 all 'before' blocks and therefore can cause cross-test contamination.  For example:
@@ -54,6 +63,16 @@ all 'before' blocks and therefore can cause cross-test contamination.  For examp
     end
   end
 
+
 To run just one test file, use something like:
 
   ruby -I"lib:test" test/controllers/sessions_controller_test.rb
+
+
+Good explanation of SASS placeholders and @extend:
+  http://thesassway.com/intermediate/understanding-placeholder-selectors
+
+
+Good explanation of flexbox:
+  http://www.sketchingwithcss.com/samplechapter/cheatsheet.html
+

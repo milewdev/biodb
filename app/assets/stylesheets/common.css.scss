@@ -1,22 +1,64 @@
-body {
-  font-family: sans-serif;
+/*
+ * debugging
+ */
+nav, nav ul, nav ul li {
+//  border: 1px solid #fcc;
 }
 
-nav#main-menu {
-  font-size: 80%;                               // menu items should be less prominent
-  
+
+/*
+ * library
+ */
+
+// menu links look like normal text but turn blue during hover
+%menu-links {
   a {
     color: inherit;
     text-decoration: none;
 
     &:hover {
+      background-color: inherit;
       color: blue;
     }
   }
+}
+
+// menus must be made of ul and li elements
+%horizontal-menu {
   
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -webkit-justify-content: space-between;
+
   ul {
     list-style-type: none;
     margin: 0;
+    padding-left: 1em;      // leave same space before first and after last menu item as there is between items
+    padding-right: 1em;
+    padding-top: 1em;       // leave some space above and below menu items
+    padding-bottom: 1em;
+  }
+  
+  li {
+    display: inline;
+    margin: 0;
+    margin-left: 1em;       // leave some space between menu items
+    margin-right: 1em;      // leave some space between menu items
     padding: 0;
   }
+}
+
+
+/*
+ * site
+ */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body > header > nav {
+  @extend %horizontal-menu;
+  @extend %menu-links;
+  font-size: 80%;
 }

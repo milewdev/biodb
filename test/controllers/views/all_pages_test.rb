@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MainMenuTest < ActionDispatch::IntegrationTest
+class AppPagesTest < ActionDispatch::IntegrationTest
 
   # TODO: move these methods to somewhere common
   # TODO: method should take user argument
@@ -21,16 +21,27 @@ class MainMenuTest < ActionDispatch::IntegrationTest
     before do
       visit home_path
     end
+
     it 'has a link to the home page' do
-      within 'nav#main-menu' do
-        page.must_have_link 'Biodb'
+      page.must_have_link 'Biodb'
+    end
+  
+    describe 'when a user is not signed in' do
+      it 'does not have a sign out link' do
+        page.wont_have_link 'sign out'
       end
     end
-  end
   
-  describe 'when a user is not signed in' do
-    it 'does not have a sign out link' do
-      page.wont_have_link 'sign out'
+    describe 'when a user is signed in' do
+      before do
+        sign_in
+      end
+      after do
+        sign_out
+      end
+      it 'has a sign out link' do
+        page.must_have_link 'sign out'
+      end
     end
   end
   
@@ -41,15 +52,8 @@ class MainMenuTest < ActionDispatch::IntegrationTest
     after do
       sign_out
     end
-    it 'has a sign out link' do
-      within 'nav#main-menu' do
-        page.must_have_link 'sign out'
-      end
-    end
     it 'displays the user\'s email address' do
-      within 'nav#main-menu' do
-        page.must_have_content users(:one).email
-      end
+      page.must_have_content users(:one).email
     end
   end
   
