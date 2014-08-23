@@ -8,7 +8,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     click_link 'sign in'
     fill_in 'Email', :with => users(:one).email
     fill_in 'Password', :with => 'Password1234'
-    click_button 'sign in'
+    click_button 'Sign in'
   end
   
   def sign_out

@@ -21,7 +21,7 @@ class SignUpTest < ActionDispatch::IntegrationTest
       current_path.must_equal new_session_path
       fill_in 'Email', with: 'name@company.com'
       fill_in 'Password', with: 'Password1234'
-      click_button 'sign in'
+      click_button 'Sign in'
       current_path.must_equal home_path
       click_link 'sign out'
       current_path.must_equal home_path
