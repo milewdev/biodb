@@ -1,0 +1,103 @@
+/*
+ * This is an SCSS library and should only contain Sass 'extend placeholders'.
+ * See http://sass-lang.com/documentation/file.SASS_REFERENCE.html#placeholders
+ *
+ * This file is named with a leading underscore (_library.scss) so that Sass 
+ * does not compile it to a CSS file; however this may be irrelevant due to
+ * the use of Sprockets.
+ * See http://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials
+ *
+ * This file should be excluded from the asset pipeline by including the following
+ * line in application.css:
+ *
+ *   *= stub _library
+ *
+ * See https://github.com/sstephenson/sprockets#the-stub-directive
+ */
+
+// constants
+$hover-color: blue;
+
+// reset attributes to unopinionated values
+%reset {
+  background-color: inherit;
+  border: none;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+// menu links look like normal text but turn blue during hover
+%menu-links {
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      background-color: inherit;
+      color: $hover-color;
+    }
+  }
+}
+
+
+// cross browser
+%display_flex {
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin flex-direction($direction) {
+  flex-direction: $direction;
+  -webkit-flex-direction: $direction;  
+}
+
+@mixin flex-wrap($wrap) {
+  flex-wrap: $wrap;
+  -webkit-flex-wrap: $wrap;  
+}
+
+@mixin justify-content($justification) {
+  justify-content: $justification;
+  -webkit-justify-content: $justification;  
+}
+
+// menus must be made of ul and li elements
+%horizontal-menu {
+
+  @extend %display_flex;
+  @include flex-direction(row);
+  @include flex-wrap(nowrap);
+  @include justify-content(space-between);
+
+  ul {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 1em;      // leave same space before first and after last menu item as there is between items
+    padding-right: 1em;
+    padding-top: 1em;       // leave some space above and below menu items
+    padding-bottom: 1em;
+  }
+  
+  li {
+    display: inline;
+    margin: 0;
+    margin-left: 1em;       // leave some space between menu items
+    margin-right: 1em;      // leave some space between menu items
+    padding: 0;
+  }
+}
+
+// buttons in forms
+%form-button {
+  background-color: white;
+  border: 1px solid #999;
+  border-radius: 0.3em;
+  box-shadow: 0 0 0.3em 0.15em #eee;
+  padding: 0.4em 2em;
+  
+  &:hover {
+    color: $hover-color;
+  }
+}

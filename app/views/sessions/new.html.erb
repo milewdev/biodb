@@ -1,20 +1,29 @@
-<% if flash[:alert] %>
-  <p id='notice'><%= flash[:alert] %></p>
-<% end %>
+<section class='signin-form'>
+  
+  <h1>Sign In</h1>
+  
+  <% if flash[:alert] %>
+    <p id='notice'><%= flash[:alert] %></p>
+  <% end %>
 
-<%= form_tag create_session_path do %>
-  <fieldset>
-    <legend>Please sign in</legend>
-    <div class="field">
-      <%= label_tag :email, 'Email:' %><br>
-      <%= text_field_tag :email, params[:email] %>
-    </div>
-    <div class="field">
-      <%= label_tag :password, 'Password:' %><br>
-      <%= password_field_tag :password, params[:password] %>
-    </div>
-    <div class="actions">
-      <%= submit_tag 'Sign in' %>
-    </div>
-  </fieldset>
-<% end %>
+  <%= form_tag create_session_path do %>
+    <table>
+      <tr>
+        <td><%= label_tag :email, 'Email:' %></td>
+        <td><%= text_field_tag :email, params[:email] %></td>
+      </tr>
+      <tr>
+        <td><%= label_tag :password, 'Password:' %></td>
+        <td><%= password_field_tag :password, params[:password] %></td>
+      </tr>
+      <tr class='actions'>
+        <td colspan='2'>
+          <%= submit_tag 'Sign in' %>
+          <br>
+          <a href='#'>I have forgotten my password</a>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+</section>
