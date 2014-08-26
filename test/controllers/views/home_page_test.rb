@@ -19,9 +19,6 @@ class HomePageTest < ActionDispatch::IntegrationTest
     before do
       visit home_path
     end
-    it 'displays "home page"' do
-      page.must_have_content 'home page'
-    end
     it 'displays the main menu' do
       page.must_have_link 'Biodb'
     end
