@@ -2,12 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// NOTE: some/all of this may move into common.css.scss
-
 @import 'library';
 
-section.signin-form, section.signup-form {
-  margin-top: 4em;
+section.signin, section.signup {
+  margin-top: 1em;
+  margin-bottom: 1em;
   text-align: center;
   
   h1 {

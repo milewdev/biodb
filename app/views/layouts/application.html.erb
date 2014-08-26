@@ -21,9 +21,11 @@
           <% end %>
         </ul>
       </nav>
-      <% if current_user %>
-        <%= current_user.email %>
-      <% end %>
+      <p>
+        <% if current_user %>
+          Signed in as <%= current_user.email %>
+        <% end %>
+      </p>
     </header>
 
     <%= yield %>

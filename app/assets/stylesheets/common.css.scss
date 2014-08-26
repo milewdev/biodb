@@ -14,7 +14,6 @@ body {
 }
 
 body > header {
-  margin-bottom: 2em;
 
   & > nav {
     @extend %horizontal-menu;
@@ -22,13 +21,19 @@ body > header {
     border-bottom: 1px solid #ddd;
     font-size: 0.8rem;
   }
+  
+  p {
+    height: 2em;
+    margin: 0;
+    padding-top: 0.4em;
+    text-align: center;
+  }
 }
 
 body > footer {
   border-top: 1px solid #ddd;
   color: #bbb;
   font-size: 0.7rem;
-  margin-top: 2em;
   padding-top: 0.2em;
   text-align: center;
 }
