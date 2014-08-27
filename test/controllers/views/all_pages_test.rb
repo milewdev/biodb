@@ -8,7 +8,7 @@ class AppPagesTest < ActionDispatch::IntegrationTest
     sign_out    
     visit home_path
     click_link 'sign in'
-    fill_in 'Email', :with => users(:one).email
+    fill_in 'Email', :with => users(:name1).email
     fill_in 'Password', :with => 'Password1234'
     click_button 'Sign in'
   end
@@ -53,7 +53,7 @@ class AppPagesTest < ActionDispatch::IntegrationTest
       sign_out
     end
     it 'displays the user\'s email address' do
-      page.must_have_content users(:one).email
+      page.must_have_content users(:name1).email
     end
   end
   
