@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :highlights
+
   get 'home/index', to: 'home#index'
 
   resources :users
