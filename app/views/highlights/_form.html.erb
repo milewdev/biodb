@@ -1,4 +1,4 @@
-<%= form_for(@highlight) do |f| %>
+<%= form_for([@user, @highlight]) do |f| %>
   <% if @highlight.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@highlight.errors.count, "error") %> prohibited this highlight from being saved:</h2>

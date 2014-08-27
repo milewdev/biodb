@@ -14,9 +14,9 @@
       <tr>
         <td><%= highlight.user %></td>
         <td><%= highlight.content %></td>
-        <td><%= link_to 'Show', highlight %></td>
-        <td><%= link_to 'Edit', edit_highlight_path(highlight) %></td>
-        <td><%= link_to 'Destroy', highlight, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', user_highlight_path(@user, highlight) %></td>
+        <td><%= link_to 'Edit', edit_user_highlight_path(@user, highlight) %></td>
+        <td><%= link_to 'Destroy', user_highlight_path(@user, highlight), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Highlight', new_highlight_path %>
+<%= link_to 'New Highlight', new_user_highlight_path(@user) %>

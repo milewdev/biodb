@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   
-  resources :highlights
-
   get 'home/index', to: 'home#index'
 
-  resources :users
+  resources :users do
+    resources :highlights
+  end
 
   # could use "resources :sessions" but did it this way to learn about rails routing
   get '/sessions/new', to: 'sessions#new', as: :new_session
