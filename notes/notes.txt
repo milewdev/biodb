@@ -76,3 +76,7 @@ Good explanation of SASS placeholders and @extend:
 Good explanation of flexbox:
   http://www.sketchingwithcss.com/samplechapter/cheatsheet.html
 
+Recreating the test db:
+  $ RAILS_ENV=test bin/rake db:drop
+  $ RAILS_ENV=test bin/rake db:create
+  $ RAILS_ENV=test bin/rake db:migrate
