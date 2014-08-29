@@ -41,9 +41,6 @@ gem 'capybara_minitest_spec', group: :test
 # See https://github.com/freerange/mocha
 gem 'mocha', group: :test
 
-# See https://github.com/jfirebaugh/konacha
-gem 'konacha', group: :test
-
 # See https://github.com/thoughtbot/capybara-webkit#usage
 gem "capybara-webkit", group: :test
 
