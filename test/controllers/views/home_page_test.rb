@@ -91,11 +91,11 @@ class HomePageTest < ActionDispatch::IntegrationTest
       enable_js
       sign_in
     end
+    focus
     it 'displays all the highlights of the logged in user' do
       visit home_path
-      within '.highlights' do
-        page.must_have_content highlights(:highlight1_1).content
-        page.must_have_content highlights(:highlight1_2).content
+      users(:name1).highlights.each do |highlight|
+        find("textarea[data-id='#{highlight.id}']").value.must_equal highlight.content
       end
     end
     after do

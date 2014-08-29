@@ -5,7 +5,7 @@
 display_data = (highlights) ->
   list = $('.highlights')
   for highlight in highlights
-    list.append "<li>#{highlight.content}</li>"
+    list.append "<li><textarea data-id='#{highlight.id}'>#{highlight.content}</textarea></li>"
   
 $(document).ready -> 
   user_id = $('.highlights')?.data('user-id')
