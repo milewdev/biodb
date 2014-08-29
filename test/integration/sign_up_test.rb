@@ -28,19 +28,4 @@ class SignUpTest < ActionDispatch::IntegrationTest
     end
   end
   
-  describe 'js test' do
-    before do
-      Capybara.current_driver = :webkit
-    end
-    
-    it 'runs js' do
-      visit home_path
-      page.must_have_content 'text'
-    end
-    
-    after do
-      Capybara.use_default_driver
-    end
-  end
-  
 end
