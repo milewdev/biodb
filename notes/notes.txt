@@ -84,4 +84,9 @@ Recreating the test db:
 Associations are instances of ActiveRecord::Associations::CollectionProxy.  This method allows
 one to write things like parent.children.new(params) and parent.children.destroy(child):
   http://edgeapi.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html
- 
+
+Useful notes on testing coffeescripts in Rails:
+  http://blog.arkency.com/2013/07/coffeescript-tests-for-rails-apps/
+
+Notes on install webkit:
+  https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit
