@@ -2,8 +2,12 @@
 
 highlight1_1:
   user: name1
-  content: MyString
+  content: 'name1 highlight1'
 
 highlight1_2:
+  user: name1
+  content: 'name1 highlight2'
+
+highlight2_1:
   user: name2
-  content: MyString
+  content: 'name2 highlight1'

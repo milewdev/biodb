@@ -14,6 +14,14 @@ class HomePageTest < ActionDispatch::IntegrationTest
   def sign_out
     click_link 'sign out' if page.has_link? 'sign out'
   end
+  
+  def enable_js
+    Capybara.current_driver = :webkit
+  end
+  
+  def disable_js
+    Capybara.use_default_driver
+  end
 
   describe 'home page' do
     before do
@@ -40,14 +48,17 @@ class HomePageTest < ActionDispatch::IntegrationTest
     before do
       sign_in
     end    
-    after do
-      sign_out
-    end
     it 'does not have a sign up link' do
       page.wont_have_link 'sign up'
     end
     it 'does not have a sign in link' do
       page.wont_have_link 'sign in'
+    end
+    it 'displays the user\'s email address' do
+      page.must_have_content users(:name1).email
+    end
+    after do
+      sign_out
     end
   end
   
@@ -72,6 +83,24 @@ class HomePageTest < ActionDispatch::IntegrationTest
       it 'displays the sign in page' do
         current_path.must_equal new_session_path
       end
+    end
+  end
+  
+  describe 'the highlight list' do
+    before do
+      enable_js
+      sign_in
+    end
+    it 'displays all the highlights of the logged in user' do
+      visit home_path
+      within '.highlights' do
+        page.must_have_content highlights(:highlight1_1).content
+        page.must_have_content highlights(:highlight1_2).content
+      end
+    end
+    after do
+      sign_out
+      disable_js
     end
   end
 
