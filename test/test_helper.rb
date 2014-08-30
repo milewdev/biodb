@@ -11,7 +11,10 @@ require 'minitest/spec'
 require 'mocha/mini_test'
 
 # See https://github.com/jnicklas/capybara#setup
-require 'capybara/rails'    
+require 'capybara/rails'
+
+# See https://github.com/teampoltergeist/poltergeist#installation
+require 'capybara/poltergeist'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.

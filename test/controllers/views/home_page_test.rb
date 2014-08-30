@@ -16,7 +16,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
   end
   
   def enable_js
-    Capybara.current_driver = :webkit
+    Capybara.current_driver = :poltergeist
   end
   
   def disable_js
@@ -91,7 +91,6 @@ class HomePageTest < ActionDispatch::IntegrationTest
       enable_js
       sign_in
     end
-    focus
     it 'displays all the highlights of the logged in user' do
       visit home_path
       users(:name1).highlights.each do |highlight|

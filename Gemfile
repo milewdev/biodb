@@ -41,8 +41,8 @@ gem 'capybara_minitest_spec', group: :test
 # See https://github.com/freerange/mocha
 gem 'mocha', group: :test
 
-# See https://github.com/thoughtbot/capybara-webkit#usage
-gem "capybara-webkit", group: :test
+# See https://github.com/teampoltergeist/poltergeist#installation
+gem "poltergeist", group: :test
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
