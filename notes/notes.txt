@@ -90,3 +90,6 @@ Useful notes on testing coffeescripts in Rails:
 
 Notes on install webkit:
   https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit
+
+CSS selectors spec:
+  http://www.w3.org/TR/css3-selectors/#selectors
