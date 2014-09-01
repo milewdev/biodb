@@ -3,11 +3,14 @@
 highlight1_1:
   user: name1
   content: 'name1 highlight1'
+  sort_order: 1
 
 highlight1_2:
   user: name1
   content: 'name1 highlight2'
+  sort_order: 2
 
 highlight2_1:
   user: name2
   content: 'name2 highlight1'
+  sort_order: 1

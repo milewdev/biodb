@@ -76,7 +76,7 @@ class HighlightsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def highlight_params
-      params.require(:highlight).permit(:content)
+      params.require(:highlight).permit(:content, :sort_order)
     end
 
 end

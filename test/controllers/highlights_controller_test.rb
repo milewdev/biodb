@@ -19,7 +19,8 @@ class HighlightsControllerTest < ActionController::TestCase
 
   test "should create highlight" do
     assert_difference('Highlight.count') do
-      post :create, user_id: @highlight.user_id, highlight: { content: @highlight.content }
+      post :create, user_id: @highlight.user_id, highlight: { content: @highlight.content, sort_order: 3 }
+      $stderr.puts assigns(:highlight).errors[:sort_order]
     end
 
     assert_redirected_to user_highlight_path(@user, assigns(:highlight))
