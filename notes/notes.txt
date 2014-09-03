@@ -88,11 +88,11 @@ one to write things like parent.children.new(params) and parent.children.destroy
 Useful notes on testing coffeescripts in Rails:
   http://blog.arkency.com/2013/07/coffeescript-tests-for-rails-apps/
 
-Notes on install webkit:
-  https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit
-
 CSS selectors spec:
   http://www.w3.org/TR/css3-selectors/#selectors
 
 jquery.caret:
   https://github.com/acdvorak/jquery.caret
+
+PhantomJS key constants for use in .native.send_key():
+  https://github.com/ariya/phantomjs/commit/cab2635e66d74b7e665c44400b8b20a8f225153a
