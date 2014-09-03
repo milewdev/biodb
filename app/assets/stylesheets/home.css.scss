@@ -18,3 +18,50 @@ section.home-page {
     margin-right: 1.5em;
   }
 }
+
+ul.highlights {
+  
+  // These variables define the bullet size ($bullet-radius and $bullet-diameter), 
+  // and the white space to the left and right of the bullet ($bullet-margin).  From
+  // these we calculate the width of the gutter ($bullet-gutter) in which the bullet
+  // is horizontally positioned ($bullet-left).  We also set the vertical position of
+  // the bullet ($bullet-top) by eye.
+  $bullet-radius: 0.25em;
+  $bullet-diameter: ( 2 * $bullet-radius );
+  $bullet-margin: 0.5em;
+  $bullet-left: -( $bullet-diameter + $bullet-margin );
+  $bullet-top: 0.65em;
+  $bullet-gutter: ( $bullet-margin + $bullet-diameter + $bullet-margin );
+
+  display: inline-block;                    // so that the ul honours the parent's text-align
+  list-style-type: none;                    // we will draw our own bullets (see li below)
+  width: 60%;                               // set by eye
+  padding: 0;
+  padding-left: $bullet-gutter;
+  text-align: left;
+
+  li {
+    margin: 0;
+    padding: 0;
+    position: relative;                     // so that the absolute positioning in :before works
+
+    &:before {                              // draw our own bullets
+        background-color: black;            // black
+        border-radius: 50%;                 // round
+        content: "";                        // force the bullet to appear but with nothing in it
+        left: $bullet-left;
+        padding: $bullet-radius;
+        position: absolute;                 // so that top and left work
+        top: $bullet-top;
+    }
+  }
+  
+  textarea {
+    border: 1px solid white;
+    overflow: hidden;                       // hide the scroll bars; we'll auto-adjust the height using js
+    resize: none;                           // do not allow the user to resize the textarea
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
