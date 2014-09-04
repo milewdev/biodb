@@ -1,21 +1,7 @@
 require 'test_helper'
 
 class AppPagesTest < ActionDispatch::IntegrationTest
-
-  # TODO: move these methods to somewhere common
-  # TODO: method should take user argument
-  def sign_in
-    sign_out    
-    visit home_path
-    click_link 'sign in'
-    fill_in 'Email', :with => users(:one).email
-    fill_in 'Password', :with => 'Password1234'
-    click_button 'Sign in'
-  end
-  
-  def sign_out
-    click_link 'sign out' if page.has_link? 'sign out'
-  end
+  include IntegrationHelper
 
   describe 'main menu' do
     before do
@@ -27,6 +13,9 @@ class AppPagesTest < ActionDispatch::IntegrationTest
     end
   
     describe 'when a user is not signed in' do
+      before do
+        sign_out
+      end
       it 'does not have a sign out link' do
         page.wont_have_link 'sign out'
       end
@@ -35,9 +24,6 @@ class AppPagesTest < ActionDispatch::IntegrationTest
     describe 'when a user is signed in' do
       before do
         sign_in
-      end
-      after do
-        sign_out
       end
       it 'has a sign out link' do
         page.must_have_link 'sign out'
