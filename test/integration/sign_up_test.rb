@@ -3,9 +3,11 @@ require 'test_helper'
 
 # See https://github.com/metaskills/minitest-spec-rails#test-styles
 class SignUpTest < ActionDispatch::IntegrationTest
+  include IntegrationHelper
 
   describe 'a user signing up' do
     it '' do      
+      sign_out
       visit home_path
       current_path.must_equal home_path
       click_link 'sign up'
