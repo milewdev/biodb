@@ -11,7 +11,16 @@ require 'minitest/spec'
 require 'mocha/mini_test'
 
 # See https://github.com/jnicklas/capybara#setup
-require 'capybara/rails'    
+require 'capybara/rails'
+
+# These are integration test helper methods.  To use them, do:
+#
+#   class MyIntegrationTest < ActionDispatch::IntegrationTest  
+#     include IntegrationHelper
+#     ...
+#   end
+# 
+require 'integration_helper'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
