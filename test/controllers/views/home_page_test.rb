@@ -14,6 +14,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
   describe 'when a user is not signed in' do
     before do
+      sign_out
       visit home_path
     end
     it 'has a sign up link' do
@@ -27,10 +28,8 @@ class HomePageTest < ActionDispatch::IntegrationTest
   describe 'when a user is signed in' do
     before do
       sign_in
+      visit home_path
     end    
-    after do
-      sign_out
-    end
     it 'does not have a sign up link' do
       page.wont_have_link 'sign up'
     end
