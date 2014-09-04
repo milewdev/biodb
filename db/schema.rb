@@ -16,26 +16,6 @@ ActiveRecord::Schema.define(version: 20140820121442) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "jobs", force: true do |t|
-    t.string   "company"
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "synopsis"
-    t.string   "when"
-  end
-
-  create_table "skills", force: true do |t|
-    t.integer  "job_id"
-    t.string   "name"
-    t.string   "group"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "skills", ["job_id", "name"], name: "index_skills_on_job_id_and_name", unique: true, using: :btree
-  add_index "skills", ["job_id"], name: "index_skills_on_job_id", using: :btree
-
   create_table "users", force: true do |t|
     t.string   "email"
     t.string   "password_digest"
