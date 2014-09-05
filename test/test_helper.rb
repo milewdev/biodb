@@ -13,6 +13,9 @@ require 'mocha/mini_test'
 # See https://github.com/jnicklas/capybara#setup
 require 'capybara/rails'
 
+# See https://github.com/teampoltergeist/poltergeist#installation
+require 'capybara/poltergeist'
+
 # These are integration test helper methods.  To use them, do:
 #
 #   class MyIntegrationTest < ActionDispatch::IntegrationTest  
@@ -33,4 +36,13 @@ end
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
+  
+  def enable_js
+    Capybara.current_driver = :poltergeist
+  end
+  
+  def disable_js
+    Capybara.use_default_driver
+  end
+
 end
