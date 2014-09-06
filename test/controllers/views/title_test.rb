@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class HomePageTest < ActionDispatch::IntegrationTest
-  include IntegrationHelper
   
   describe 'a user\'s title' do
     before do

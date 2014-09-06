@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class AppPagesTest < ActionDispatch::IntegrationTest
-  include IntegrationHelper
 
   describe 'main menu' do
     before do

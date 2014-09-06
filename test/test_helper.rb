@@ -36,6 +36,9 @@ end
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
+
+  # Additional custom utilities to make the test dry and easier to read.
+  include IntegrationHelper
   
   def enable_js
     Capybara.current_driver = :poltergeist
