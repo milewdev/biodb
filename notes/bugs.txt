@@ -1,0 +1,5 @@
+$(document).ready not running after clicking on the home button.
+  Go to the site.
+  Click the edit mode ckeckbox to verify that the border around title appears when in edit mode.
+  Click the home button.
+  Click the edit mode checkbox to verify that the border around title does not appear when in edit mode, although it should.
