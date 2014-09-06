@@ -6,6 +6,19 @@ module IntegrationHelper
 
   EditModeCheckboxSelector = '#edit-mode-checkbox'
   TitleSelector = '.user-title'   # TODO: change to #user-title
+  
+  
+  #
+  # general helpers
+  #
+  
+  def enable_js
+    Capybara.current_driver = :poltergeist
+  end
+  
+  def disable_js
+    Capybara.use_default_driver
+  end
 
   
   #

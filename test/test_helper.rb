@@ -39,13 +39,4 @@ class ActionDispatch::IntegrationTest
 
   # Additional custom utilities to make the test dry and easier to read.
   include IntegrationHelper
-  
-  def enable_js
-    Capybara.current_driver = :poltergeist
-  end
-  
-  def disable_js
-    Capybara.use_default_driver
-  end
-
 end
