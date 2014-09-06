@@ -13,6 +13,16 @@ section.home-page {
     margin-bottom: 2em;
   }
   
+  h2 {
+    &.visible {
+      display: initial;
+    }
+    
+    &.hidden {
+      display: none;
+    }
+  }
+  
   a {
     margin-left: 1.5em;
     margin-right: 1.5em;
