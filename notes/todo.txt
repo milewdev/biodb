@@ -1,8 +1,17 @@
 Refactor email_format_validator_test.rb and password_format_validator_test.rb
+
 Refactor email_format_validator.rb and password_format_validator.rb
+
 Map db exceptions to model errors
+
 Refactor fixtures: use better fixture names
+
 Remove uneeded methods from HomeController (e.g. index)
+
 Refactor sign_up_test.rb
+
 Test what happens when the sign up page and the sign in page are loaded in a browser when a user is already signed in
+
 Adjust site to be responsive to different screen dimensions
+
+Decide where to handle the trimming of titles (and other fields?) and where to convert empty title to nil (unless this happens automagically)
