@@ -59,8 +59,12 @@ install_handlers = ->
     user_title().attr('contentEditable', this.checked)    # TODO: move this into set_edit_mode_class?  and rename to set_edit_mode?
     set_edit_mode_class(user_title(), this.checked)
     display_data()
-
-$(document).ready ->
+    
+ready = ->
   install_handlers()
   set_edit_mode_class(user_title(), this.checked)
   display_data()
+
+# See http://stackoverflow.com/a/18770589
+$(document).ready(ready)
+$(document).on('page:load', ready)
