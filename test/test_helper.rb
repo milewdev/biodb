@@ -16,14 +16,9 @@ require 'capybara/rails'
 # See https://github.com/teampoltergeist/poltergeist#installation
 require 'capybara/poltergeist'
 
-# These are integration test helper methods.  To use them, do:
-#
-#   class MyIntegrationTest < ActionDispatch::IntegrationTest  
-#     include IntegrationHelper
-#     ...
-#   end
-# 
+# This included in ActionDispatch::IntegrationTest (see below).
 require 'integration_helper'
+
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -32,9 +27,10 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 end
 
-# See https://github.com/jnicklas/capybara#using-capybara-with-testunit
+
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
+  # See https://github.com/jnicklas/capybara#using-capybara-with-testunit
   include Capybara::DSL
 
   # Additional custom utilities to make the test dry and easier to read.
