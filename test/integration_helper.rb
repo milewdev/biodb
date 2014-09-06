@@ -5,7 +5,7 @@ module IntegrationHelper
   #
 
   EditModeCheckboxSelector = '#edit-mode-checkbox'
-  TitleSelector = '.user-title'   # TODO: change to #user-title
+  TitleSelector = '#user-title'
   
   
   #

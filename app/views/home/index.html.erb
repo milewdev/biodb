@@ -3,7 +3,7 @@
   <h1>Biodb</h1>
 
   <% if current_user %>
-    <h2 class='user-title'><%= current_user.title %></h2>
+    <h2 id='user-title'><%= current_user.title %></h2>
   <% else %>
     <%= link_to 'sign in', new_session_path %>
     <%= link_to 'sign up', new_user_path %>

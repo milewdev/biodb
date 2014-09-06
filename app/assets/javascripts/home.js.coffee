@@ -9,7 +9,7 @@ edit_mode_checkbox = ->
   $('#edit-mode-checkbox')
 
 user_title = ->
-  $('h2.user-title')
+  $('#user-title')
 
 #
 # queries
