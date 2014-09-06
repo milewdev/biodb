@@ -101,7 +101,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
       before do
         sign_in users(:with_title)
         use_edit_mode
-        delete_text_of title
+        delete_inner_text title
         use_view_mode
       end
       it 'hides the title' do

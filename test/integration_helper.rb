@@ -71,8 +71,7 @@ module IntegrationHelper
     edit_mode_checkbox.set(true)
   end
   
-  def delete_text_of(element)
-    # WARNING: may not work with textareas or text inputs
+  def delete_inner_text(element)
     # Yep, that's end, and backspace, and backspace, and backspace, and ...
     element.native.send_keys :End, *( Array.new( element.text.length, :Backspace ) )
   end
