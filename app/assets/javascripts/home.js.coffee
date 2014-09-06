@@ -42,15 +42,25 @@ toggle = (element, is_visible) ->
   else
     element.removeClass('visible')
     element.addClass('hidden')
+    
+set_edit_mode_class = (element, is_in_edit_mode) ->
+  if is_in_edit_mode
+    element.removeClass('view-mode')
+    element.addClass('edit-mode')
+  else
+    element.removeClass('edit-mode')
+    element.addClass('view-mode')
 
 #
 # other
 #
 install_handlers = ->
   edit_mode_checkbox().change ->
-    user_title().attr('contentEditable', this.checked)
+    user_title().attr('contentEditable', this.checked)    # TODO: move this into set_edit_mode_class?  and rename to set_edit_mode?
+    set_edit_mode_class(user_title(), this.checked)
     display_data()
 
 $(document).ready ->
   install_handlers()
+  set_edit_mode_class(user_title(), this.checked)
   display_data()

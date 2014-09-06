@@ -14,8 +14,19 @@ section.home-page {
   }
   
   h2 {
+    padding: 0.5em;
+    
+    // When in edit mode, the border around the text area will grow/shrink
+    // to fit the content, but we limit how narrow it will shrink to; this 
+    // seems to give a better user experience.
+    margin: auto;
+    min-width: 10em;
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: fit-content;
+    
     &.visible {
-      display: initial;
+      display: block-inline;
     }
     
     &.hidden {
@@ -27,4 +38,16 @@ section.home-page {
     margin-left: 1.5em;
     margin-right: 1.5em;
   }
+}
+
+.view-mode {
+  // Specify a hidden border so that the element does not change size
+  // when we make the border visible in edit mode.
+  border: 1px solid white;
+}
+
+.edit-mode {
+  // Place an unobtrusive border around items that the user can edit
+  // when they are in edit mode.
+  border: 1px solid #eee;
 }

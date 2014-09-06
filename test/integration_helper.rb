@@ -5,7 +5,7 @@ module IntegrationHelper
   #
 
   EditModeCheckboxSelector = '#edit-mode-checkbox'
-  TitleSelector = '.user-title'
+  TitleSelector = '.user-title'   # TODO: change to #user-title
 
   
   #
@@ -17,7 +17,10 @@ module IntegrationHelper
   end
    
   def title
-    find(TitleSelector)
+    # 'visible: false' finds visible and hidden elements on the page and we want to be able
+    # to find the title whether it is visible or not.
+    # See: https://github.com/jnicklas/capybara/blob/master/lib/capybara/node/finders.rb#L135
+    find(TitleSelector, visible: false)
   end
   
   
@@ -30,8 +33,8 @@ module IntegrationHelper
     element[:class].must_include css_class
   end
   
-  def must_be_in_view_mode
-    edit_mode_checkbox.checked?.must_equal false
+  def wont_have_class(element, css_class)
+    element[:class].wont_include css_class
   end
   
   def must_be_visible(element)
@@ -70,7 +73,7 @@ module IntegrationHelper
   
   def delete_text_of(element)
     # WARNING: may not work with textareas or text inputs
-    # Yep, that's end and backspace and backspace and backspace and ...
+    # Yep, that's end, and backspace, and backspace, and backspace, and ...
     element.native.send_keys :End, *( Array.new( element.text.length, :Backspace ) )
   end
 

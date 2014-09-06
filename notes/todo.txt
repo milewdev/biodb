@@ -15,3 +15,7 @@ Test what happens when the sign up page and the sign in page are loaded in a bro
 Adjust site to be responsive to different screen dimensions
 
 Decide where to handle the trimming of titles (and other fields?) and where to convert empty title to nil (unless this happens automagically)
+
+Do not allow newlines (i.e. pressing enter/return) in titles (why?)
+
+Add a short-cut key to switch between view and edit modes.
