@@ -108,6 +108,30 @@ class HomePageTest < ActionDispatch::IntegrationTest
         wont_be_visible(title)
       end
     end
+    
+    describe 'when title is visible' do
+      before do
+        sign_in users(:with_title)
+      end
+      it 'has the class visible' do
+        must_have_class(title, 'visible')
+      end
+      it 'does not have the class hidden' do
+        wont_have_class(title, 'hidden')
+      end
+    end
+    
+    describe 'when title is not visible' do
+      before do
+        sign_in users(:no_title)
+      end
+      it 'has the class hidden' do
+        must_have_class(title, 'hidden')
+      end
+      it 'does not have the class visible' do
+        wont_have_class(title, 'visible')
+      end
+    end
 
     describe 'when in view mode' do
       before do
