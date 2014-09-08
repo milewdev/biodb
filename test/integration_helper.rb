@@ -4,6 +4,7 @@ module IntegrationHelper
   # element selectors
   #
 
+  HomeLinkSelector = '#home-link'
   EditModeCheckboxSelector = '#edit-mode-checkbox'
   TitleSelector = '#user-title'
   
@@ -19,11 +20,33 @@ module IntegrationHelper
   def disable_js
     Capybara.use_default_driver
   end
+  
+  def stub_onbeforeunload
+    page.execute_script 'window.onbeforeunload = function () {}'
+  end
+  
+  def capture_onbeforeunload(&block)
+    page.execute_script <<-'EOF'
+      localStorage.removeItem("onbeforeunload_result");
+      var onbeforeunload_original = window.onbeforeunload;
+      window.onbeforeunload = function () { localStorage.onbeforeunload_result = onbeforeunload_original(); }
+    EOF
+    yield
+    page.evaluate_script('localStorage.onbeforeunload_result')
+  ensure
+    page.execute_script <<-'EOF'
+      localStorage.removeItem("onbeforeunload_result");
+    EOF
+  end
 
   
   #
   # elements on the page
   #
+  
+  def home_link
+    find(HomeLinkSelector)
+  end
 
   def edit_mode_checkbox
     find(EditModeCheckboxSelector)

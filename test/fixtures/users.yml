@@ -11,10 +11,15 @@ two:
   title: title2
 
 no_title:
-  email: no_title@company.co
+  email: no_title@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
 
 with_title:
-  email: with_title@company.co
+  email: with_title@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
-  title: with_title
+  title: with title
+  
+may_be_changed_by_tests:
+  email: may_be_changed_by_tests@company.com
+  password_digest: <%= BCrypt::Password.create('Password1234') %>
+  title: may be changed by tests

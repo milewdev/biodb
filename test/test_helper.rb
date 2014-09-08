@@ -36,3 +36,9 @@ class ActionDispatch::IntegrationTest
   # Additional custom utilities to make the test dry and easier to read.
   include IntegrationHelper
 end
+
+
+# See http://www.rubydoc.info/github/jonleighton/poltergeist/frames
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app)
+end
