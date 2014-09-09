@@ -44,6 +44,10 @@ gem 'mocha', group: :test
 # See https://github.com/teampoltergeist/poltergeist#installation
 gem "poltergeist", group: :test
 
+# Excellent for debugging.  In code, do 'binding.pry' to launch the pry debugger.
+# See http://pryrepl.org
+gem 'pry', group: :test
+
 # for headless js testing
 # gem 'capybara-webkit', group: :test
 
