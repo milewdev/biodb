@@ -102,3 +102,20 @@ jquery.caret:
 
 PhantomJS key constants for use in .native.send_key():
   https://github.com/ariya/phantomjs/commit/cab2635e66d74b7e665c44400b8b20a8f225153a
+
+
+Example of invoking json via curl (here we update the title of the user with id 1):
+
+    curl -v -H "Accept: application/json" -H "Content-type: application/json" -X PATCH -d '{"user":{"title":"new title"}}' http://localhost:3000/users/1.json
+
+Note that for this to work you have to change this line in application_controller.rb:
+
+    protect_from_forgery with: :exception
+
+to this:
+
+    protect_from_forgery with: :null_session
+
+
+A very nice explanation of Rack:
+  http://rubylearning.com/blog/a-quick-introduction-to-rack/
