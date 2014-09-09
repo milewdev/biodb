@@ -55,8 +55,9 @@ save_data = ->
   user_patch['title'] = user_title().text()   # TODO: does this need to be HTML, SQL, etc. escaped?
   $.ajax(
     url: "/users/#{user_title().data('user-id')}.json",
-    type: 'PATCH',
-    data: { user: user_patch }
+    type: 'PUT',
+    dataType: 'json',
+    data: { _method: 'PATCH', user: user_patch }
   ).done(
     (data, textStatus, jqXHR) ->
       # TODO: need to check for errors returned by server
