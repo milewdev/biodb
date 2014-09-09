@@ -38,6 +38,17 @@ module IntegrationHelper
       localStorage.removeItem("onbeforeunload_result");
     EOF
   end
+  
+  # See http://www.youtube.com/watch?v=pMZskZW-XdI
+  # See https://github.com/teampoltergeist/poltergeist/tree/master/lib/capybara/poltergeist/network_traffic
+  def dump_network_traffic
+    page.driver.network_traffic.each do |request|
+      request.response_parts.uniq(&:url).each do |response|
+        $stderr.puts "\nRequest:", request.url, request.method, request.headers, "\n"
+        $stderr.puts "Response:", response.status, response.status_text, response.headers, "\n"
+      end
+    end
+  end
 
   
   #
