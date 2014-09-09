@@ -36,3 +36,15 @@ class ActionDispatch::IntegrationTest
   # Additional custom utilities to make the test dry and easier to read.
   include IntegrationHelper
 end
+
+
+# Uncomment if you want to set Poltergeist options (e.g. debug: true).
+# See https://github.com/teampoltergeist/poltergeist#customization
+# Capybara.register_driver :poltergeist do |app|
+#   Capybara::Poltergeist::Driver.new(app, debug: true)
+# end
+
+# Uncomment to if you want to sniff the network traffic between PhantonJS (a
+# headless browser) and rails.
+# See http://rubydoc.info/github/jnicklas/capybara/master/Capybara
+# Capybara.server_port = 4000
