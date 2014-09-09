@@ -173,6 +173,40 @@ class HomePageTest < ActionDispatch::IntegrationTest
         onbeforeunload_result.must_equal 'undefined'
       end
     end
+    
+    describe 'when leaving edit mode and there are unsaved changes' do
+      before do
+        sign_in users(:may_be_changed_by_tests)
+        use_edit_mode
+        title.native.send_keys :End, ' changed'
+        use_view_mode
+        
+        # TODO: is there a better way to wait for ajax to finish?
+        # Yes: search for something that changes after the update is complete (e.g. save button dimmed); in this 
+        # way capybara will handle the waiting/sleeping.
+        # See https://github.com/jnicklas/capybara#asynchronous-javascript-ajax-and-friends
+        sleep(0.1)
+      end
+      it 'immediately saves the changes to the server' do
+        stale_user = users(:may_be_changed_by_tests)
+        fresh_user = User.find(stale_user.id)
+        fresh_user.title.must_equal stale_user.title + ' changed'
+      end
+    end
+    
+    describe 'when leaving edit mode and there are no unsaved changes' do
+      before do
+        sign_in users(:may_be_changed_by_tests)
+        use_edit_mode
+        use_view_mode
+        sleep(0.1)    # TODO: see TODO in test above this one
+      end
+      it 'does not save anything to the server' do
+        stale_user = users(:may_be_changed_by_tests)
+        fresh_user = User.find(stale_user.id)
+        fresh_user.title.must_equal stale_user.title
+      end
+    end
 
     after do
       disable_js

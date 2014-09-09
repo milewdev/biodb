@@ -67,7 +67,7 @@ save_data = ->
   #     console.log "ajax fail: jqXHR.responseText='#{jqXHR.reponseText}', textStatus='#{textStatus}', errorThrown='#{errorThrown}'"
   )
 
-  
+
 #
 # helpers
 #
@@ -102,6 +102,7 @@ install_handlers = ->
     user_title().attr('contentEditable', this.checked)    # TODO: move this into set_edit_mode_class?  and rename to set_edit_mode?
     set_edit_mode_class(user_title(), this.checked)
     display_data()
+    save_data() if has_unsaved_changes
     
   user_title().on 'input', ->                             # TODO: this will need to be applied to any editable page element
     has_unsaved_changes = true
