@@ -21,3 +21,5 @@ Do not allow newlines (i.e. pressing enter/return) in titles (why?)
 Add a short-cut key to switch between view and edit modes.
 
 Remove title from sign up page.
+
+Add version number to footer; increment version number with each release.
