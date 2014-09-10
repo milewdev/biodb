@@ -119,3 +119,14 @@ to this:
 
 A very nice explanation of Rack:
   http://rubylearning.com/blog/a-quick-introduction-to-rack/
+
+
+Using less like tail -f:
+  less -W +F -r log/test.log
+  
+See http://www.commandlinefu.com/commands/view/1024/make-less-behave-like-tail-f
+See http://unix.stackexchange.com/a/19320
+
+
+Notes on colorization of output to a terminal:
+  http://stackoverflow.com/questions/1489183/colorized-ruby-output
