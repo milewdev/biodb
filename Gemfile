@@ -48,6 +48,9 @@ gem "poltergeist", group: :test
 # See http://pryrepl.org
 gem 'pry', group: :test
 
+# See https://github.com/copiousfreetime/launchy
+gem 'launchy', group: :test
+
 # for headless js testing
 # gem 'capybara-webkit', group: :test
 
