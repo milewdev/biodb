@@ -6,7 +6,6 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   Coveralls::SimpleCov::Formatter
 ]
 SimpleCov.start 'rails'
-# Coveralls.wear! 'rails'
 
 
 ENV['RAILS_ENV'] ||= 'test'
