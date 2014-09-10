@@ -23,3 +23,13 @@ Add a short-cut key to switch between view and edit modes.
 Remove title from sign up page.
 
 Add version number to footer; increment version number with each release.
+
+Add _lint:
+  - check for parentheses - ( and ) - in describe texts; minitest will not run them if they have an 'it' block with a focus:
+  
+    describe "a description with (parentheses)" do
+      focus
+      it "will be ignored" do
+        $stderr.puts 'this will not be run'
+      end
+    end
