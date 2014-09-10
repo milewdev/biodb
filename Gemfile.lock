@@ -184,6 +184,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
+  minitest
   minitest-focus
   minitest-spec-rails
   mocha
@@ -194,6 +195,7 @@ DEPENDENCIES
   rails_12factor
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  simplecov
   spring
   turbolinks
   uglifier (>= 1.3.0)

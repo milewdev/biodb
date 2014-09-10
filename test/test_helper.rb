@@ -1,10 +1,18 @@
 # See https://coveralls.io/docs/ruby
+require 'simplecov'
 require 'coveralls'
-Coveralls.wear!('rails')
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start 'rails'
+# Coveralls.wear! 'rails'
+
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+gem 'minitest'
 require 'minitest/spec'
 
 # See https://github.com/freerange/mocha#rails
@@ -16,7 +24,7 @@ require 'capybara/rails'
 # See https://github.com/teampoltergeist/poltergeist#installation
 require 'capybara/poltergeist'
 
-# This included in ActionDispatch::IntegrationTest (see below).
+# So that IntegrationHelper can be included in ActionDispatch::IntegrationTest (see below).
 require 'integration_helper'
 
 
@@ -44,7 +52,7 @@ end
 #   Capybara::Poltergeist::Driver.new(app, debug: true)
 # end
 
-# Uncomment to if you want to sniff the network traffic between PhantonJS (a
+# Uncomment to if you want to, say, sniff the network traffic between PhantonJS (a
 # headless browser) and rails.
 # See http://rubydoc.info/github/jnicklas/capybara/master/Capybara
 # Capybara.server_port = 4000

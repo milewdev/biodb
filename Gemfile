@@ -26,8 +26,16 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring', group: :development
 
+# See https://github.com/colszowka/simplecov#getting-started
+# Do not use ':require => false'; see https://github.com/colszowka/simplecov/issues/235#issuecomment-36558984
+gem 'simplecov', group: :test
+
 # See https://coveralls.io/docs/ruby
-gem 'coveralls', require: false
+# Do not use ':require => false'; see https://github.com/colszowka/simplecov/issues/235#issuecomment-36558984
+gem 'coveralls', group: :test
+
+# See https://github.com/seattlerb/minitest/blob/master/README.txt#L556
+gem 'minitest', group: :test
 
 # See https://github.com/metaskills/minitest-spec-rails
 gem 'minitest-spec-rails', group: :test
