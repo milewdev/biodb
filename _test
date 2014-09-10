@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
-printf '\n********************************************************************************\n\n' >> log/test.log
+# To run minitest with a seed value, do something like: ./_test TESTOPTS="--seed 41006"
+
 clear
-bin/rake test
+printf '\n***** START ***************************************************************************\n\n' >> log/test.log
+if [ $# -eq 0 ] ; then
+  bin/rake test
+else
+  bin/rake test "$*"
+fi
+printf '\n***** DONE ****************************************************************************\n\n' >> log/test.log
