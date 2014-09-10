@@ -19,3 +19,5 @@ Decide where to handle the trimming of titles (and other fields?) and where to c
 Do not allow newlines (i.e. pressing enter/return) in titles (why?)
 
 Add a short-cut key to switch between view and edit modes.
+
+Remove title from sign up page.
