@@ -4,8 +4,8 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
   describe 'a user\'s title' do
     before do
+      Rails.logger.level = 0    # 0 means :debug
       enable_js
-      stub_onbeforeunload    # TODO: do not know why this works; investigate further.
     end
 
     describe 'when a user is not signed in' do
@@ -81,19 +81,21 @@ class HomePageTest < ActionDispatch::IntegrationTest
     end
 
     describe 'when the user types something' do
+      let(:change) { "-#{__FILE__}-#{__LINE__}" }
       before do
-        sign_in users(:with_title)
+        sign_in users(:title_will_be_changed_by_tests)
         use_edit_mode
-        title.native.send_keys :Home, 'abc'
+        title.native.send_keys :End, change
+        stub_onbeforeunload
       end
       it 'changes the title' do
-        title.text.must_equal "abc#{users(:with_title).title}"
+        title.text.must_equal "#{users(:title_will_be_changed_by_tests).title}#{change}"
       end
     end
 
     describe 'when the user deletes the title and then switches to view mode' do
       before do
-        sign_in users(:with_title)
+        sign_in users(:title_will_be_deleted_by_a_test)
         use_edit_mode
         delete_inner_text title
         use_view_mode
@@ -153,10 +155,11 @@ class HomePageTest < ActionDispatch::IntegrationTest
     end
 
     describe 'when a link is clicked and there are unsaved changes' do
+      let(:change) { "-#{__FILE__}-#{__LINE__}" }
       let(:onbeforeunload_result) do
-        sign_in users(:may_be_changed_by_tests)
+        sign_in users(:title_will_be_changed_by_tests)
         use_edit_mode
-        title.native.send_keys :End, ' changed'
+        title.native.send_keys :End, change
         capture_onbeforeunload { home_link.click }
       end
       it 'prompts the user about unsaved changes' do
@@ -166,7 +169,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
     describe 'when a link is clicked and there are no unsaved changes' do
       let(:onbeforeunload_result) do
-        sign_in users(:may_be_changed_by_tests)
+        sign_in users(:one)
         capture_onbeforeunload { home_link.click }
       end
       it 'does not prompt the user about unsaved changes' do
@@ -175,10 +178,11 @@ class HomePageTest < ActionDispatch::IntegrationTest
     end
     
     describe 'when leaving edit mode and there are unsaved changes' do
+      let(:change) { "-#{__FILE__}-#{__LINE__}" }
       before do
-        sign_in users(:may_be_changed_by_tests)
+        sign_in users(:title_will_be_changed_by_tests)
         use_edit_mode
-        title.native.send_keys :End, ' changed'
+        title.native.send_keys :End, change
         use_view_mode
         
         # TODO: is there a better way to wait for ajax to finish?
@@ -188,21 +192,21 @@ class HomePageTest < ActionDispatch::IntegrationTest
         sleep(0.1)
       end
       it 'immediately saves the changes to the server' do
-        stale_user = users(:may_be_changed_by_tests)
+        stale_user = users(:title_will_be_changed_by_tests)
         fresh_user = User.find(stale_user.id)
-        fresh_user.title.must_equal stale_user.title + ' changed'
+        fresh_user.title.must_equal stale_user.title + change
       end
     end
     
     describe 'when leaving edit mode and there are no unsaved changes' do
       before do
-        sign_in users(:may_be_changed_by_tests)
+        sign_in users(:one)
         use_edit_mode
         use_view_mode
         sleep(0.1)    # TODO: see TODO in test above this one
       end
       it 'does not save anything to the server' do
-        stale_user = users(:may_be_changed_by_tests)
+        stale_user = users(:one)
         fresh_user = User.find(stale_user.id)
         fresh_user.title.must_equal stale_user.title
       end

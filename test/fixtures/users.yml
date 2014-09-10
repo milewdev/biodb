@@ -17,9 +17,14 @@ no_title:
 with_title:
   email: with_title@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
-  title: with title
+  title: with_title
   
-may_be_changed_by_tests:
-  email: may_be_changed_by_tests@company.com
+title_will_be_changed_by_tests:
+  email: title_will_be_changed_by_tests@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
-  title: may be changed by tests
+  title: title_will_be_changed_by_tests
+  
+title_will_be_deleted_by_a_test:
+  email: title_will_be_deleted_by_a_test@company.com
+  password_digest: <%= BCrypt::Password.create('Password1234') %>
+  title: title_will_be_deleted_by_a_test
