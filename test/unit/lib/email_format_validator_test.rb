@@ -16,7 +16,7 @@ describe EmailFormatValidator do
   end
   
   [ 'name', '@', 'company.com', 'name@', '@company', '@company.com', 'name@company', 'name@company.c' ].each do |bad_email|
-    describe "when the email format is invalid (#{bad_email})" do
+    describe "when the email format is invalid: #{bad_email}" do
       let(:errors) do
         errors = { email: [] }
         object = mock()
