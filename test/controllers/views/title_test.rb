@@ -81,7 +81,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     end
 
     describe 'when the user types something' do
-      let(:change) { "-#{__FILE__}-#{__LINE__}" }
+      let(:change) { "_#{__LINE__}" }
       before do
         sign_in users(:title_will_be_changed_by_tests)
         use_edit_mode
@@ -155,7 +155,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     end
 
     describe 'when a link is clicked and there are unsaved changes' do
-      let(:change) { "-#{__FILE__}-#{__LINE__}" }
+      let(:change) { "_#{__LINE__}" }
       let(:onbeforeunload_result) do
         sign_in users(:title_will_be_changed_by_tests)
         use_edit_mode
@@ -178,7 +178,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     end
     
     describe 'when leaving edit mode and there are unsaved changes' do
-      let(:change) { "-#{__FILE__}-#{__LINE__}" }
+      let(:change) { "_#{__LINE__}" }
       before do
         sign_in users(:title_will_be_changed_by_tests)
         use_edit_mode
