@@ -169,7 +169,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
     describe 'when a link is clicked and there are no unsaved changes' do
       let(:onbeforeunload_result) do
-        sign_in users(:one)
+        sign_in users(:generic)
         capture_onbeforeunload { home_link.click }
       end
       it 'does not prompt the user about unsaved changes' do
@@ -200,13 +200,13 @@ class HomePageTest < ActionDispatch::IntegrationTest
     
     describe 'when leaving edit mode and there are no unsaved changes' do
       before do
-        sign_in users(:one)
+        sign_in users(:generic)
         use_edit_mode
         use_view_mode
         sleep(0.1)    # TODO: see TODO in test above this one
       end
       it 'does not save anything to the server' do
-        stale_user = users(:one)
+        stale_user = users(:generic)
         fresh_user = User.find(stale_user.id)
         fresh_user.title.must_equal stale_user.title
       end

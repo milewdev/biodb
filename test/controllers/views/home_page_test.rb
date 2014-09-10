@@ -30,7 +30,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
   
   describe 'when a user is signed in' do
     before do
-      sign_in users(:one)
+      sign_in users(:generic)
       visit home_path
     end    
     it 'does not have a sign up link' do
@@ -75,7 +75,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
   
   describe 'the edit node check box' do
     before do
-      sign_in users(:one)
+      sign_in users(:generic)
     end
     describe 'when a user first logs in' do
       it 'is not checked' do

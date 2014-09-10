@@ -13,10 +13,10 @@ describe SessionsController do
   describe 'create' do
     describe 'when it is called with a known user' do
       before do
-        post :create, email: users(:one).email, password: 'Password1234'
+        post :create, email: users(:generic).email, password: 'Password1234'
       end
       it 'saves the user\'s id in the session' do
-        session[:user_id].must_equal users(:one).id
+        session[:user_id].must_equal users(:generic).id
       end
       it 'redirects to the home page' do      # TODO: it should redirect to the page the user was originally on
         assert_redirected_to home_path
@@ -37,7 +37,7 @@ describe SessionsController do
     
     describe 'when it is called with the wrong password' do
       before do
-        post :create, email: users(:one).email, password: 'WrongPassword'
+        post :create, email: users(:generic).email, password: 'WrongPassword'
       end
       it 'returns to the sign in page' do
         assert_template :new
