@@ -130,3 +130,7 @@ See http://unix.stackexchange.com/a/19320
 
 Notes on colorization of output to a terminal:
   http://stackoverflow.com/questions/1489183/colorized-ruby-output
+
+
+Notes on how to update a gem:
+  http://ilikestuffblog.com/2012/07/01/you-should-update-one-gem-at-a-time-with-bundler-heres-how/
