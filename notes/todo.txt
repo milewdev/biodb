@@ -44,3 +44,5 @@ If in edit mode and one goes away and then comes back, should one still be in ed
 clicking the link that takes you to the same page (currently the home link)?
 
 Disable the save button while we wait for a save to the server; re-enable if save failed.
+
+Investigate what :require => false does in Gemfiles (re: coverals and simplecov gems).
