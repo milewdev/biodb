@@ -13,6 +13,7 @@ module IntegrationHelper
   SaveButtonSelector = '#save-button'
   UserNameSelector = '#user-name'
   TitleSelector = '#user-title'   # TODO: rename to UserTitleSelector
+  UserEmailSelector = '#user-email'
   
   
   #
@@ -112,6 +113,10 @@ module IntegrationHelper
     find(TitleSelector, visible: false)
   end
   
+  def user_email
+    find(UserEmailSelector, visible: false)
+  end
+  
   
   #
   # expectations
@@ -119,7 +124,7 @@ module IntegrationHelper
   
   # See http://sideshowcoder.com/post/41185074450/checking-for-the-css-class-of-the-found-element-in
   def must_have_class(element, css_class)    
-    element[:class].wont_be_nil('element is missing the class attribute')
+    element[:class].wont_be_nil('element is missing the class attribute (enable_js required?)')
     element[:class].must_include css_class
   end
   

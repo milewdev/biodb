@@ -30,18 +30,6 @@ class AppPagesTest < ActionDispatch::IntegrationTest
     end
   end
   
-  describe 'when a user is signed in' do
-    before do
-      sign_in
-    end
-    after do
-      sign_out
-    end
-    it 'displays the user\'s email address' do
-      page.must_have_content users(:generic).email
-    end
-  end
-  
   describe 'footer' do
     before do
       visit home_path

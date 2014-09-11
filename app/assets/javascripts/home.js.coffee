@@ -25,6 +25,9 @@ user_name = ->
 
 user_title = ->
   $('#user-title')
+  
+user_email = ->
+  $('#user-email')
 
 
 #
@@ -151,6 +154,7 @@ ready = ->
     install_handlers()
     set_edit_mode_class(user_name(), edit_mode_checkbox().checked)  # TODO: smells; why do we need to know about edit_mode_checkbox?
     set_edit_mode_class(user_title(), edit_mode_checkbox().checked)
+    set_edit_mode_class(user_email(), false)              # always 'false' because email is not editable
     set_dirty(false)
     display_data()
 
