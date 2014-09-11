@@ -9,12 +9,8 @@ section.home-page {
   margin-bottom: 1em;
   text-align: center;
   
-  h1 {
-    margin-bottom: 2em;
-  }
-  
-  h2 {
-    padding: 0.5em;
+  h1, h2 {
+    padding: 0.25em;
     
     // When in edit mode, the border around the text area will grow/shrink
     // to fit the content, but we limit how narrow it will shrink to; this 
@@ -34,9 +30,17 @@ section.home-page {
     }
   }
   
-  a {
-    margin-left: 1.5em;
-    margin-right: 1.5em;
+  h2 {
+    font-size: 1.2rem;
+  }
+  
+  nav {
+    margin-top: 2em;
+    
+    a {
+      margin-left: 1em;
+      margin-right: 1em;
+    }
   }
 }
 

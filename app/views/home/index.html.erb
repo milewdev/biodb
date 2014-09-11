@@ -1,13 +1,15 @@
 <section class='home-page'>   <!-- TODO: use id instead of class -->
   
-  <h1>Biodb</h1>
-
   <% if current_user %>
-    <h2 id='user-name'><%= current_user.name %></h2>
+    <h1 id='user-name'><%= current_user.name %></h1>
     <h2 id='user-title' data-user-id='<%= current_user.id %>'><%= current_user.title %></h2>   <!-- TODO: data-user-id is temporary -->
   <% else %>
-    <%= link_to 'sign in', new_session_path %>
-    <%= link_to 'sign up', new_user_path %>
+    <h1>Biodb</h1>
+
+    <nav>
+      <%= link_to 'sign in', new_session_path %>
+      <%= link_to 'sign up', new_user_path %>
+    </nav>
   <% end %>
 
 </section>
