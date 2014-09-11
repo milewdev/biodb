@@ -7,7 +7,7 @@
 # variables
 #
 
-has_unsaved_changes = false
+dirty_flag = false
 
 
 #
@@ -64,8 +64,7 @@ save_data = ->
   ).done(
     (data, textStatus, jqXHR) ->
       # TODO: need to check for errors returned by server
-      has_unsaved_changes = false
-      refresh_save_button_enabled_state()
+      set_dirty(false)
   # ).fail(
   #   ( jqXHR, textStatus, errorThrown ) ->
   #     console.log "ajax fail: jqXHR.responseText='#{jqXHR.reponseText}', textStatus='#{textStatus}', errorThrown='#{errorThrown}'"
@@ -95,8 +94,15 @@ set_edit_mode_class = (element, is_in_edit_mode) ->
 is_resume_page = ->
   user_title().length > 0
   
-refresh_save_button_enabled_state = ->
-  save_button().prop('disabled', not has_unsaved_changes)
+enable_save_button = (enabled) ->
+  save_button().prop('disabled', not enabled)
+
+set_dirty = (dirty)->
+  dirty_flag = dirty
+  enable_save_button(dirty)
+  
+is_dirty = ->
+  dirty_flag
 
 
 #
@@ -109,24 +115,23 @@ install_handlers = ->
     user_title().attr('contentEditable', this.checked)    # TODO: move this into set_edit_mode_class?  and rename to set_edit_mode?
     set_edit_mode_class(user_title(), this.checked)
     display_data()
-    save_data() if has_unsaved_changes
+    save_data() if is_dirty()
     
   save_button().click ->
     save_data()
     
   user_title().on 'input', ->                             # TODO: this will need to be applied to any editable page element
-    has_unsaved_changes = true
-    refresh_save_button_enabled_state()
+    set_dirty(true)
     
   window.onbeforeunload = ->
-    return 'Data you have entered may not be saved.' if has_unsaved_changes
+    return 'Data you have entered may not be saved.' if is_dirty()
     return undefined                                      # 'undefined' suppresses 'leave page?' prompt
     
 ready = ->
   if is_resume_page()
     install_handlers()
     set_edit_mode_class(user_title(), edit_mode_checkbox().checked)   # TODO: smells; why do we need to know about edit_mode_checkbox here?
-    refresh_save_button_enabled_state()
+    set_dirty(false)
     display_data()
 
 $(document).ready(ready)
