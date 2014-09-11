@@ -42,3 +42,5 @@ Trim spaces from fields in both js and ruby.
 
 If in edit mode and one goes away and then comes back, should one still be in edit mode?  What about simply refreshing the page?  Or
 clicking the link that takes you to the same page (currently the home link)?
+
+Disable the save button while we wait for a save to the server; re-enable if save failed.
