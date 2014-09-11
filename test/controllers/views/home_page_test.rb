@@ -26,7 +26,9 @@ class HomePageTest < ActionDispatch::IntegrationTest
       page.wont_have_css 'header nav input[type="checkbox"]'
       page.wont_have_content 'edit mode'
     end
-    it 'does not have a save button'
+    it 'does not have a save button' do
+      page.wont_have_css SaveButtonSelector
+    end
   end
   
   describe 'when a user is signed in' do
@@ -42,11 +44,13 @@ class HomePageTest < ActionDispatch::IntegrationTest
     end
     it 'has an edit mode check box' do
       within 'header nav' do
-        page.must_have_css 'input[type="checkbox"]'
+        page.must_have_css 'input[type="checkbox"]'   # TODO: remove hard coding here and anywhere else
         page.must_have_content 'edit mode'
       end
     end
-    it 'has a save button'
+    it 'has a save button' do
+      page.must_have_css SaveButtonSelector           # TODO: how about must_exist(SaveButtonSelector)
+    end
   end
   
   describe 'the sign up link' do
@@ -89,23 +93,39 @@ class HomePageTest < ActionDispatch::IntegrationTest
   end
   
   describe 'the save button' do
-    describe 'when there are no unsaved changes in view mode' do
-      it 'is dimmed'
+    describe 'when there are no unsaved changes' do
+      before do
+        enable_js
+        sign_in users(:generic)
+        visit home_path
+      end
+      it 'is disabled' do
+        save_button.disabled?.must_equal true
+      end
+      after do
+        disable_js
+      end
     end
     
-    describe 'when there are no unsaved changes in edit mode' do
-      it 'is dimmed'
+    describe 'when there are unsaved changes' do
+      let(:change) { "_#{__LINE__}" }
+      before do
+        enable_js
+        sign_in users(:generic)
+        visit home_path
+        stub_onbeforeunload
+        use_edit_mode
+        title.native.send_keys :End, change
+      end
+      it 'is enabled' do
+        save_button.disabled?.must_equal false
+      end
+      after do
+        disable_js
+      end
     end
     
-    describe 'when there are unsaved changes in view mode' do
-      it 'is clickable (not dimmed)'
-    end
-    
-    describe 'when there are unsaved changes in edit mode' do
-      it 'is clickable (not dimmed)'
-    end
-    
-    describe 'when it is pressed in view mode' do
+    describe 'when it is pressed' do
       let(:change) { "_#{__LINE__}" }
       before do
         enable_js
@@ -126,10 +146,9 @@ class HomePageTest < ActionDispatch::IntegrationTest
         fresh_user = User.find(stale_user.id)
         fresh_user.title.must_equal stale_user.title + change
       end
-    end
-    
-    describe 'when it is pressed in edit mode' do
-      it 'save changes to the server'
+      after do
+        disable_js
+      end
     end
   end
 

@@ -58,6 +58,9 @@ class HomePageTest < ActionDispatch::IntegrationTest
         it 'shows the title' do
           must_be_visible(title)
         end
+        it 'disables the save button' do
+          save_button.disabled?.must_equal true
+        end
       end
 
       describe 'after switching to edit mode' do
@@ -90,6 +93,9 @@ class HomePageTest < ActionDispatch::IntegrationTest
       end
       it 'changes the title' do
         title.text.must_equal "#{users(:title_will_be_changed_by_tests).title}#{change}"
+      end
+      it 'enables the save button' do
+        save_button.disabled?.must_equal false
       end
     end
 

@@ -65,6 +65,7 @@ save_data = ->
     (data, textStatus, jqXHR) ->
       # TODO: need to check for errors returned by server
       has_unsaved_changes = false
+      refresh_save_button_enabled_state()
   # ).fail(
   #   ( jqXHR, textStatus, errorThrown ) ->
   #     console.log "ajax fail: jqXHR.responseText='#{jqXHR.reponseText}', textStatus='#{textStatus}', errorThrown='#{errorThrown}'"
@@ -92,7 +93,10 @@ set_edit_mode_class = (element, is_in_edit_mode) ->
     element.addClass('view-mode')
     
 is_resume_page = ->
-  $('#user-title').length > 0
+  user_title().length > 0
+  
+refresh_save_button_enabled_state = ->
+  save_button().prop('disabled', not has_unsaved_changes)
 
 
 #
@@ -112,6 +116,7 @@ install_handlers = ->
     
   user_title().on 'input', ->                             # TODO: this will need to be applied to any editable page element
     has_unsaved_changes = true
+    refresh_save_button_enabled_state()
     
   window.onbeforeunload = ->
     return 'Data you have entered may not be saved.' if has_unsaved_changes
@@ -121,6 +126,7 @@ ready = ->
   if is_resume_page()
     install_handlers()
     set_edit_mode_class(user_title(), edit_mode_checkbox().checked)   # TODO: smells; why do we need to know about edit_mode_checkbox here?
+    refresh_save_button_enabled_state()
     display_data()
 
 $(document).ready(ready)
