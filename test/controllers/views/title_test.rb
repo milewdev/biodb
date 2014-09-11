@@ -177,7 +177,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
       end
     end
     
-    describe 'when leaving edit mode and there are unsaved changes' do
+    describe 'when leaving edit mode and there are unsaved changes to the title' do
       let(:change) { "_#{__LINE__}" }
       before do
         sign_in users(:title_will_be_changed_by_tests)
