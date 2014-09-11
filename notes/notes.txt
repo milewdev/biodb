@@ -134,3 +134,11 @@ Notes on colorization of output to a terminal:
 
 Notes on how to update a gem:
   http://ilikestuffblog.com/2012/07/01/you-should-update-one-gem-at-a-time-with-bundler-heres-how/
+
+
+When adding a field to a model:
+  - create and run a migration
+  - check that the field was correctly added to schema.rb
+  - add tests to the model class test
+  - add validations to the model class
+  - add to controller permitted list
