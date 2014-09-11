@@ -33,6 +33,8 @@ Add _lint:
         $stderr.puts 'this will not be run'
       end
     end
+    
+  - also check for \s (which should be \'s); what about other escaped characters?
 
 Need to decide which field should get focus when entering edit mode.
 
@@ -46,3 +48,5 @@ clicking the link that takes you to the same page (currently the home link)?
 Disable the save button while we wait for a save to the server; re-enable if save failed.
 
 Investigate what :require => false does in Gemfiles (re: coverals and simplecov gems).
+
+Refactor title_test.rb to be like name_test.rb
