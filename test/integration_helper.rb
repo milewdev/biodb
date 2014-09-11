@@ -4,9 +4,14 @@ module IntegrationHelper
   # element selectors
   #
 
+  # TODO: can we eliminate these?  Yes, if they are only used in one place, ie the 
+  # element helpers below.  Note that TitleSelector is used in a test to test for
+  # the presence of the title element, not for its visibility; is there another 
+  # way of doing this?
   HomeLinkSelector = '#home-link'
   EditModeCheckboxSelector = '#edit-mode-checkbox'
-  TitleSelector = '#user-title'
+  SaveButtonSelector = '#save-button'
+  TitleSelector = '#user-title'   # TODO: rename to UserTitleSelector
   
   
   #
@@ -89,7 +94,12 @@ module IntegrationHelper
   def edit_mode_checkbox
     find(EditModeCheckboxSelector)
   end
+  
+  def save_button
+    find(SaveButtonSelector)
+  end
    
+  # TODO: rename to user_title
   def title
     # 'visible: false' finds visible and hidden elements on the page and we want to be able
     # to find the title whether it is visible or not.

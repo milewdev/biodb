@@ -16,6 +16,9 @@ has_unsaved_changes = false
 
 edit_mode_checkbox = ->
   $('#edit-mode-checkbox')
+  
+save_button = ->
+  $('#save-button')
 
 user_title = ->
   $('#user-title')
@@ -103,6 +106,9 @@ install_handlers = ->
     set_edit_mode_class(user_title(), this.checked)
     display_data()
     save_data() if has_unsaved_changes
+    
+  save_button().click ->
+    save_data()
     
   user_title().on 'input', ->                             # TODO: this will need to be applied to any editable page element
     has_unsaved_changes = true

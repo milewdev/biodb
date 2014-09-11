@@ -26,6 +26,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
       page.wont_have_css 'header nav input[type="checkbox"]'
       page.wont_have_content 'edit mode'
     end
+    it 'does not have a save button'
   end
   
   describe 'when a user is signed in' do
@@ -45,6 +46,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
         page.must_have_content 'edit mode'
       end
     end
+    it 'has a save button'
   end
   
   describe 'the sign up link' do
@@ -83,6 +85,51 @@ class HomePageTest < ActionDispatch::IntegrationTest
           page.wont_have_checked_field 'edit mode'
         end
       end
+    end
+  end
+  
+  describe 'the save button' do
+    describe 'when there are no unsaved changes in view mode' do
+      it 'is dimmed'
+    end
+    
+    describe 'when there are no unsaved changes in edit mode' do
+      it 'is dimmed'
+    end
+    
+    describe 'when there are unsaved changes in view mode' do
+      it 'is clickable (not dimmed)'
+    end
+    
+    describe 'when there are unsaved changes in edit mode' do
+      it 'is clickable (not dimmed)'
+    end
+    
+    describe 'when it is pressed in view mode' do
+      let(:change) { "_#{__LINE__}" }
+      before do
+        enable_js
+        sign_in users(:title_will_be_changed_by_tests)
+        visit home_path
+        use_edit_mode
+        title.native.send_keys :End, change
+        save_button.click
+        
+        # TODO: is there a better way to wait for ajax to finish?
+        # Yes: search for something that changes after the update is complete (e.g. save button dimmed); in this 
+        # way capybara will handle the waiting/sleeping.
+        # See https://github.com/jnicklas/capybara#asynchronous-javascript-ajax-and-friends
+        sleep(0.1)
+      end
+      it 'saves changes to the server' do
+        stale_user = users(:title_will_be_changed_by_tests)
+        fresh_user = User.find(stale_user.id)
+        fresh_user.title.must_equal stale_user.title + change
+      end
+    end
+    
+    describe 'when it is pressed in edit mode' do
+      it 'save changes to the server'
     end
   end
 
