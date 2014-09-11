@@ -9,3 +9,10 @@ $(document).ready not running after clicking on the home button.
 
 Fixed.  See http://stackoverflow.com/a/18770589
 ----------
+
+
+-----------
+2014 Sep 11
+
+Pasting into title field in edit mode caused Safari to display an error and reload the page.
+-----------
