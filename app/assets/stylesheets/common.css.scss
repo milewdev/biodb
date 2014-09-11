@@ -40,3 +40,14 @@ body {
 input[type='checkbox'] {
   margin-right: 0.5em;            // gap between checkbox box itself and the label next to it
 }
+
+button[type='button'] {
+  background-color: white;
+  border: 1px solid #888;
+  color: black;
+  
+  &:disabled {                    // dim the button when it is disabled
+    border: 1px solid #ddd;
+    color: #ccc;
+  }
+}
