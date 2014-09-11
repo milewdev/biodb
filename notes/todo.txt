@@ -33,3 +33,12 @@ Add _lint:
         $stderr.puts 'this will not be run'
       end
     end
+
+Need to decide which field should get focus when entering edit mode.
+
+Replace things like click_link 'home' with home.click
+
+Trim spaces from fields in both js and ruby.
+
+If in edit mode and one goes away and then comes back, should one still be in edit mode?  What about simply refreshing the page?  Or
+clicking the link that takes you to the same page (currently the home link)?
