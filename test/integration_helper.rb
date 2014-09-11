@@ -11,6 +11,7 @@ module IntegrationHelper
   HomeLinkSelector = '#home-link'
   EditModeCheckboxSelector = '#edit-mode-checkbox'
   SaveButtonSelector = '#save-button'
+  UserNameSelector = '#user-name'
   TitleSelector = '#user-title'   # TODO: rename to UserTitleSelector
   
   
@@ -98,6 +99,10 @@ module IntegrationHelper
   def save_button
     find(SaveButtonSelector)
   end
+  
+  def user_name
+    find(UserNameSelector, visible: false)
+  end
    
   # TODO: rename to user_title
   def title
@@ -114,19 +119,32 @@ module IntegrationHelper
   
   # See http://sideshowcoder.com/post/41185074450/checking-for-the-css-class-of-the-found-element-in
   def must_have_class(element, css_class)    
+    element[:class].wont_be_nil('element is missing the class attribute')
     element[:class].must_include css_class
   end
   
   def wont_have_class(element, css_class)
-    element[:class].wont_include css_class
+    element[:class].nil? or element[:class].wont_include css_class
   end
   
   def must_be_visible(element)
     must_have_class(element, 'visible')
+    wont_have_class(element, 'hidden')
   end
   
   def wont_be_visible(element)
     must_have_class(element, 'hidden')
+    wont_have_class(element, 'visible')
+  end
+  
+  def must_be_editable(element)
+    must_have_class(element, 'edit-mode')
+    wont_have_class(element, 'view-mode')
+  end
+  
+  def wont_be_editable(element)
+    must_have_class(element, 'view-mode')
+    wont_have_class(element, 'edit-mode')
   end
 
 

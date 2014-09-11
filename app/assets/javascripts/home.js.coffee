@@ -19,6 +19,9 @@ edit_mode_checkbox = ->
   
 save_button = ->
   $('#save-button')
+  
+user_name = ->
+  $('#user-name')
 
 user_title = ->
   $('#user-title')
@@ -28,6 +31,11 @@ user_title = ->
 # queries
 #
 
+has_user_name = ->
+  # TODO: what if there is no user name because no one is logged in?
+  # TODO: trimming will be implemented on the server, but when should we do it on the client?  After saving?
+  user_name().text()?.trim().length > 0
+  
 has_user_title = ->
   # TODO: what if there is no user title (no one is logged in)?
   user_title().text()?.trim().length > 0
@@ -42,7 +50,12 @@ is_edit_mode = ->
 #
 
 display_data = ->
+  display_user_name()
   display_user_title()
+  
+display_user_name = ->
+  is_visible = has_user_name() or is_edit_mode()
+  toggle(user_name(), is_visible)
 
 display_user_title = ->
   is_visible = has_user_title() or is_edit_mode()
@@ -55,7 +68,8 @@ display_user_title = ->
 
 save_data = ->
   user_patch = {}
-  user_patch['title'] = user_title().text()   # TODO: does this need to be HTML, SQL, etc. escaped?
+  user_patch.name = user_name().text()      # TODO: does this need to be HTML, SQL, etc. escaped?
+  user_patch.title = user_title().text()    # TODO: does this need to be HTML, SQL, etc. escaped?
   $.ajax(
     url: "/users/#{user_title().data('user-id')}.json",
     type: 'PUT',
@@ -112,13 +126,18 @@ is_dirty = ->
 install_handlers = ->
   
   edit_mode_checkbox().change ->
-    user_title().attr('contentEditable', this.checked)    # TODO: move this into set_edit_mode_class?  and rename to set_edit_mode?
+    user_name().attr('contentEditable', this.checked)     # TODO: move this into set_edit_mode_class?  and rename to set_edit_mode?
+    user_title().attr('contentEditable', this.checked)
+    set_edit_mode_class(user_name(), this.checked)
     set_edit_mode_class(user_title(), this.checked)
     display_data()
     save_data() if is_dirty()
     
   save_button().click ->
     save_data()
+    
+  user_name().on 'input', ->
+    set_dirty(true)
     
   user_title().on 'input', ->                             # TODO: this will need to be applied to any editable page element
     set_dirty(true)
@@ -130,7 +149,8 @@ install_handlers = ->
 ready = ->
   if is_resume_page()
     install_handlers()
-    set_edit_mode_class(user_title(), edit_mode_checkbox().checked)   # TODO: smells; why do we need to know about edit_mode_checkbox here?
+    set_edit_mode_class(user_name(), edit_mode_checkbox().checked)  # TODO: smells; why do we need to know about edit_mode_checkbox?
+    set_edit_mode_class(user_title(), edit_mode_checkbox().checked)
     set_dirty(false)
     display_data()
 

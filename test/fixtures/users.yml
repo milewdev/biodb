@@ -1,25 +1,53 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 generic:
-  email: email1@company.com
+  email: generic@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
-  title: title1
+  name: name
+  title: title
+
+no_name:
+  email: no_name@company.com
+  password_digest: <%= BCrypt::Password.create('Password1234') %>
+  title: title
+
+with_name:
+  email: with_title@company.com
+  password_digest: <%= BCrypt::Password.create('Password1234') %>
+  name: with_name
+  title: title
+
+name_will_be_changed_by_tests:
+  email: name_will_be_changed_by_tests@company.com
+  password_digest: <%= BCrypt::Password.create('Password1234') %>
+  name: name_will_be_changed_by_tests
+  title: title
+
+name_will_be_deleted_by_a_test:
+  email: name_will_be_deleted_by_a_test@company.com
+  password_digest: <%= BCrypt::Password.create('Password1234') %>
+  name: name_will_be_deleted_by_a_test
+  title: title
 
 no_title:
   email: no_title@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
+  name: name
 
 with_title:
   email: with_title@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
+  name: name
   title: with_title
   
 title_will_be_changed_by_tests:
   email: title_will_be_changed_by_tests@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
+  name: name
   title: title_will_be_changed_by_tests
   
 title_will_be_deleted_by_a_test:
   email: title_will_be_deleted_by_a_test@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
+  name: name
   title: title_will_be_deleted_by_a_test
