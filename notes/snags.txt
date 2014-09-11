@@ -1,0 +1,76 @@
+2014 Sep 11
+-----------
+
+minitest appears as a production dependency on gemnasium when it is 
+in 'group: :test' in the Gemfile.
+
+STATUS: open
+
+
+
+2014 Sep 11
+-----------
+
+Tests pass on development machine (seed 44926) but sometimes fail on Travis CI:
+
+  1) Error:
+HomePageTest::a user's title::when the user types something#test_0001_changes the title:
+Capybara::Poltergeist::TimeoutError: Timed out waiting for response to {"name":"click","args":[56,5]}. It's possible that this happened because something took a very long time (for example a page load was slow). If so, setting the Poltergeist :timeout option to a higher value will help (see the docs for details). If increasing the timeout does not help, this is probably a bug in Poltergeist - please report it to the issue tracker.
+    test/integration_helper.rb:150:in `sign_out'
+    test/integration_helper.rb:138:in `sign_in'
+    test/controllers/views/title_test.rb:89:in `block (3 levels) in <class:HomePageTest>'
+
+  2) Error:
+HomePageTest::a user's title::when the user types something#test_0002_enables the save button:
+Capybara::ElementNotFound: Unable to find link "sign in"
+    test/integration_helper.rb:141:in `sign_in'
+    test/controllers/views/title_test.rb:89:in `block (3 levels) in <class:HomePageTest>'
+
+STATUS: open
+
+
+
+2014 Sep 10
+-----------
+
+Very low coverage numbers reported by coveralls.io.  Installed SimpleCov and 
+discovered the same problem when building on development machine.  Solved by
+removing :require => false from Gemfile, i.e. changed:
+
+  gem 'coveralls', :require => false, group: :test
+
+to:
+
+  gem 'coveralls', group: :test
+
+STATUS: fixed, 1 hour.  Need to investigate what :require => false does.
+
+
+
+2014 Sep 10
+-----------
+
+minitest + focus does not run tests that have enclosing describe blocks with 
+parentheses - ( and ) - in their descriptions.  Removed parentheses from one
+of the describe descriptions.
+
+STATUS: fixed, 0.5 hours.  Need to check for parentheses in other tests,
+need to write a _lint script to do this automatically, need to see if there
+are other characters that also cause the issue, need to perhaps fix focus
+and/or minitest.  Suspect issue is due to the fact that 'focus' simply
+causes minitest to be run with the focused test's name as an argument, and
+the shell may be interpretting the parentheses, or focus may be escaping
+the parentheses thereby changing the descriptive text and as a result 
+causing it to no longer match the test in the source code.
+
+
+
+2014 Sep 10
+-----------
+
+Interacting tests found.
+
+STATUS: fixed, 3 hours.  Could be that two processes, the test code and the
+js code on the web page, were changing a record in the test db for a given
+test but only the test code was within a transaction and therefore was being 
+rolled back.
