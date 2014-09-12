@@ -149,15 +149,15 @@ install_handlers = ->
     return 'Data you have entered may not be saved.' if is_dirty()
     return undefined                                      # 'undefined' suppresses 'leave page?' prompt
     
-set_fields_to_edit_mode = ->
-  set_edit_mode_class(user_name(), edit_mode_checkbox().checked)  # TODO: smells; why do we need to know about edit_mode_checkbox?
-  set_edit_mode_class(user_title(), edit_mode_checkbox().checked)
+set_fields_to_edit_mode = (in_edit_mode) ->
+  set_edit_mode_class(user_name(), in_edit_mode)
+  set_edit_mode_class(user_title(), in_edit_mode)
   set_edit_mode_class(user_email(), false)              # always 'false' because email is not editable
-    
+
 ready = ->
   if is_resume_page()
     install_handlers()
-    set_fields_to_edit_mode()
+    set_fields_to_edit_mode(false)
     set_dirty(false)
     display_data()
 
