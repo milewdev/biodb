@@ -23,13 +23,13 @@ $hover-color: blue;
     color: inherit;
     text-decoration: none;
 
+    &:visited {
+      color: inherit;
+    }
+
     &:hover {
       background-color: inherit;
       color: $hover-color;
-    }
-    
-    &:visited {
-      color: inherit;
     }
   }
 }

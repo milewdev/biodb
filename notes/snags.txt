@@ -1,6 +1,26 @@
 2014 Sep 11
 -----------
 
+Menu items were not aligning properly on the main menu.
+
+STATUS: fixed, 3 hours.  Ultimately had to explicity set the height of the li items,
+and then set their line-height to the same value.
+
+
+
+2014 Sep 11
+-----------
+
+links were not changing to blue when the mouse hovered over them.
+
+STATUS: fixed, 0.5 hours.  List :visited before :hover in the css source.  
+See https://developer.mozilla.org/en-US/docs/Web/CSS/:visited
+
+
+
+2014 Sep 11
+-----------
+
 minitest appears as a production dependency on gemnasium when it is 
 in 'group: :test' in the Gemfile.
 
