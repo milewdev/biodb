@@ -100,7 +100,9 @@ toggle = (element, is_visible) ->
     element.removeClass('visible')
     element.addClass('hidden')
     
+# TODO: rename to set_edit_mode?
 set_edit_mode_class = (element, is_in_edit_mode) ->
+  element.attr('contentEditable', is_in_edit_mode)
   if is_in_edit_mode
     element.removeClass('view-mode')
     element.addClass('edit-mode')
@@ -129,8 +131,6 @@ is_dirty = ->
 install_handlers = ->
   
   edit_mode_checkbox().change ->
-    user_name().attr('contentEditable', this.checked)     # TODO: move this into set_edit_mode_class?  and rename to set_edit_mode?
-    user_title().attr('contentEditable', this.checked)
     set_edit_mode_class(user_name(), this.checked)
     set_edit_mode_class(user_title(), this.checked)
     display_data()
