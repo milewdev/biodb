@@ -64,11 +64,11 @@ display_data = ->
   
 display_user_name = ->
   is_visible = has_user_name() or is_edit_mode()
-  show_field(user_name(), is_visible)
+  set_field_visibility(user_name(), is_visible)
 
 display_user_title = ->
   is_visible = has_user_title() or is_edit_mode()
-  show_field(user_title(), is_visible)
+  set_field_visibility(user_title(), is_visible)
   
   
 #
@@ -98,7 +98,7 @@ save_data = ->
 # helpers
 #
 
-show_field = (element, is_visible) ->
+set_field_visibility = (element, is_visible) ->
   if is_visible
     element.removeClass('hidden')
     element.addClass('visible')
