@@ -100,9 +100,9 @@ toggle = (element, is_visible) ->
     element.removeClass('visible')
     element.addClass('hidden')
     
-set_fields_to_edit_mode = (in_edit_mode) ->
-  set_field_to_edit_mode(user_name(), in_edit_mode)
-  set_field_to_edit_mode(user_title(), in_edit_mode)
+set_fields_to_edit_mode = (is_in_edit_mode) ->
+  set_field_to_edit_mode(user_name(), is_in_edit_mode)
+  set_field_to_edit_mode(user_title(), is_in_edit_mode)
   set_field_to_edit_mode(user_email(), false)           # always 'false' because email is not editable
 
 set_field_to_edit_mode = (element, is_in_edit_mode) ->
