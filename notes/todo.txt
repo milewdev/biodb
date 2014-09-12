@@ -50,3 +50,5 @@ Disable the save button while we wait for a save to the server; re-enable if sav
 Investigate what :require => false does in Gemfiles (re: coverals and simplecov gems).
 
 Refactor title_test.rb to be like name_test.rb
+
+The edit mode label should change to the hover color when the mouse hovers over it.
