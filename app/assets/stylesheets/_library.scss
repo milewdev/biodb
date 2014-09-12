@@ -15,7 +15,6 @@
  * See https://github.com/sstephenson/sprockets#the-stub-directive
  */
 
-// constants
 $hover-color: blue;
 
 // menu links look like normal text but turn blue during hover
@@ -27,6 +26,10 @@ $hover-color: blue;
     &:hover {
       background-color: inherit;
       color: $hover-color;
+    }
+    
+    &:visited {
+      color: inherit;
     }
   }
 }
@@ -62,25 +65,45 @@ $hover-color: blue;
   @include justify-content(space-between);
 
   ul {
-    display: inline-block;
     list-style-type: none;
     margin: 0;
-    padding-left: 1em;      // leave same space before first and after last menu item as there is between items
-    padding-right: 1em;
-    padding-top: 1em;       // leave some space above and below menu items
-    padding-bottom: 1em;
+    padding: 0;
   }
   
   li {
-    display: inline;
+    $height: 3em;
+    $lr-margin: 1em;
+    
+    display: inline-block;
+    height: $height;
+    line-height: $height;
     margin: 0;
-    margin-left: 1em;       // leave some space between menu items
-    margin-right: 1em;      // leave some space between menu items
+    margin-left: $lr-margin;      // leave some space between menu items
+    margin-right: $lr-margin;     // leave some space between menu items
     padding: 0;
   }
 }
 
+// buttons in menus
+%menu-button {
+  background-color: white;
+  border: 1px solid #888;
+  border-radius: 0.3em;
+  line-height: normal;            // otherwise it inherits the line height set in the menu li element
+  padding: 0.3em 1em;
+  
+  &:hover {
+    color: $hover-color;
+  }
+  
+  &:disabled {                    // dim the button when it is disabled
+    border: 1px solid #ddd;
+    color: #ccc;
+  }
+}
+
 // buttons in forms
+// TODO: also do the main menu bar save button
 %form-button {
   background-color: white;
   border: 1px solid #999;
@@ -90,5 +113,10 @@ $hover-color: blue;
   
   &:hover {
     color: $hover-color;
+  }
+  
+  &:disabled {                    // dim the button when it is disabled
+    border: 1px solid #ddd;
+    color: #ccc;
   }
 }
