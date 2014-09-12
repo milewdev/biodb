@@ -48,12 +48,6 @@ is_dirty = ->
 is_field_populated = (element) ->
   element.text()?.trim().length > 0
 
-has_user_name = ->
-  is_field_populated(user_name())
-  
-has_user_title = ->
-  is_field_populated(user_title())
-
 
 #
 # display
@@ -64,11 +58,11 @@ display_data = ->
   display_user_title()
   
 display_user_name = ->
-  is_visible = has_user_name() or is_edit_mode()
+  is_visible = is_field_populated(user_name()) or is_edit_mode()
   set_field_visibility(user_name(), is_visible)
 
 display_user_title = ->
-  is_visible = has_user_title() or is_edit_mode()
+  is_visible = is_field_populated(user_title()) or is_edit_mode()
   set_field_visibility(user_title(), is_visible)
 
   
