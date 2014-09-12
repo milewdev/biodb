@@ -100,6 +100,11 @@ toggle = (element, is_visible) ->
     element.removeClass('visible')
     element.addClass('hidden')
     
+set_fields_to_edit_mode = (in_edit_mode) ->
+  set_edit_mode_class(user_name(), in_edit_mode)
+  set_edit_mode_class(user_title(), in_edit_mode)
+  set_edit_mode_class(user_email(), false)                # always 'false' because email is not editable
+
 # TODO: rename to set_edit_mode?
 set_edit_mode_class = (element, is_in_edit_mode) ->
   element.attr('contentEditable', is_in_edit_mode)
@@ -147,11 +152,6 @@ install_handlers = ->
   window.onbeforeunload = ->
     return 'Data you have entered may not be saved.' if is_dirty()
     return undefined                                      # 'undefined' suppresses 'leave page?' prompt
-    
-set_fields_to_edit_mode = (in_edit_mode) ->
-  set_edit_mode_class(user_name(), in_edit_mode)
-  set_edit_mode_class(user_title(), in_edit_mode)
-  set_edit_mode_class(user_email(), false)              # always 'false' because email is not editable
 
 ready = ->
   if is_resume_page()
