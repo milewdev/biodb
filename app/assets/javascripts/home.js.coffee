@@ -43,15 +43,16 @@ is_edit_mode = ->
 
 is_dirty = ->
   dirty_flag
+  
+# TODO: trimming will be implemented on the server, but when should we do it on the client?  After saving?
+is_field_populated = (element) ->
+  element.text()?.trim().length > 0
 
 has_user_name = ->
-  # TODO: what if there is no user name because no one is logged in?
-  # TODO: trimming will be implemented on the server, but when should we do it on the client?  After saving?
-  user_name().text()?.trim().length > 0
+  is_field_populated(user_name())
   
 has_user_title = ->
-  # TODO: what if there is no user title (no one is logged in)?
-  user_title().text()?.trim().length > 0
+  is_field_populated(user_title())
 
 
 #
@@ -69,7 +70,7 @@ display_user_name = ->
 display_user_title = ->
   is_visible = has_user_title() or is_edit_mode()
   set_field_visibility(user_title(), is_visible)
-  
+
   
 #
 # backend
