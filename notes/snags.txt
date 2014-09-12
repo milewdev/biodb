@@ -46,7 +46,9 @@ Capybara::ElementNotFound: Unable to find link "sign in"
     test/integration_helper.rb:141:in `sign_in'
     test/controllers/views/title_test.rb:89:in `block (3 levels) in <class:HomePageTest>'
 
-STATUS: open
+STATUS: open.
+See https://github.com/teampoltergeist/poltergeist/issues/375#issuecomment-54171533
+See https://gist.github.com/afn/c04ccfe71d648763b306
 
 
 

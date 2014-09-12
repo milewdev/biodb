@@ -2,6 +2,8 @@ require 'test_helper'
 
 class NameIntegrationTest < ActionDispatch::IntegrationTest
   
+  field = 'user name'
+  
   describe 'a user\'s name' do
     before do
       enable_js
@@ -61,7 +63,7 @@ class NameIntegrationTest < ActionDispatch::IntegrationTest
     
     describe 'when there is a name' do
       before do
-        sign_in users(:with_name)
+        sign_in users(:with_title)
       end
 
       describe 'when in view mode' do

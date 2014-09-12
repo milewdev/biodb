@@ -142,3 +142,6 @@ When adding a field to a model:
   - add tests to the model class test
   - add validations to the model class
   - add to controller permitted list
+  - add to fixtures
+  - add to view tests
+  - add to views and coffeescript

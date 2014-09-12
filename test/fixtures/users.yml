@@ -5,49 +5,58 @@ generic:
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: name
   title: title
+  highlights: highlights
 
 no_name:
   email: no_name@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   title: title
+  highlights: highlights
 
 with_name:
   email: with_title@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: with_name
   title: title
+  highlights: highlights
 
 name_will_be_changed_by_tests:
   email: name_will_be_changed_by_tests@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: name_will_be_changed_by_tests
   title: title
+  highlights: highlights
 
 name_will_be_deleted_by_a_test:
   email: name_will_be_deleted_by_a_test@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: name_will_be_deleted_by_a_test
   title: title
+  highlights: highlights
 
 no_title:
   email: no_title@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: name
+  highlights: highlights
 
 with_title:
   email: with_title@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: name
   title: with_title
+  highlights: highlights
   
 title_will_be_changed_by_tests:
   email: title_will_be_changed_by_tests@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: name
   title: title_will_be_changed_by_tests
+  highlights: highlights
   
 title_will_be_deleted_by_a_test:
   email: title_will_be_deleted_by_a_test@company.com
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: name
   title: title_will_be_deleted_by_a_test
+  highlights: highlights
