@@ -131,8 +131,7 @@ is_dirty = ->
 install_handlers = ->
   
   edit_mode_checkbox().change ->
-    set_edit_mode_class(user_name(), this.checked)
-    set_edit_mode_class(user_title(), this.checked)
+    set_fields_to_edit_mode(this.checked)
     display_data()
     save_data() if is_dirty()
     
