@@ -48,19 +48,6 @@ is_dirty = ->
 is_field_populated = (element) ->
   element.text()?.trim().length > 0
 
-
-#
-# display
-#
-
-display_data = ->
-  display_field(user_name())
-  display_field(user_title())
-  
-display_field = (element) ->
-  is_visible = is_field_populated(element) or is_edit_mode()
-  set_field_visibility(element, is_visible)
-
   
 #
 # backend
@@ -110,7 +97,15 @@ set_field_to_edit_mode = (element, is_in_edit_mode) ->
   else
     element.removeClass('edit-mode')
     element.addClass('view-mode')
+
+display_data = ->
+  display_field(user_name())
+  display_field(user_title())
   
+display_field = (element) ->
+  is_visible = is_field_populated(element) or is_edit_mode()
+  set_field_visibility(element, is_visible)
+
 enable_save_button = (enabled) ->
   save_button().prop('disabled', not enabled)
 
