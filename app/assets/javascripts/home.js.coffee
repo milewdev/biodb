@@ -64,11 +64,11 @@ display_data = ->
   
 display_user_name = ->
   is_visible = has_user_name() or is_edit_mode()
-  toggle(user_name(), is_visible)
+  show_field(user_name(), is_visible)
 
 display_user_title = ->
   is_visible = has_user_title() or is_edit_mode()
-  toggle(user_title(), is_visible)
+  show_field(user_title(), is_visible)
   
   
 #
@@ -98,7 +98,7 @@ save_data = ->
 # helpers
 #
 
-toggle = (element, is_visible) ->
+show_field = (element, is_visible) ->
   if is_visible
     element.removeClass('hidden')
     element.addClass('visible')
