@@ -54,16 +54,12 @@ is_field_populated = (element) ->
 #
 
 display_data = ->
-  display_user_name()
-  display_user_title()
+  display_field(user_name())
+  display_field(user_title())
   
-display_user_name = ->
-  is_visible = is_field_populated(user_name()) or is_edit_mode()
-  set_field_visibility(user_name(), is_visible)
-
-display_user_title = ->
-  is_visible = is_field_populated(user_title()) or is_edit_mode()
-  set_field_visibility(user_title(), is_visible)
+display_field = (element) ->
+  is_visible = is_field_populated(element) or is_edit_mode()
+  set_field_visibility(element, is_visible)
 
   
 #
