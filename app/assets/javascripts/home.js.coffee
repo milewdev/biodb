@@ -78,11 +78,9 @@ save_data = ->
 
 set_field_visibility = (element, is_visible) ->
   if is_visible
-    element.removeClass('hidden')
-    element.addClass('visible')
+    element.removeClass('hidden').addClass('visible')
   else
-    element.removeClass('visible')
-    element.addClass('hidden')
+    element.removeClass('visible').addClass('hidden')
     
 set_fields_to_edit_mode = (is_in_edit_mode) ->
   set_field_to_edit_mode(user_name(), is_in_edit_mode)
@@ -92,11 +90,9 @@ set_fields_to_edit_mode = (is_in_edit_mode) ->
 set_field_to_edit_mode = (element, is_in_edit_mode) ->
   element.attr('contentEditable', is_in_edit_mode)
   if is_in_edit_mode
-    element.removeClass('view-mode')
-    element.addClass('edit-mode')
+    element.removeClass('view-mode').addClass('edit-mode')
   else
-    element.removeClass('edit-mode')
-    element.addClass('view-mode')
+    element.removeClass('edit-mode').addClass('view-mode')
 
 display_data = ->
   display_field(user_name())
