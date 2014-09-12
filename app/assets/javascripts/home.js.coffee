@@ -34,6 +34,16 @@ user_email = ->
 # queries
 #
 
+is_resume_page = ->
+  user_title().length > 0
+  
+is_edit_mode = ->
+  # TODO: what if there is no edit mode checkbox (no one is logged in)?
+  edit_mode_checkbox().prop('checked')
+
+is_dirty = ->
+  dirty_flag
+
 has_user_name = ->
   # TODO: what if there is no user name because no one is logged in?
   # TODO: trimming will be implemented on the server, but when should we do it on the client?  After saving?
@@ -42,10 +52,6 @@ has_user_name = ->
 has_user_title = ->
   # TODO: what if there is no user title (no one is logged in)?
   user_title().text()?.trim().length > 0
-  
-is_edit_mode = ->
-  # TODO: what if there is no edit mode checkbox (no one is logged in)?
-  edit_mode_checkbox().prop('checked')
 
 
 #
@@ -113,9 +119,6 @@ set_field_to_edit_mode = (element, is_in_edit_mode) ->
   else
     element.removeClass('edit-mode')
     element.addClass('view-mode')
-    
-is_resume_page = ->
-  user_title().length > 0
   
 enable_save_button = (enabled) ->
   save_button().prop('disabled', not enabled)
@@ -123,9 +126,6 @@ enable_save_button = (enabled) ->
 set_dirty = (dirty)->
   dirty_flag = dirty
   enable_save_button(dirty)
-  
-is_dirty = ->
-  dirty_flag
 
 
 #
