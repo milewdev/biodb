@@ -97,6 +97,7 @@ set_field_to_edit_mode = (element, is_in_edit_mode) ->
 display_data = ->
   display_field(user_name())
   display_field(user_title())
+  display_field(user_email())
   
 display_field = (element) ->
   is_visible = is_field_populated(element) or is_edit_mode()
