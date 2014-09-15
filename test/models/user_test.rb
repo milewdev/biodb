@@ -3,7 +3,7 @@ require 'test_helper'
 describe User do
   describe 'email' do
     describe 'when it is valid' do
-      let(:user) {User.create({email: 'name@company.com'})}
+      let(:user) {User.create({email: "name_#{__LINE__}@company.com"})}   # TODO: should not need __LINE__
       it 'does not have any errors' do
         user.errors[:email].must_be_empty
       end
