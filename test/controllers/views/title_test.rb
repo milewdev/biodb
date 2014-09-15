@@ -6,7 +6,6 @@ class HomePageTest < ActionDispatch::IntegrationTest
   describe 'a user\'s title' do
     before do
       Rails.logger.level = 0    # 0 means :debug
-      enable_js
     end
 
     describe 'when a user is not signed in' do
@@ -193,10 +192,6 @@ class HomePageTest < ActionDispatch::IntegrationTest
         fresh_user = User.find(stale_user.id)
         fresh_user.title.must_equal stale_user.title
       end
-    end
-
-    after do
-      disable_js
     end
   end
 end

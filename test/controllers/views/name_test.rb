@@ -3,10 +3,6 @@ require 'test_helper'
 class NameIntegrationTest < ActionDispatch::IntegrationTest
   
   describe 'a user\'s name' do
-    before do
-      enable_js
-    end
-    
     describe 'when a user is not signed in' do
       before do
         sign_out
@@ -144,10 +140,6 @@ class NameIntegrationTest < ActionDispatch::IntegrationTest
         fresh_user = User.find(stale_user.id)
         fresh_user.name.must_equal stale_user.name + change
       end
-    end
-    
-    after do
-      disable_js
     end
   end
 end

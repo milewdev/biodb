@@ -20,16 +20,6 @@ module IntegrationHelper
   # general helpers
   #
   
-  def enable_js
-    debug 'enable_js: switching to :poltergeist'
-    Capybara.current_driver = :poltergeist
-  end
-  
-  def disable_js
-    Capybara.use_default_driver
-    debug "disable_js: switching to default driver (:#{Capybara.current_driver})"
-  end
-  
   def stub_onbeforeunload
     debug 'stub_onbeforeunload: stubbing window.onbeforeunload in the browser'
     page.execute_script 'window.onbeforeunload = function () {}'
@@ -124,7 +114,7 @@ module IntegrationHelper
   
   # See http://sideshowcoder.com/post/41185074450/checking-for-the-css-class-of-the-found-element-in
   def must_have_class(element, css_class)    
-    element[:class].wont_be_nil('element is missing the class attribute (enable_js required?)')
+    element[:class].wont_be_nil('element is missing the class attribute (javascript required, e.g. poltergeist?)')
     element[:class].must_include css_class
   end
   

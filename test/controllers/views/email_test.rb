@@ -3,10 +3,6 @@ require 'test_helper'
 class EmailIntergationTest < ActionDispatch::IntegrationTest
   
   describe 'a user\'s email address' do
-    before do
-      enable_js
-    end
-    
     describe 'when a user is signed in' do
       before do
         sign_in users(:generic)
@@ -24,10 +20,6 @@ class EmailIntergationTest < ActionDispatch::IntegrationTest
       it 'is not editable' do
         wont_be_editable(user_email)
       end
-    end
-    
-    after do
-      disable_js
     end
   end
 

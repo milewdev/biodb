@@ -55,3 +55,7 @@ end
 # headless browser) and rails.
 # See http://rubydoc.info/github/jnicklas/capybara/master/Capybara
 # Capybara.server_port = 4000
+
+
+# See https://github.com/teampoltergeist/poltergeist#installation
+Capybara.current_driver = :poltergeist

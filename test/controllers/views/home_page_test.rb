@@ -95,22 +95,17 @@ class HomePageTest < ActionDispatch::IntegrationTest
   describe 'the save button' do
     describe 'when there are no unsaved changes' do
       before do
-        enable_js
         sign_in users(:generic)
         visit home_path
       end
       it 'is disabled' do
         save_button.disabled?.must_equal true
       end
-      after do
-        disable_js
-      end
     end
     
     describe 'when there are unsaved changes' do
       let(:change) { "_#{__LINE__}" }
       before do
-        enable_js
         sign_in users(:generic)
         visit home_path
         stub_onbeforeunload
@@ -120,15 +115,11 @@ class HomePageTest < ActionDispatch::IntegrationTest
       it 'is enabled' do
         save_button.disabled?.must_equal false
       end
-      after do
-        disable_js
-      end
     end
     
     describe 'when it is pressed' do
       let(:change) { "_#{__LINE__}" }
       before do
-        enable_js
         sign_in users(:title_will_be_changed_by_tests)
         visit home_path
         use_edit_mode
@@ -145,9 +136,6 @@ class HomePageTest < ActionDispatch::IntegrationTest
         stale_user = users(:title_will_be_changed_by_tests)
         fresh_user = User.find(stale_user.id)
         fresh_user.title.must_equal stale_user.title + change
-      end
-      after do
-        disable_js
       end
     end
   end
