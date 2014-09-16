@@ -3,7 +3,7 @@ require 'test_helper'
 describe User do
   describe 'email' do
     describe 'when it is valid' do
-      let(:user) {User.create({email: "name_#{__LINE__}@company.com"})}   # TODO: should not need __LINE__
+      let(:user) {User.create({email: "name@company.com"})}
       it 'does not have any errors' do
         user.errors[:email].must_be_empty
       end
@@ -32,8 +32,8 @@ describe User do
     
     describe 'when it already exists' do
       let(:user) do
-        User.create({email: 'name1@company.com', password: 'ValidPassword1234', password_confirmation: 'ValidPassword1234'})
-        User.create({email: 'NAME1@company.com'})
+        User.create({email: 'name@company.com', password: 'ValidPassword1234', password_confirmation: 'ValidPassword1234'})
+        User.create({email: 'NAME@company.com'})
       end
       it 'has the error "already in use"' do
         user.errors[:email].must_include 'has already been taken'

@@ -96,3 +96,8 @@ STATUS: fixed, 3 hours.  Could be that two processes, the test code and the
 js code on the web page, were changing a record in the test db for a given
 test but only the test code was within a transaction and therefore was being 
 rolled back.
+
+UPDATE: better fix, 1 day.  self.use_transactional_fixtures = false within
+class class ActionDispatch::IntegrationTest in test_helper.rb to force rails
+to re-populate the fixtures in the test db between tests.  Does result in 
+slower tests unfortunately.

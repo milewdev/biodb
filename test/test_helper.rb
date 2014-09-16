@@ -35,7 +35,18 @@ class ActiveSupport::TestCase
 end
 
 
-class ActionDispatch::IntegrationTest
+class ActionDispatch::IntegrationTest  
+  # It looks like using transactions to roll back the test database (to 
+  # improve test speed) does not work for integration tests.   The test 
+  # that holds the transaction to be rolled back runs in a different thread 
+  # than the one which services browser (poltergeist) requests that make
+  # changes to the database.  The latter runs in a different transaction
+  # and does not get rolled back.  This leaves the database in an 'unknown'
+  # state between tests and the result is Erratic Tests due to Interacting 
+  # Tests.
+  # See http://api.rubyonrails.org/v3.2.13/classes/ActiveRecord/Fixtures.html
+  self.use_transactional_fixtures = false
+
   # Make the Capybara DSL available in all integration tests
   # See https://github.com/jnicklas/capybara#using-capybara-with-testunit
   include Capybara::DSL

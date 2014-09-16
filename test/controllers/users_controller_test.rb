@@ -13,7 +13,7 @@ end
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = users(:generic)
+    @user = users(:generic_user)
   end
 
   test "should get index" do
@@ -29,7 +29,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: { email: "name_#{__LINE__}@company.com", password: 'Password1234', password_confirmation: 'Password1234' }    # TODO: should not need __LINE__
+      post :create, user: { email: "name@company.com", password: 'Password1234', password_confirmation: 'Password1234' }
     end
 
     assert_redirected_to home_path
