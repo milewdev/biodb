@@ -22,7 +22,7 @@ class AppPagesTest < ActionDispatch::IntegrationTest
   
     describe 'when a user is signed in' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
       end
       it 'has a sign out link' do
         page.must_have_link 'sign out'

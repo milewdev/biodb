@@ -147,7 +147,8 @@ module IntegrationHelper
   # actions
   #
 
-  def sign_in(user)
+  def sign_in(user_fixture)
+    user = users(user_fixture)
     sign_out    
     debug "sign_in: signing in as #{user.as_json(only: [:email, :title])}"
     visit home_path

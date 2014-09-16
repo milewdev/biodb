@@ -14,7 +14,7 @@ class NameIntegrationTest < ActionDispatch::IntegrationTest
     
     describe 'when the name is missing' do
       before do
-        sign_in users(:unpopulated_user)
+        sign_in :unpopulated_user
       end
       
       describe 'when in view mode' do
@@ -57,7 +57,7 @@ class NameIntegrationTest < ActionDispatch::IntegrationTest
     
     describe 'when there is a name' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
       end
 
       describe 'when in view mode' do
@@ -101,7 +101,7 @@ class NameIntegrationTest < ActionDispatch::IntegrationTest
     describe 'when the user types something' do
       let(:change) { "_#{__LINE__}" }
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
         user_name.native.send_keys :End, change
         stub_onbeforeunload     # TODO: this likely should be done by default for all tests, otherwise it adds local noise
@@ -116,7 +116,7 @@ class NameIntegrationTest < ActionDispatch::IntegrationTest
     
     describe 'when the user deletes the name and switches back to view mode' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
         delete_inner_text user_name
         use_view_mode
@@ -129,7 +129,7 @@ class NameIntegrationTest < ActionDispatch::IntegrationTest
     describe 'when data is saved' do
       let(:change) { "_#{__LINE__}" }
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
         user_name.native.send_keys :End, change
         save_button.click

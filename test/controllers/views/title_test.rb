@@ -20,7 +20,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
     describe 'when there is no title' do
       before do
-        sign_in users(:unpopulated_user)
+        sign_in :unpopulated_user
       end
 
       describe 'when starting in view mode' do
@@ -51,7 +51,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
     describe 'when there is a title' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
       end
 
       describe 'when starting in view mode' do
@@ -86,7 +86,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     describe 'when the user types something' do
       let(:change) { "_#{__LINE__}" }
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
         title.native.send_keys :End, change
         stub_onbeforeunload
@@ -101,7 +101,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
     describe 'when the user deletes the title and then switches to view mode' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
         delete_inner_text title
         use_view_mode
@@ -113,7 +113,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
     describe 'when in view mode' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
       end
       it 'has the class view-mode' do
         must_have_class(title, 'view-mode')
@@ -125,7 +125,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
     describe 'when in edit mode' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
       end
       it 'has the class edit-mode' do
@@ -139,7 +139,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     describe 'when a link is clicked and there are unsaved changes' do
       let(:change) { "_#{__LINE__}" }
       let(:onbeforeunload_result) do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
         title.native.send_keys :End, change
         capture_onbeforeunload { home_link.click }
@@ -151,7 +151,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
 
     describe 'when a link is clicked and there are no unsaved changes' do
       let(:onbeforeunload_result) do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         capture_onbeforeunload { home_link.click }
       end
       it 'does not prompt the user about unsaved changes' do
@@ -162,7 +162,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     describe 'when leaving edit mode and there are unsaved changes to the title' do
       let(:change) { "_#{__LINE__}" }
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
         title.native.send_keys :End, change
         use_view_mode
@@ -182,7 +182,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     
     describe 'when leaving edit mode and there are no unsaved changes' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
         use_view_mode
         sleep(0.1)    # TODO: see TODO in test above this one

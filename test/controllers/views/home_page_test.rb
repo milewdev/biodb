@@ -33,7 +33,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
   
   describe 'when a user is signed in' do
     before do
-      sign_in users(:generic_user)
+      sign_in :generic_user
       visit home_path
     end    
     it 'does not have a sign up link' do
@@ -81,7 +81,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
   
   describe 'the edit node check box' do
     before do
-      sign_in users(:generic_user)
+      sign_in :generic_user
     end
     describe 'when a user first logs in' do
       it 'is not checked' do
@@ -95,7 +95,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
   describe 'the save button' do
     describe 'when there are no unsaved changes' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         visit home_path
       end
       it 'is disabled' do
@@ -106,7 +106,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     describe 'when there are unsaved changes' do
       let(:change) { "_#{__LINE__}" }
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         visit home_path
         stub_onbeforeunload
         use_edit_mode
@@ -120,7 +120,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     describe 'when it is pressed' do
       let(:change) { "_#{__LINE__}" }
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         visit home_path
         use_edit_mode
         title.native.send_keys :End, change

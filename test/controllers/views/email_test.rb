@@ -5,7 +5,7 @@ class EmailIntergationTest < ActionDispatch::IntegrationTest
   describe 'a user\'s email address' do
     describe 'when a user is signed in' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
       end
       it 'is displayed' do
         page.must_have_css UserEmailSelector
@@ -14,7 +14,7 @@ class EmailIntergationTest < ActionDispatch::IntegrationTest
     
     describe 'when in edit mode' do
       before do
-        sign_in users(:generic_user)
+        sign_in :generic_user
         use_edit_mode
       end
       it 'is not editable' do
