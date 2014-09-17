@@ -49,30 +49,6 @@ module IntegrationHelper
       end
     end
   end
-  
-  # See http://stackoverflow.com/a/16363159
-  def black(text)          ; "\033[30m#{text}\033[0m" ; end
-  def red(text)            ; "\033[31m#{text}\033[0m" ; end
-  def green(text)          ; "\033[32m#{text}\033[0m" ; end
-  def brown(text)          ; "\033[33m#{text}\033[0m" ; end
-  def blue(text)           ; "\033[34m#{text}\033[0m" ; end
-  def magenta(text)        ; "\033[35m#{text}\033[0m" ; end
-  def cyan(text)           ; "\033[36m#{text}\033[0m" ; end
-  def gray(text)           ; "\033[37m#{text}\033[0m" ; end
-  def bg_black(text)       ; "\033[40m#{text}\033[0m" ; end
-  def bg_red(text)         ; "\033[41m#{text}\033[0m" ; end
-  def bg_green(text)       ; "\033[42m#{text}\033[0m" ; end
-  def bg_brown(text)       ; "\033[43m#{text}\033[0m" ; end
-  def bg_blue(text)        ; "\033[44m#{text}\033[0m" ; end
-  def bg_magenta(text)     ; "\033[45m#{text}\033[0m" ; end
-  def bg_cyan(text)        ; "\033[46m#{text}\033[0m" ; end
-  def bg_gray(text)        ; "\033[47m#{text}\033[0m" ; end
-  def bold(text)           ; "\033[1m#{text}\033[22m" ; end
-  def reverse_color(text)  ; "\033[7m#{text}\033[27m" ; end
-  
-  def debug(message)
-    Rails::logger.debug bold(green(message))
-  end
 
   
   #
