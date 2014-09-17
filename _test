@@ -5,8 +5,8 @@
 clear
 printf '\n***** START ***************************************************************************\n\n' >> log/test.log
 if [ $# -eq 0 ] ; then
-  bin/rake test
+  time bin/rake test
 else
-  bin/rake test "$*"
+  time bin/rake test "$*"
 fi
 printf '\n***** DONE ****************************************************************************\n\n' >> log/test.log
