@@ -4,6 +4,7 @@
     <h1 id='user-name'><%= current_user.name %></h1>
     <h2 id='user-title' data-user-id='<%= current_user.id %>'><%= current_user.title %></h2>   <!-- TODO: data-user-id is temporary -->
     <p id='user-email'><%= current_user.email %></p>
+    <ul id='user-highlights'><li><%= current_user.highlights %></li></ul>
   <% else %>
     <h1>Biodb</h1>
 

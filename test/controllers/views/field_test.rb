@@ -111,7 +111,7 @@ end
 
 class FieldIntegrationTest < ActionDispatch::IntegrationTest
 
-  let(:editable_fields) { FieldList.new( [ :user_name, :user_title ] ) }      # TODO: , :user_highlights
+  let(:editable_fields) { FieldList.new( [ :user_name, :user_title, :user_highlights ] ) }
   let(:readonly_fields) { FieldList.new( [ :user_email ] ) }
 
   describe 'internal check: javascript' do

@@ -28,6 +28,9 @@ user_title = ->
   
 user_email = ->
   $('#user-email')
+  
+user_highlights = ->
+  $('#user-highlights')
 
 
 #
@@ -55,14 +58,15 @@ is_field_populated = (element) ->
 
 save_data = ->
   user_patch = {}
-  user_patch.name = user_name().text()      # TODO: does this need to be HTML, SQL, etc. escaped?
-  user_patch.title = user_title().text()    # TODO: does this need to be HTML, SQL, etc. escaped?
-  $.ajax(
+  user_patch.name = user_name().text()              # TODO: does this need to be HTML, SQL, etc. escaped?
+  user_patch.title = user_title().text()            # TODO: does this need to be HTML, SQL, etc. escaped?
+  user_patch.highlights = user_highlights().text()  # TODO: does this need to be HTML, SQL, etc. escaped?
+  $.ajax({
     url: "/users/#{user_title().data('user-id')}.json",
     type: 'PUT',
     dataType: 'json',
     data: { _method: 'PATCH', user: user_patch }
-  ).done(
+  }).done(
     (data, textStatus, jqXHR) ->
       # TODO: need to check for errors returned by server
       set_dirty(false)
@@ -86,6 +90,7 @@ set_fields_to_edit_mode = (is_in_edit_mode) ->
   set_field_to_edit_mode(user_name(), is_in_edit_mode)
   set_field_to_edit_mode(user_title(), is_in_edit_mode)
   set_field_to_edit_mode(user_email(), false)           # always 'false' because email is not editable
+  set_field_to_edit_mode(user_highlights(), is_in_edit_mode)
 
 set_field_to_edit_mode = (element, is_in_edit_mode) ->
   element.attr('contentEditable', is_in_edit_mode)
@@ -98,6 +103,7 @@ display_data = ->
   display_field(user_name())
   display_field(user_title())
   display_field(user_email())
+  display_field(user_highlights())
   
 display_field = (element) ->
   is_visible = is_field_populated(element) or is_edit_mode()
@@ -120,7 +126,7 @@ install_handlers = ->
   edit_mode_checkbox().change ->
     set_fields_to_edit_mode(this.checked)
     display_data()
-    save_data() if is_dirty()
+    save_data() if is_dirty()                             # TODO: move the 'if is_dirty()' guard into save_data()
     
   save_button().click ->
     save_data()
@@ -129,6 +135,9 @@ install_handlers = ->
     set_dirty(true)
     
   user_title().on 'input', ->                             # TODO: this will need to be applied to any editable page element
+    set_dirty(true)
+    
+  user_highlights().on 'input', ->
     set_dirty(true)
     
   window.onbeforeunload = ->
