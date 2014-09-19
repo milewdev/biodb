@@ -33,7 +33,7 @@ def bold(text)           ; "\033[1m#{text}\033[22m" ; end
 def reverse_color(text)  ; "\033[7m#{text}\033[27m" ; end
 
 def debug(message)
-  Rails::logger.debug bold(green(message))
+  Rails::logger.debug "#{bold(green( Time.now.strftime('%T') + ' - ' + message ))}"
 end
 
 
@@ -104,6 +104,10 @@ class ActionDispatch::IntegrationTest
     # TODO: document this
     # page.driver.reset!              # real: 3m41.154s, user: 0m0.136s, sys: 0m0.073s
     stub_onbeforeunload               # real: 1m13.246s, user: 0m0.131s, sys: 0m0.069s
+    
+    # TODO: investigate why this needs to be done explicity here.
+    # See https://github.com/blowmage/minitest-rails-capybara/blob/master/lib/minitest/rails/capybara.rb#L43
+    Capybara.reset_sessions!
     
     # Restore the default browser driver as we use a headless browser only for
     # the integration tests.
