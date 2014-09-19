@@ -48,7 +48,7 @@ is_dirty = ->
   dirty_flag
   
 # TODO: trimming will be implemented on the server, but when should we do it on the client?  After saving?
-is_field_populated = (element) ->
+is_populated = (element) ->
   element.text()?.trim().length > 0
 
   
@@ -60,7 +60,7 @@ save_data = ->
   user_patch = {}
   user_patch.name = user_name().text()              # TODO: does this need to be HTML, SQL, etc. escaped?
   user_patch.title = user_title().text()            # TODO: does this need to be HTML, SQL, etc. escaped?
-  user_patch.highlights = user_highlights().text()  # TODO: does this need to be HTML, SQL, etc. escaped?
+  user_patch.highlights = highlights_view_to_model(user_highlights().html())  # TODO: does this need to be HTML, SQL, etc. escaped?
   $.ajax({
     url: "/users/#{user_title().data('user-id')}.json",
     type: 'PUT',
@@ -98,6 +98,9 @@ set_field_to_edit_mode = (element, is_in_edit_mode) ->
     element.removeClass('view-mode').addClass('edit-mode')
   else
     element.removeClass('edit-mode').addClass('view-mode')
+    
+populate_field = (element, source)->
+  element.html(source)
 
 display_data = ->
   display_field(user_name())
@@ -106,7 +109,7 @@ display_data = ->
   display_field(user_highlights())
   
 display_field = (element) ->
-  is_visible = is_field_populated(element) or is_edit_mode()
+  is_visible = is_populated(element) or is_edit_mode()
   set_field_visibility(element, is_visible)
 
 enable_save_button = (enabled) ->
@@ -115,6 +118,28 @@ enable_save_button = (enabled) ->
 set_dirty = (dirty)->
   dirty_flag = dirty
   enable_save_button(dirty)
+  
+
+#
+# view models?
+#
+
+highlights_model_to_view = (model_value) ->
+  view_value = model_value
+  view_value ?= ''
+  lines = view_value.split("\n")
+  lines = ( line.trim() for line in lines )
+  lines = ( line for line in lines when line.length > 0 )
+  view_value = "<li>#{lines.join('</li><li>')}</li>"
+  # console.log("model_value: '#{model_value}' to view_value: '#{view_value}'")   # TODO: remove this line
+  view_value
+  
+highlights_view_to_model = (view_value) ->
+  # TODO: need to check for null
+  # TODO: need to trim spaces from the beginning and end of each line
+  model_value = view_value.replace(/^<li>/, '').replace(/<\/li><li>/g, "\n").replace(/<\/li>$/, '')
+  # console.log("view_value: '#{view_value}' to model_value: '#{model_value}'")   # TODO: remove this line
+  model_value
 
 
 #
@@ -144,11 +169,13 @@ install_handlers = ->
     return 'Data you have entered may not be saved.' if is_dirty()
     return undefined                                      # 'undefined' suppresses 'leave page?' prompt
 
+
 ready = ->
   if is_resume_page()
     install_handlers()
     set_fields_to_edit_mode(false)
     set_dirty(false)
+    populate_field(user_highlights(), highlights_model_to_view(user_highlights_data))
     display_data()
 
 $(document).ready(ready)

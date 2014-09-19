@@ -14,6 +14,9 @@ module IntegrationHelper
   UserNameSelector = '#user-name'
   TitleSelector = '#user-title'   # TODO: rename to UserTitleSelector
   UserEmailSelector = '#user-email'
+  UserHighlightsSelector = '#user-highlights'
+  
+  UserHighlightsDomId = 'user-highlights'
   
   
   #
@@ -83,6 +86,22 @@ module IntegrationHelper
     find(UserEmailSelector, visible: false)
   end
   
+  def user_highlights
+    element = find(UserHighlightsSelector, visible: false) 
+    class << element
+      include Capybara::DSL
+      
+      def dom_id
+        UserHighlightsDomId
+      end
+      
+      def html
+        page.evaluate_script("document.getElementById('#{dom_id}').innerHTML")
+      end
+    end
+    element
+  end
+  
   
   #
   # expectations
@@ -123,10 +142,10 @@ module IntegrationHelper
   # actions
   #
 
-  def sign_in(user_fixture)
-    user = users(user_fixture)
+  def sign_in(user)
+    user = users(user) if user.is_a? Symbol
     sign_out    
-    debug "sign_in: signing in as #{user.as_json(only: [:email, :title])}"
+    debug "sign_in: signing in as #{user.as_json}"
     visit home_path
     click_link 'sign in'
     fill_in 'Email', :with => user.email
