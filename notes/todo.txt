@@ -35,6 +35,7 @@ Add _lint:
     end
     
   - also check for \s (which should be \'s); what about other escaped characters?
+  - check that :Enter is passed to send_keys, not :Return
 
 Need to decide which field should get focus when entering edit mode.
 
