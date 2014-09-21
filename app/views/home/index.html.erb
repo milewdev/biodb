@@ -3,7 +3,7 @@
   <% if current_user %>
     <h1 id='user-name'><%= current_user.name %></h1>
     <h2 id='user-title' data-user-id='<%= current_user.id %>'><%= current_user.title %></h2>   <!-- TODO: data-user-id is temporary -->
-    <p class='email' id='user-email'><%= current_user.email %></p>
+    <p id='user-email' class='email'><%= current_user.email %></p>
     <ul id='user-highlights'></ul>
   <% else %>
     <h1>Biodb</h1>
