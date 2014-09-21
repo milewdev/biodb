@@ -70,9 +70,12 @@ save_data = ->
     (data, textStatus, jqXHR) ->
       # TODO: need to check for errors returned by server
       set_dirty(false)
-  # ).fail(
-  #   ( jqXHR, textStatus, errorThrown ) ->
-  #     console.log "ajax fail: jqXHR.responseText='#{jqXHR.reponseText}', textStatus='#{textStatus}', errorThrown='#{errorThrown}'"
+      # TODO: temporary logging for debugging
+      console.log "ajax done: jqXHR.responseText='#{jqXHR.reponseText}', textStatus='#{textStatus}'"
+  ).fail(
+    ( jqXHR, textStatus, errorThrown ) ->
+      # TODO: temporary logging for debugging
+      console.log "ajax fail: jqXHR.responseText='#{jqXHR.reponseText}', textStatus='#{textStatus}', errorThrown='#{errorThrown}'"
   )
 
 
