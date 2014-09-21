@@ -9,31 +9,6 @@ section.home-page {
   margin-bottom: 3em;
   text-align: center;
   
-  h1, h2 {
-    padding: 0.25em;
-    
-    // When in edit mode, the border around the text area will grow/shrink
-    // to fit the content, but we limit how narrow it will shrink to; this 
-    // seems to give a better user experience.
-    margin: auto;
-    min-width: 10em;
-    width: -moz-fit-content;
-    width: -webkit-fit-content;
-    width: fit-content;
-    
-    &.visible {
-      display: block-inline;
-    }
-    
-    &.hidden {
-      display: none;
-    }
-  }
-  
-  h2 {
-    font-size: 1.2rem;
-  }
-  
   nav {
     margin-top: 2em;
     
@@ -41,6 +16,61 @@ section.home-page {
       margin-left: 1em;
       margin-right: 1em;
     }
+  }
+}
+
+h1, h2 {
+  padding: 0.25em;
+  
+  // When in edit mode, the border around the text area will grow/shrink
+  // to fit the content, but we limit how narrow it will shrink to; this 
+  // seems to give a better user experience.
+  margin: auto;
+  min-width: 10em;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  
+  &.hidden {
+    display: none;
+  }
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+p.email {
+  margin: 0;
+  margin-bottom: 1em;
+  padding: 0;
+}
+
+ul {
+  // When in edit mode, the border around the text area will grow/shrink
+  // to fit the content, but we limit how narrow it will shrink to; this 
+  // seems to give a better user experience.
+  margin: auto;
+  min-width: 10em;
+  max-width: 70%;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  
+  padding: 0;
+  padding-left: 2em;
+  padding-right: 1em;
+  text-align: left;
+
+  &.hidden {
+    display: none;
+  }
+  
+  li {
+    margin: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0;
   }
 }
 
