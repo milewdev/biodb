@@ -128,14 +128,7 @@ set_dirty = (dirty)->
 #
 
 highlights_model_to_view = (model_value) ->
-  view_value = model_value
-  view_value ?= ''
-  lines = view_value.split("\n")
-  lines = ( line.trim() for line in lines )
-  lines = ( line for line in lines when line.length > 0 )
-  view_value = "<li>#{lines.join('</li><li>')}</li>"
-  # console.log("model_value: '#{model_value}' to view_value: '#{view_value}'")   # TODO: remove this line
-  view_value
+  '<li>' + ( model_value ? '' ).replace( /\n/, '</li><li>' ) + '</li>'
   
 highlights_view_to_model = (view_value) ->
   view_value                            # "<li>one </li><li>br></li><li> two</li><li><br></li><li>&nbsp;</li>"
