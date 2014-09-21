@@ -136,8 +136,16 @@ highlights_model_to_view = (model_value) ->
   
 highlights_view_to_model = (view_value) ->
   # TODO: need to check for null
-  # TODO: need to trim spaces from the beginning and end of each line
-  model_value = view_value.replace(/^<li>/, '').replace(/<\/li><li>/g, "\n").replace(/<\/li>$/, '')
+  model_value = view_value              # "<li>one </li><li>br></li><li> two</li><li><br></li><li>&nbsp;</li>"
+    .replace( /^<li>/, '' )             # "one </li><li>br></li><li> two</li><li><br></li><li>&nbsp;</li>"
+    .replace( /<\/li><li>/g, "\n" )     # "one \n<br>\n two\n<br>&nbsp;</li>"
+    .replace( /<\/li>$/, '' )           # "one \n<br>\n two\n<br>&nbsp;"
+    .replace( /<br>/g, "\n" )           # "one \n\n two\n\n&nbsp;"
+    .replace( /&nbsp;/g, ' ' )          # "one \n\n two\n\n "
+    .replace( /^[ \t]+/gm, '' )         # "one \n\ntwo\n\n "
+    .replace( /[ \t]+$/gm, '' )         # "one\n\ntwo\n\n"
+    .replace( /\n\n+/g, "\n" )          # "one\ntwo\n"
+    .replace( /\n$/, '' )               # "one\ntwo"
   # console.log("view_value: '#{view_value}' to model_value: '#{model_value}'")   # TODO: remove this line
   model_value
 

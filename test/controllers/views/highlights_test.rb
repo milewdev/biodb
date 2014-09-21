@@ -55,13 +55,77 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     end
     specify { user_highlights.html.must_equal '<li>one</li>' }
   end
+
+  describe 'saving changes to highlights' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one" ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.native.send_keys :End, :Enter, 'two'
+      save_button.click
+      sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
+    end
+    specify { User.find(user.id).highlights.must_equal "one\ntwo" }
+  end
   
-  # saving highlights (check both the screen fields and the database):
-  #   happy path
-  #   empty content is saved as nil
-  #   blank content is saved as nil
-  #   interspersed blank lines removed
-  #   trailing blank lines removed
-  # these edits need to be added to the client and the model
+  describe 'saving empty highlights' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: " " ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.native.send_keys :End, :Backspace
+      save_button.click
+      sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
+    end
+    specify { User.find(user.id).highlights.must_be_nil }
+  end
+  
+  describe 'saving blank highlights' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: " " ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.native.send_keys :End, ' '
+      save_button.click
+      sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
+    end
+    specify { User.find(user.id).highlights.must_be_nil }
+  end
+  
+  describe 'saving highlights with embedded blank lines' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one" ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.native.send_keys :End, :Enter, :Enter, 'two'
+      save_button.click
+      sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
+    end
+    specify { User.find(user.id).highlights.must_equal "one\ntwo" }
+  end
+  
+  describe 'saving highlights with trailing blank lines' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one" ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.native.send_keys :End, :Enter, :Enter
+      save_button.click
+      sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
+    end
+    specify { User.find(user.id).highlights.must_equal "one" }
+  end
+  
+  describe 'saving highlights that are nothing but blank lines' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: nil ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.native.send_keys :End, ' ', :Enter, :Enter, ' ', :Enter
+      save_button.click
+      sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
+    end
+    specify { User.find(user.id).highlights.must_be_nil }
+  end
   
 end
