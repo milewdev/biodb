@@ -22,14 +22,13 @@ class User < ActiveRecord::Base
     end
   
     def cleanse_highlights
-      if not self.highlights.nil?
-        self.highlights = self.highlights   # " one \n \n two \n"
-          .gsub( /^[ \t]+/, '' )            # "one \n\ntwo \n"
-          .gsub( /[ \t]+$/, '' )            # "one\n\ntwo\n"
-          .gsub( /\n\n+/, "\n" )            # "one\ntwo\n"
-          .sub( /\n+\z/, '' )               # "one\ntwo"
-        self.highlights = nil if self.highlights.length == 0
-      end
+      return if self.highlights.nil?
+      self.highlights = self.highlights   # " one \n \n two \n"
+        .gsub( /^[ \t]+/, '' )            # "one \n\ntwo \n"
+        .gsub( /[ \t]+$/, '' )            # "one\n\ntwo\n"
+        .gsub( /\n\n+/, "\n" )            # "one\ntwo\n"
+        .sub( /\n+\z/, '' )               # "one\ntwo"
+      self.highlights = nil if self.highlights.length == 0
     end
   
 end
