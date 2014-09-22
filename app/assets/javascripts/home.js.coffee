@@ -178,7 +178,7 @@ ready = ->
     populate_field(user_name(), user.name)
     populate_field(user_title(), user.title)
     populate_field(user_email(), user.email)
-    populate_field(user_highlights(), highlights_model_to_view(user_highlights_data))
+    populate_field(user_highlights(), highlights_model_to_view(user.highlights))
     display_data()
 
 $(document).ready(ready)

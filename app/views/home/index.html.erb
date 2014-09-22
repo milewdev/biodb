@@ -23,8 +23,8 @@
       id: "<%= current_user.id %>",
       name: "<%= current_user.name %>",
       title: "<%= current_user.title %>",
-      email: "<%= current_user.email %>"
+      email: "<%= current_user.email %>",
+      highlights: "<%= (current_user.highlights || '').gsub(/\n/, '\n') %>"
     };
-    user_highlights_data = "<%= (current_user.highlights || '').gsub(/\n/, '\n') %>";
   </script>
 <% end %>
