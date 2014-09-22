@@ -1,7 +1,7 @@
 <section class='home-page'>   <!-- TODO: use id instead of class -->
   
   <% if current_user %>
-    <h1 id='user-name'><%= current_user.name %></h1>
+    <h1 id='user-name'></h1>
     <h2 id='user-title'><%= current_user.title %></h2>
     <p id='user-email' class='email'><%= current_user.email %></p>
     <ul id='user-highlights'></ul>
@@ -19,6 +19,9 @@
 
 <% if current_user %>
   <script>
+    user = {
+      name: "<%= current_user.name %>"
+    };
     user_id = "<%= current_user.id %>";
     user_highlights_data = "<%= (current_user.highlights || '').gsub(/\n/, '\n') %>";
   </script>
