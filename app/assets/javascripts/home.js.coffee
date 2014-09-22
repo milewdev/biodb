@@ -57,10 +57,11 @@ is_populated = (element) ->
 #
 
 save_data = ->
-  user_patch = {}
-  user_patch.name = user_name().text()              # TODO: does this need to be HTML, SQL, etc. escaped?
-  user_patch.title = user_title().text()            # TODO: does this need to be HTML, SQL, etc. escaped?
-  user_patch.highlights = highlights_view_to_model(user_highlights().html())  # TODO: does this need to be HTML, SQL, etc. escaped?
+  user_patch = {
+    name: user_name().text(),              # TODO: does this need to be HTML, SQL, etc. escaped?
+    title: user_title().text(),            # TODO: does this need to be HTML, SQL, etc. escaped?
+    highlights: highlights_view_to_model(user_highlights().html())  # TODO: does this need to be HTML, SQL, etc. escaped?
+  }
   $.ajax({
     url: "/users/#{user.id}.json",
     type: 'PUT',
