@@ -3,12 +3,12 @@ require 'test_helper'
 class FieldIntegrationTest < ActionDispatch::IntegrationTest
   
   describe 'highlights in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one\ntwo" ) }
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one\ntwo\nthree" ) }
     before do
       sign_in user
       use_edit_mode
     end
-    specify { user_highlights.html.must_equal '<li>one</li><li>two</li>' }
+    specify { user_highlights.html.must_equal '<li>one</li><li>two</li><li>three</li>' }
   end
   
   describe 'nil highlights in edit mode' do

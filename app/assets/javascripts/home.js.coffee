@@ -128,7 +128,7 @@ set_dirty = (dirty)->
 #
 
 highlights_model_to_view = (model_value) ->
-  '<li>' + ( model_value ? '' ).replace( /\n/, '</li><li>' ) + '</li>'
+  '<li>' + ( model_value ? '' ).replace( /\n/g, '</li><li>' ) + '</li>'
   
 highlights_view_to_model = (view_value) ->
   view_value                            # "<li>one </li><li>br></li><li> two</li><li><br></li><li>&nbsp;</li>"
