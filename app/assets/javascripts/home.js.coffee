@@ -103,6 +103,12 @@ set_field_to_edit_mode = (element, is_in_edit_mode) ->
   else
     element.removeClass('edit-mode').addClass('view-mode')
     
+populate_data = ->
+  populate_field(user_name(), user.name)
+  populate_field(user_title(), user.title)
+  populate_field(user_email(), user.email)
+  populate_field(user_highlights(), highlights_model_to_view(user.highlights))
+
 populate_field = (element, source)->
   element.html(source)
 
@@ -176,10 +182,7 @@ ready = ->
     install_handlers()
     set_fields_to_edit_mode(false)
     set_dirty(false)
-    populate_field(user_name(), user.name)
-    populate_field(user_title(), user.title)
-    populate_field(user_email(), user.email)
-    populate_field(user_highlights(), highlights_model_to_view(user.highlights))
+    populate_data()
     display_data()
 
 $(document).ready(ready)
