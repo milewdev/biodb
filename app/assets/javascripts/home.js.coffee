@@ -84,12 +84,13 @@ save_data = ->
 # helpers
 #
 
-set_field_visibility = (element, is_visible) ->
-  if is_visible
-    element.removeClass('hidden').addClass('visible')
-  else
-    element.removeClass('visible').addClass('hidden')
+set_dirty = (dirty)->
+  dirty_flag = dirty
+  enable_save_button(dirty)
     
+enable_save_button = (enabled) ->
+  save_button().prop('disabled', not enabled)
+
 set_fields_to_edit_mode = (is_in_edit_mode) ->
   set_field_to_edit_mode(user_name(), is_in_edit_mode)
   set_field_to_edit_mode(user_title(), is_in_edit_mode)
@@ -122,12 +123,11 @@ display_field = (element) ->
   is_visible = is_populated(element) or is_edit_mode()
   set_field_visibility(element, is_visible)
 
-enable_save_button = (enabled) ->
-  save_button().prop('disabled', not enabled)
-
-set_dirty = (dirty)->
-  dirty_flag = dirty
-  enable_save_button(dirty)
+set_field_visibility = (element, is_visible) ->
+  if is_visible
+    element.removeClass('hidden').addClass('visible')
+  else
+    element.removeClass('visible').addClass('hidden')
   
 
 #
