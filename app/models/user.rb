@@ -11,14 +11,22 @@ class User < ActiveRecord::Base
     has_secure_password
   
     before_validation :cleanse_name
+    before_validation :cleanse_title
     before_validation :cleanse_highlights
   
   private
   
+    # TODO: DRY up these cleansing routines
     def cleanse_name
       return if self.name.nil?
       self.name = self.name.strip
       self.name = nil if self.name.length == 0
+    end
+  
+    def cleanse_title
+      return if self.title.nil?
+      self.title = self.title.strip
+      self.title = nil if self.title.length == 0
     end
   
     def cleanse_highlights
