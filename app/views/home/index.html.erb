@@ -3,7 +3,7 @@
   <% if current_user %>
     <h1 id='user-name'></h1>
     <h2 id='user-title'></h2>
-    <p id='user-email' class='email'><%= current_user.email %></p>
+    <p id='user-email' class='email'></p>
     <ul id='user-highlights'></ul>
   <% else %>
     <h1>Biodb</h1>
@@ -21,7 +21,8 @@
   <script>
     user = {
       name: "<%= current_user.name %>",
-      title: "<%= current_user.title %>"
+      title: "<%= current_user.title %>",
+      email: "<%= current_user.email %>"
     };
     user_id = "<%= current_user.id %>";
     user_highlights_data = "<%= (current_user.highlights || '').gsub(/\n/, '\n') %>";

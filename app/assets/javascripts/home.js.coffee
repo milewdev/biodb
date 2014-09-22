@@ -177,6 +177,7 @@ ready = ->
     set_dirty(false)
     populate_field(user_name(), user.name)
     populate_field(user_title(), user.title)
+    populate_field(user_email(), user.email)
     populate_field(user_highlights(), highlights_model_to_view(user_highlights_data))
     display_data()
 
