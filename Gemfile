@@ -56,6 +56,7 @@ gem "poltergeist", group: :test
 # See http://pryrepl.org
 gem 'pry', group: :test
 
+# Required by #save_and_open_page
 # See https://github.com/copiousfreetime/launchy
 gem 'launchy', group: :test
 
