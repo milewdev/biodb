@@ -20,11 +20,11 @@
 <% if current_user %>
   <script>
     user = {
+      id: "<%= current_user.id %>",
       name: "<%= current_user.name %>",
       title: "<%= current_user.title %>",
       email: "<%= current_user.email %>"
     };
-    user_id = "<%= current_user.id %>";
     user_highlights_data = "<%= (current_user.highlights || '').gsub(/\n/, '\n') %>";
   </script>
 <% end %>
