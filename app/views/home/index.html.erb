@@ -2,7 +2,7 @@
   
   <% if current_user %>
     <h1 id='user-name'></h1>
-    <h2 id='user-title'><%= current_user.title %></h2>
+    <h2 id='user-title'></h2>
     <p id='user-email' class='email'><%= current_user.email %></p>
     <ul id='user-highlights'></ul>
   <% else %>
@@ -20,7 +20,8 @@
 <% if current_user %>
   <script>
     user = {
-      name: "<%= current_user.name %>"
+      name: "<%= current_user.name %>",
+      title: "<%= current_user.title %>"
     };
     user_id = "<%= current_user.id %>";
     user_highlights_data = "<%= (current_user.highlights || '').gsub(/\n/, '\n') %>";
