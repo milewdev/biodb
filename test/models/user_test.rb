@@ -88,49 +88,4 @@ describe User do
       end
     end
   end
-  
-  describe 'highlights' do
-    describe 'when it is null' do
-      let(:user) {User.create({email: 'email@test.com', password: 'Password1234', password_confirmation: 'Password1234', highlights: nil})}
-      it 'is saved as null' do
-        User.find(user.id).highlights.must_be_nil
-      end
-    end
-    
-    describe 'when it is empty' do
-      let(:user) {User.create({email: 'email@test.com', password: 'Password1234', password_confirmation: 'Password1234', highlights: ''})}
-      it 'is saved as null' do
-        User.find(user.id).highlights.must_be_nil
-      end
-    end
-    
-    describe 'when it is blank' do
-      let(:user) {User.create({email: 'email@test.com', password: 'Password1234', password_confirmation: 'Password1234', highlights: '  '})}
-      it 'is saved as null' do
-        User.find(user.id).highlights.must_be_nil
-      end
-    end
-    
-    describe 'when it is blank lines' do
-      let(:user) {User.create({email: 'email@test.com', password: 'Password1234', password_confirmation: 'Password1234', highlights: " \n\n \n"})}
-      it 'is saved as null' do
-        User.find(user.id).highlights.must_be_nil
-      end
-    end
-    
-    describe 'when it has blank lines' do
-      let(:user) {User.create({email: 'email@test.com', password: 'Password1234', password_confirmation: 'Password1234', highlights: "one\n\n\ntwo"})}
-      it 'removes the blank lines' do
-        User.find(user.id).highlights.must_equal "one\ntwo"
-      end
-    end
-    
-    describe 'when it has a trailing newline' do
-      let(:user) {User.create({email: 'email@test.com', password: 'Password1234', password_confirmation: 'Password1234', highlights: "one\ntwo\n"})}
-      it 'removes the trailing newline' do
-        User.find(user.id).highlights.must_equal "one\ntwo"
-      end
-    end
-    
-  end
 end
