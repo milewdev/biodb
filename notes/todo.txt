@@ -53,3 +53,5 @@ Investigate what :require => false does in Gemfiles (re: coverals and simplecov 
 Refactor title_test.rb to be like name_test.rb
 
 The edit mode label should change to the hover color when the mouse hovers over it.
+
+Retire fixtures (test/fixtures/users.yml).
