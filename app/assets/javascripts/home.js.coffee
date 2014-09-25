@@ -194,9 +194,9 @@ install_handlers = ->
 ready = ->
   if is_resume_page()
     install_handlers()
+    populate_data()
     set_fields_to_edit_mode(false)
     set_dirty(false)
-    populate_data()
     display_data()
 
 $(document).ready(ready)
