@@ -145,3 +145,27 @@ When adding a field to a model:
   - add to fixtures
   - add to view tests
   - add to views and coffeescript
+
+
+PostgreSQL:
+  - Location of postgreSQL files: /usr/local/var/postgres
+    See http://stackoverflow.com/a/5053003
+    
+  - pgAdmin3 connection info:
+      Name: biodb_development
+      Host: localhost
+      Port: 5432
+      Service: <blank>
+      Maintenance DB: postgres
+      Username: vagrant
+      Password: <blank>
+      Group: Servers
+      
+  - SQL command line:
+      $ psql DBNAME USERNAME
+      
+    For example:
+      $ psql biodb_development vagrant
+      
+    This can be shortened to:
+      $ psql biodb_development
