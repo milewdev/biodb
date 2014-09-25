@@ -21,6 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant_config|
     Setup     :SyncedFolder, HOST_HOME_DIR                # easy way to copy gpg keys and git config from host to vm
     Install   :OsxCommandLineToolsMavericks               # needed by git, ruby
     Install   :TextMate
+    Install   :ITerm2                                     # split windows are useful for watching log output
     Install   :Gpg                                        # needed to sign git commits
     Install   :Git                                        # source is on github
     Install   :GitHubForMac
