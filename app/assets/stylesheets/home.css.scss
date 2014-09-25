@@ -36,8 +36,14 @@ h1, h2 {
   }
 }
 
+h1 {
+  font-size: 2rem;
+  font-weight: normal;
+}
+
 h2 {
   font-size: 1.2rem;
+  font-weight: normal;
 }
 
 p.email {
@@ -80,22 +86,22 @@ table#user-highlights {
   width: 80%;
 
   td {
-    border: 1px solid #eee;
-    padding: 0.4em;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 0.5em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
     text-align: left;
     vertical-align: middle;
   }
 
-  td.name {
-    font-size: 1.4rem !important;
-    padding-right: 3rem;
-    text-align: center;
-    white-space: nowrap;
+  td.highlight-name {
+    color: #ccc;
+    font-size: 1.6rem !important;
+    line-height: 1.1em;
+    text-align: right;
+    width: 20%;
   }
 
-  td.content {  
+  td.highlight-content {  
     font-size: 0.8rem !important;
   }
 }
