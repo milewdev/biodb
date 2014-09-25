@@ -10,6 +10,12 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
 SimpleCov.start 'rails'
 
 
+# Warning: RAILS_ENV must be set before using Rails.logger
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
+require 'rails/test_help'
+
+
 # TODO: these either need to go somewhere else or most of them
 # should be deleted.
 # See http://stackoverflow.com/a/16363159
@@ -33,17 +39,12 @@ def bold(text)           ; "\033[1m#{text}\033[22m" ; end
 def reverse_color(text)  ; "\033[7m#{text}\033[27m" ; end
 
 def debug(message)
-  Rails::logger.debug "#{bold(green( Time.now.strftime('%T') + ' - ' + message ))}"
+  Rails.logger.debug "#{bold(green( Time.now.strftime('%T') + ' - ' + message ))}"
 end
 
 
 debug "SimpleCov::VERSION: #{SimpleCov::VERSION}"
 debug "Coveralls::VERSION: #{Coveralls::VERSION}"
-
-
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
 
 # See https://github.com/seattlerb/minitest
 require 'minitest/spec'

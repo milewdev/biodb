@@ -1,3 +1,43 @@
+2014 Sep 25
+-----------
+
+Rails::logger.debug failing on Travis CI (https://travis-ci.org/milewgit/biodb/builds/36218267):
+
+  ...
+  $ bundle exec rake
+  rake aborted!
+  NoMethodError: private method `debug' called for nil:NilClass
+  /home/travis/build/milewgit/biodb/test/test_helper.rb:36:in `debug'
+  /home/travis/build/milewgit/biodb/test/test_helper.rb:40:in `<top (required)>'
+  ...
+  
+STATUS: fixed, 1 hour.  In test_helper.rb, the RAILS_ENV ENV value must be set before calling
+Rails.logger.debug.  test_helper.rb originally had this:
+
+  ...
+  def debug(message)
+    Rails::logger.debug "#{bold(green( Time.now.strftime('%T') + ' - ' + message ))}"
+  end
+  ...
+  ENV['RAILS_ENV'] ||= 'test'
+  require File.expand_path('../../config/environment', __FILE__)
+  require 'rails/test_help'
+  ...
+  
+Changing it to the following solved the issue:
+
+  ...
+  ENV['RAILS_ENV'] ||= 'test'
+  require File.expand_path('../../config/environment', __FILE__)
+  require 'rails/test_help'
+  ...
+  def debug(message)
+    Rails::logger.debug "#{bold(green( Time.now.strftime('%T') + ' - ' + message ))}"
+  end
+  ...
+
+
+
 2014 Sep 11
 -----------
 
