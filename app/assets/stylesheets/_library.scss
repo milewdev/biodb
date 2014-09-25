@@ -68,6 +68,15 @@ $hover-color: blue;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    text-align: center;
+  
+    // TODO: hacks until I figure out why the ul is so much wider than the single child li
+    &:first-child {
+      text-align: left;
+    }
+    &:last-child {
+      text-align: right;
+    }
   }
   
   li {
