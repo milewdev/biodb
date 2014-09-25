@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
     
     validates :password,
       password_format: true
-    
+      
     has_secure_password
   
     before_validation :cleanse_name
@@ -30,13 +30,18 @@ class User < ActiveRecord::Base
     end
   
     def cleanse_highlights
-      return if self.highlights.nil?
-      self.highlights = self.highlights   # " one \n \n two \n"
-        .gsub( /^[ \t]+/, '' )            # "one \n\ntwo \n"
-        .gsub( /[ \t]+$/, '' )            # "one\n\ntwo\n"
-        .gsub( /\n\n+/, "\n" )            # "one\ntwo\n"
-        .sub( /\n+\z/, '' )               # "one\ntwo"
-      self.highlights = nil if self.highlights.length == 0
+      self.highlights = '[]' if self.highlights.nil? or self.highlights.strip.length == 0
+      highlights = JSON.parse(self.highlights)
+      highlights.each do |highlight|
+        highlight['name'].strip!          # TODO: loop through the attributes
+        highlight['content'].strip!
+      end
+      highlights = highlights.select do |highlight|
+        highlight['name'].length > 0 or highlight['content'].length > 0     # TODO: loop through the attributes
+      end
+      self.highlights = JSON.generate(highlights)
+    rescue JSON::ParserError => ex
+        errors[:highlights] << "badly formed JSON: #{ex.message}"
     end
   
 end

@@ -58,9 +58,9 @@ is_populated = (element) ->
 
 save_data = ->
   user_patch = {
-    name: user_name().text(),              # TODO: does this need to be HTML, SQL, etc. escaped?
-    title: user_title().text(),            # TODO: does this need to be HTML, SQL, etc. escaped?
-    highlights: highlights_view_to_model(user_highlights().html())  # TODO: does this need to be HTML, SQL, etc. escaped?
+    name: user_name().text(),               # TODO: does this need to be HTML, SQL, etc. escaped?
+    title: user_title().text(),             # TODO: does this need to be HTML, SQL, etc. escaped?
+    highlights: highlights_view_to_model()  # TODO: does this need to be HTML, SQL, etc. escaped?
   }
   $.ajax({
     url: "/users/#{user.id}.json",
@@ -95,7 +95,7 @@ set_fields_to_edit_mode = (is_in_edit_mode) ->
   set_field_to_edit_mode(user_name(), is_in_edit_mode)
   set_field_to_edit_mode(user_title(), is_in_edit_mode)
   set_field_to_edit_mode(user_email(), false)           # always 'false' because email is not editable
-  set_field_to_edit_mode(user_highlights(), is_in_edit_mode)
+  set_field_to_edit_mode($('.highlight-name, .highlight-content'), is_in_edit_mode)
 
 set_field_to_edit_mode = (element, is_in_edit_mode) ->
   element.attr('contentEditable', is_in_edit_mode)
@@ -134,19 +134,19 @@ set_field_visibility = (element, is_visible) ->
 # view models?
 #
 
+# model_value = [ { name: 'languages', content: 'C, C++' }, ... ]
 highlights_model_to_view = (model_value) ->
-  '<li>' + ( model_value ? '' ).replace( /\n/g, '</li><li>' ) + '</li>'
+  model_value = [{name:'', content:''}] if model_value.length == 0
+  ( "<tr><td class='highlight-name'>#{highlight.name}</td><td class='highlight-content'>#{highlight.content}</td></tr>" for highlight in model_value ).join()
   
-highlights_view_to_model = (view_value) ->
-  view_value                            # "<li>one </li><li>br></li><li> two</li><li><br></li><li>&nbsp;</li>"
-    .replace( /<li>/g, '' )             # "one </li>br></li> two</li><br></li>&nbsp;</li>"    
-    .replace( /<\/li>/g, "\n" )         # "one \n<br>\n two\n<br>\n&nbsp;\n"    
-    .replace( /<br>/g, "\n" )           # "one \n\n two\n\n\n&nbsp;\n"
-    .replace( /&nbsp;/g, ' ' )          # "one \n\n two\n\n\n \n"
-    .replace( /^[ \t]+/gm, '' )         # "one \n\ntwo\n\n\n\n"
-    .replace( /[ \t]+$/gm, '' )         # "one\n\ntwo\n\n\n\n"
-    .replace( /\n\n+/g, "\n" )          # "one\ntwo\n"
-    .replace( /\n$/, '' )               # "one\ntwo"
+highlights_view_to_model = ->
+  # TODO: clean this up
+  list = []
+  user_highlights().find('tr').each ->
+    name = $($(this).children()[0]).text()
+    content = $($(this).children()[1]).text()
+    list.push( {name:name, content:content} )
+  JSON.stringify(list)
 
 
 #
@@ -172,6 +172,20 @@ install_handlers = ->
   user_highlights().on 'input', ->
     set_dirty(true)
     
+  $('#user-highlights').on 'keypress', '.highlight-name', (event) ->
+    return true unless event.which == 13
+    $(this).next().focus()
+    return false
+
+  $('#user-highlights').on 'keypress', '.highlight-content', (event) ->
+    return true unless event.which == 13
+    current_row = $(this).closest('tr')
+    new_row = current_row.clone(true)
+    new_row.find('td').text('')
+    current_row.after(new_row)
+    new_row.find('td:first').focus()
+    return false
+
   window.onbeforeunload = ->
     return 'Data you have entered may not be saved.' if is_dirty()
     return undefined                                      # 'undefined' suppresses 'leave page?' prompt

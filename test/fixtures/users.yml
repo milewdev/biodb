@@ -5,7 +5,7 @@ generic_user:
   password_digest: <%= BCrypt::Password.create('Password1234') %>
   name: name
   title: title
-  highlights: highlights
+  highlights: '[{"name":"name","content":"content"}]'
 
 unpopulated_user:
   email: unpopulated_user@company.com

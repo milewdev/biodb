@@ -4,7 +4,7 @@
     <h1 id='user-name'></h1>
     <h2 id='user-title'></h2>
     <p id='user-email' class='email'></p>
-    <ul id='user-highlights'></ul>
+    <table id='user-highlights'></table>
   <% else %>
     <h1>Biodb</h1>
 
@@ -24,7 +24,31 @@
       name: "<%= current_user.name %>",
       title: "<%= current_user.title %>",
       email: "<%= current_user.email %>",
-      highlights: "<%= (current_user.highlights || '').gsub(/\n/, '\n') %>"
+      highlights: <%= (current_user.highlights.nil? ? 'null' : current_user.highlights.html_safe) %>          // TODO: see warning comment at http://stackoverflow.com/a/3758055
     };
   </script>
 <% end %>
+
+
+<!--
+
+      <tr>
+        <td class='name' contentEditable='true'>languages</td><td class='content' contentEditable='true'>C, C++, C#, Java, VB.Net, Ruby, SQL, PL/SQL</td>
+      </tr>
+      <tr>
+        <td class='name' contentEditable='true'>databases</td><td class='content' contentEditable='true'>Oracle, DB2, MySQL, PostgreSQL</td>
+      </tr>
+      <tr>
+        <td class='name' contentEditable='true'>web</td><td class='content' contentEditable='true'>HTML, CSS, SASS, JSP, ASP, ERb, CoffeeScript, JavaScript</td>
+      </tr>
+      <tr>
+        <td class='name' contentEditable='true'>other</td><td class='content' contentEditable='true'>git, Vagrant, VSS, Perforce, Visual Studio, eclipse, WebSphere, InfoSphere, WebLogic, .Net, JEE, Ruby on Rails, TDD, JSON</td>
+      </tr>
+      <tr>
+        <td class='name' contentEditable='true'>roles</td><td class='content' contentEditable='true'>senior developer, team lead, programmer/analyst</td>
+      </tr>
+      <tr>
+        <td class='name' contentEditable='true'>os</td><td class='content' contentEditable='true'>OS X, Unix, Linux, Windows</td>
+      </tr>
+
+-->

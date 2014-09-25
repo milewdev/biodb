@@ -74,6 +74,32 @@ ul {
   }
 }
 
+table#user-highlights {
+  margin: auto;
+  margin-top: 2em;
+  width: 80%;
+
+  td {
+    border: 1px solid #eee;
+    padding: 0.4em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  td.name {
+    font-size: 1.4rem !important;
+    padding-right: 3rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  td.content {  
+    font-size: 0.8rem !important;
+  }
+}
+
 .view-mode {
   // Specify a hidden border so that the element does not change size
   // when we make the border visible in edit mode.

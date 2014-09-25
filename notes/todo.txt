@@ -55,3 +55,7 @@ Refactor title_test.rb to be like name_test.rb
 The edit mode label should change to the hover color when the mouse hovers over it.
 
 Retire fixtures (test/fixtures/users.yml).
+
+What about quotes (single and double) in the highlights field; how are they escaped in the JSON structures?
+
+Change all JSON embedded in tests to be consistent (use double quotes not single quotes, no whitespace after commas).

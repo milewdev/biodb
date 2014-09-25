@@ -2,13 +2,28 @@ require 'test_helper'
 
 class FieldIntegrationTest < ActionDispatch::IntegrationTest
   
-  describe 'highlights in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one\ntwo\nthree" ) }
+  describe 'displaying highlights' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n1","content":"c1"},{"name":"n2","content":"c2"}]' ) }
     before do
       sign_in user
-      use_edit_mode
+      use_view_mode
     end
-    specify { user_highlights.html.must_equal '<li>one</li><li>two</li><li>three</li>' }
+    specify { user_highlights.must_be_visible }
+    specify {
+      user_highlights.cell(1,1).text.must_equal 'n1'
+      user_highlights.cell(1,2).text.must_equal 'c1'
+      user_highlights.cell(2,1).text.must_equal 'n2'
+      user_highlights.cell(2,2).text.must_equal 'c2'
+    }
+  end
+  
+  describe 'nil highlights in view mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: nil ) }
+    before do
+      sign_in user
+      use_view_mode
+    end
+    specify { user_highlights.wont_be_visible }
   end
   
   describe 'nil highlights in edit mode' do
@@ -17,115 +32,136 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
       sign_in user
       use_edit_mode
     end
-    specify { user_highlights.html.must_equal '<li></li>' }
+    specify { user_highlights.must_be_visible }
+    specify { 
+      user_highlights.cell(1,1).text.must_equal '' 
+      user_highlights.cell(1,2).text.must_equal '' 
+    }
   end
   
-  describe 'empty highlights in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '' ) }
+  describe 'nil highlights in view mode after editing' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
+      user_highlights.cell(1,1).native.send_keys :End, :Backspace
+      user_highlights.cell(1,2).native.send_keys :End, :Backspace
+      use_view_mode
     end
-    specify { user_highlights.html.must_equal '<li></li>' }
+    specify { user_highlights.wont_be_visible }
   end
   
-  describe 'blank highlights in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '  ' ) }
+  describe 'pressing Enter in the name field in edit mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
+      user_highlights.cell(1,1).native.send_keys :Enter
     end
-    specify { user_highlights.html.must_equal '<li></li>' }
+    it 'moves the cursor to the content field on the same row'
   end
   
-  describe 'blank lines in highlights in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one\n\ntwo" ) }
+  describe 'pressing Enter in the content field in edit mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
+      user_highlights.cell(1,2).native.send_keys :Enter
     end
-    specify { user_highlights.html.must_equal '<li>one</li><li>two</li>' }
+    it 'adds a blank row below the current one' do
+      user_highlights.cell(1,1).text.must_equal 'n' 
+      user_highlights.cell(1,2).text.must_equal 'c' 
+      user_highlights.cell(2,1).text.must_equal '' 
+      user_highlights.cell(2,2).text.must_equal '' 
+    end
+    it 'does not enable the save button' do
+      save_button.wont_be_enabled
+    end
+    it 'moves the cursor to the name field of the new row'
   end
   
-  describe 'trailing returns in highlights in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one\n" ) }
+  describe 'a change to an existing row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
+      user_highlights.cell(1,2).native.send_keys '1'
     end
-    specify { user_highlights.html.must_equal '<li>one</li>' }
+    it 'enables the save button' do
+      save_button.must_be_enabled
+    end
   end
-
-  describe 'saving changes to highlights' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one" ) }
+  
+  describe 'a change to an existing row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
-      user_highlights.native.send_keys :End, :Enter, 'two'
+      user_highlights.cell(1,2).native.send_keys :End, '1'
       save_button.click
       sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
     end
-    specify { User.find(user.id).highlights.must_equal "one\ntwo" }
+    it 'is saved to the database' do
+      User.find(user.id).highlights.must_equal '[{"name":"n","content":"c1"}]'
+    end
   end
   
-  describe 'saving empty highlights' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: " " ) }
+  describe 'a change to a new row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
-      user_highlights.native.send_keys :End, :Backspace
-      save_button.click
-      sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
+      user_highlights.cell(1,2).native.send_keys :Enter
+      user_highlights.cell(2,1).native.send_keys 'n2'
     end
-    specify { User.find(user.id).highlights.must_be_nil }
+    it 'enables the save button' do
+      save_button.must_be_enabled
+    end
   end
   
-  describe 'saving blank highlights' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: " " ) }
+  describe 'a new row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
-      user_highlights.native.send_keys :End, ' '
+      # :Enter = move to content field of current row, :Enter = new row, insert 'n2', :Enter = move to content of new row, insert 'c2'
+      user_highlights.cell(1,1).native.send_keys :Enter, :Enter, 'n2', :Enter, 'c2'   
       save_button.click
       sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
     end
-    specify { User.find(user.id).highlights.must_be_nil }
+    it 'is saved to the database' do
+      User.find(user.id).highlights.must_equal '[{"name":"n","content":"c"},{"name":"n2","content":"c2"}]'
+    end
   end
   
-  describe 'saving highlights with embedded blank lines' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one" ) }
+  describe 'a new empty row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
-      user_highlights.native.send_keys :End, :Enter, :Enter, 'two'
+      user_highlights.cell(1,1).native.send_keys :End, 'X', :Enter    # change (i.e. the 'X') enables save, Enter creates empty row
       save_button.click
       sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
     end
-    specify { User.find(user.id).highlights.must_equal "one\ntwo" }
+    it 'is not saved to the database' do
+      User.find(user.id).highlights.must_equal '[{"name":"nX","content":"c"}]'
+    end
   end
   
-  describe 'saving highlights with trailing blank lines' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: "one" ) }
+  describe 'emptying an existing row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
-      user_highlights.native.send_keys :End, :Enter, :Enter
+      user_highlights.cell(1,1).native.send_keys :End, :Backspace
+      user_highlights.cell(1,2).native.send_keys :End, :Backspace
       save_button.click
       sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
     end
-    specify { User.find(user.id).highlights.must_equal "one" }
-  end
-  
-  describe 'saving highlights that are nothing but blank lines' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: nil ) }
-    before do
-      sign_in user
-      use_edit_mode
-      user_highlights.native.send_keys :End, ' ', :Enter, :Enter, ' ', :Enter
-      save_button.click
-      sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
+    # focus
+    it 'deletes the row from the database when saved' do
+      User.find(user.id).highlights.must_equal '[]'
     end
-    specify { User.find(user.id).highlights.must_be_nil }
   end
   
 end

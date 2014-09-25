@@ -67,7 +67,17 @@ module IntegrationHelper
   end
   
   def save_button
-    find(SaveButtonSelector)
+    element = find(SaveButtonSelector, visible: false)
+    class << element
+      def must_be_enabled
+        disabled?.must_equal false
+      end
+      
+      def wont_be_enabled
+        disabled?.must_equal true
+      end
+    end
+    element
   end
   
   def user_name
@@ -97,6 +107,20 @@ module IntegrationHelper
       
       def html
         page.evaluate_script("document.getElementById('#{dom_id}').innerHTML")
+      end
+      
+      def cell(row, col)
+        find("##{dom_id} tr:nth-child(#{row}) td:nth-child(#{col})")
+      end
+      
+      def must_be_visible
+        self[:class].must_include 'visible'
+        self[:class].nil? or self[:class].wont_include 'hidden'
+      end
+
+      def wont_be_visible
+        self[:class].must_include 'hidden'
+        self[:class].nil? or self[:class].wont_include 'visible'
       end
     end
     element

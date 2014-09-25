@@ -109,10 +109,10 @@ end
 
 class FieldIntegrationTest < ActionDispatch::IntegrationTest
 
-  let(:editable_fields) { FieldList.new( [ :user_name, :user_title, :user_highlights ] ) }
+  let(:editable_fields) { FieldList.new( [ :user_name, :user_title ] ) }
   let(:readonly_fields) { FieldList.new( [ :user_email ] ) }
   
-  let(:generic_user) { User.create!({ email: 'email@test.com', password: 'Password1234', name: 'name', title: 'title', highlights: 'highlights' }) }
+  let(:generic_user) { User.create!({ email: 'email@test.com', password: 'Password1234', name: 'name', title: 'title', highlights: '[{"name":"name","content":"content"}]' }) }
   let(:unpopulated_user) { User.create!({ email: 'email@test.com', password: 'Password1234', name: nil, title: nil, highlights: nil }) }
 
   describe 'internal check: javascript' do
