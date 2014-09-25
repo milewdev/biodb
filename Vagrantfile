@@ -33,6 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant_config|
     Install   :HerokuToolbelt                             # production runs on heroku
     Git       :Clone, PROJECT_GITHUB_URL, PROJECT_VM_DIR    
     Bundle    :Install, PROJECT_VM_DIR
+    Run       :Shell, PROJECT_VM_DIR, "bin/rake db:setup" # create dev and test databases
     Reboot    :Vm
   end
 end
