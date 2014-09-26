@@ -4,6 +4,14 @@
 
 
 #
+# constants
+#
+
+HIGHLIGHT_NAME_CLASS = 'highlight-name'
+HIGHLIGHT_CONTENT_CLASS = 'highlight-content'
+
+
+#
 # variables
 #
 
@@ -137,8 +145,14 @@ set_field_visibility = (element, is_visible) ->
 # model_value = [ { name: 'languages', content: 'C, C++' }, ... ]
 highlights_model_to_view = (model_value) ->
   model_value = [{name:'', content:''}] if model_value.length == 0
-  ( "<tr><td class='highlight-name'>#{highlight.name}</td><td class='highlight-content'>#{highlight.content}</td></tr>" for highlight in model_value ).join()
+  ( build_highlight_row(highlight) for highlight in model_value ).join()
   
+build_highlight_row = (highlight) ->
+  "<tr>" +
+  "<td class='#{HIGHLIGHT_NAME_CLASS}'>#{highlight.name}</td>" +
+  "<td class='#{HIGHLIGHT_CONTENT_CLASS}'>#{highlight.content}</td>" +
+  "</tr>"
+
 highlights_view_to_model = ->
   # TODO: clean this up
   list = []
@@ -172,12 +186,12 @@ install_handlers = ->
   user_highlights().on 'input', ->
     set_dirty(true)
     
-  $('#user-highlights').on 'keypress', '.highlight-name', (event) ->
+  $('#user-highlights').on 'keypress', ".#{HIGHLIGHT_NAME_CLASS}", (event) ->
     return true unless event.which == 13
     $(this).next().focus()
     return false
 
-  $('#user-highlights').on 'keypress', '.highlight-content', (event) ->
+  $('#user-highlights').on 'keypress', ".#{HIGHLIGHT_CONTENT_CLASS}", (event) ->
     return true unless event.which == 13
     current_row = $(this).closest('tr')
     new_row = current_row.clone(true)
