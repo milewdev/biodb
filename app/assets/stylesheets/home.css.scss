@@ -107,9 +107,9 @@ table#user-highlights {
 }
 
 .view-mode {
-  // Specify a hidden border so that the element does not change size
-  // when we make the border visible in edit mode.
-  border: 1px solid white;
+  // Specify a transparent border so that the element does not change
+  // size when we make the border visible in edit mode.
+  border: 1px solid transparent;
 }
 
 .edit-mode {
