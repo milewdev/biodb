@@ -118,11 +118,18 @@ class ActionDispatch::IntegrationTest
 end
 
 
+# See http://stackoverflow.com/a/24974371
+# See https://github.com/jnicklas/capybara/pull/609
+# See https://github.com/jnicklas/capybara/pull/958
+Capybara.asset_host = "http://localhost:3000"
+
+
 # Uncomment if you want to set Poltergeist options (e.g. debug: true).
 # See https://github.com/teampoltergeist/poltergeist#customization
 # Capybara.register_driver :poltergeist do |app|
 #   Capybara::Poltergeist::Driver.new(app, debug: true)
 # end
+
 
 # Uncomment to if you want to, say, sniff the network traffic between PhantonJS (a
 # headless browser) and rails.
