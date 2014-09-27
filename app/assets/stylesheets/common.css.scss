@@ -15,28 +15,29 @@ body {
   width: 780px;           // TODO: use media queries, etc.
 
   & > header {
+    background-color: #bdd;       // TODO: use a constant for this color
+    left: 0;
+    margin: 0;
+    position: fixed;              // page scrolls but the menu does not
+    top: 0;
+    width: 100%;                  // the background color extends the full width of the page
+    
+    // fixes a Capybara/Poltergeist/PhantomJS issue ('Poltergeist detected another element...')
+    // See https://github.com/teampoltergeist/poltergeist/issues/60
+    z-index: -1;
+
     & > nav {
       @extend %horizontal-menu;
 
-      // See http://css-tricks.com/quick-css-trick-how-to-center-an-object-exactly-in-the-center/
-      background-color: rgba(255, 255, 255, 0.99);      // a wisper of transparency
-      box-shadow: 0 0 2px 1px #eee;
-      border: 1px solid rgba(189, 183, 107, 0.5);
-      border-radius: 3px;
       font-size: 0.8rem;
-      left: 50%;                                        // center the menu
-      margin: 0;
-      position: fixed;                                  // page scrolls but the menu does not
-      top: 1.5em;
-      transform: translate(-50%, 0);                    // center the menu
-      -webkit-transform: translate(-50%, 0);            // -- ditto --
-      width: 780px;                                     // TODO: use a constant, but wait until we go responsive
+      margin: 0 auto;             // center the menu on the page
+      width: 780px;               // TODO: use a constant but do this when we go responsive
     }
   }
 
   & > footer {
-    border-top: 1px solid #ddd;
-    color: #bbb;
+    border-top: 1px solid #bdd;   // TODO: use a constant for this color (same as menu background color)
+    color: #bdd;                  // TODO: -- ditto --
     font-size: 0.7rem;
     padding-top: 0.2em;
     text-align: center;

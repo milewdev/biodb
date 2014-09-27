@@ -95,7 +95,7 @@ $hover-color: blue;
 // buttons in menus
 %menu-button {
   background-color: transparent;
-  border: 1px solid #888;
+  border: 1px solid black;
   border-radius: 2px;
   line-height: normal;            // otherwise it inherits the line height set in the menu li element
   padding: 0.3em 1em;
@@ -105,8 +105,8 @@ $hover-color: blue;
   }
   
   &:disabled {                    // dim the button when it is disabled
-    border: 1px solid #ddd;
-    color: #ccc;
+    border: 1px solid #999;
+    color: #999;
   }
 }
 
