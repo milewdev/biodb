@@ -34,7 +34,6 @@ $hover-color: blue;
   }
 }
 
-
 // cross browser
 %display_flex {
   display: -webkit-flex;
@@ -95,9 +94,9 @@ $hover-color: blue;
 
 // buttons in menus
 %menu-button {
-  background-color: white;
+  background-color: transparent;
   border: 1px solid #888;
-  border-radius: 0.3em;
+  border-radius: 2px;
   line-height: normal;            // otherwise it inherits the line height set in the menu li element
   padding: 0.3em 1em;
   
