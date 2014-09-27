@@ -8,6 +8,14 @@ NOTE!
     $ ./_test
     
   to run the tests and verify that everything is working as expected.
+  
+  Also, do:
+  
+    $ heroku keys:add
+    $ heroku git:remote -a biodb
+  
+  See http://stackoverflow.com/a/15212531
+  See http://stackoverflow.com/a/5129733
 
 
 minitest:
