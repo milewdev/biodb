@@ -16,6 +16,7 @@ body {
 
   & > header {
     background-color: #bdd;       // TODO: use a constant for this color
+    box-shadow: 0 0 3px 1px #777;
     left: 0;
     margin: 0;
     position: fixed;              // page scrolls but the menu does not
