@@ -21,10 +21,6 @@ body {
     position: fixed;              // page scrolls but the menu does not
     top: 0;
     width: 100%;                  // the background color extends the full width of the page
-    
-    // fixes a Capybara/Poltergeist/PhantomJS issue ('Poltergeist detected another element...')
-    // See https://github.com/teampoltergeist/poltergeist/issues/60
-    z-index: -1;
 
     & > nav {
       @extend %horizontal-menu;

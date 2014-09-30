@@ -5,105 +5,120 @@ require 'test_helper'
 # we want to be able to find a field whether it is visible or not.
 # See: https://github.com/jnicklas/capybara/blob/master/lib/capybara/node/finders.rb#L135
 class FieldList
-  include Capybara::DSL
+    include Capybara::DSL
   
-  Change = ' CHANGE'
+    Change = ' CHANGE'
   
-  def initialize(field_names)
-    @dom_ids = field_names.map { |field_name| field_name.to_s.dasherize }
-  end
-  
-  def must_be_populated
-    @dom_ids.each do |dom_id|               # TODO: need to DRY this loop from all these methods
-      find("##{dom_id}", visible: false).text.wont_be_empty "DOM id: #{dom_id}"
+    def initialize(field_names)
+      @dom_ids = field_names.map { |field_name| field_name.to_s.dasherize }
     end
-  end
   
-  def wont_be_populated
-    @dom_ids.each do |dom_id|
-      find("##{dom_id}", visible: false).text.must_be_empty "DOM id: #{dom_id}"
+    def must_be_populated
+      @dom_ids.each do |dom_id|               # TODO: need to DRY this loop from all these methods
+        find("##{dom_id}", visible: false).text.wont_be_empty "DOM id: #{dom_id}"
+      end
     end
-  end
   
-  def must_be_editable
-    @dom_ids.each do |dom_id|
-      element = find("##{dom_id}", visible: false)
-      element[:contentEditable].must_equal 'true', "DOM id: #{dom_id}"
-      element[:class].must_include 'edit-mode', "DOM id: #{dom_id}"
-      element[:class].nil? or element[:class].wont_include 'view-mode', "DOM id: #{dom_id}"
+    def wont_be_populated
+      @dom_ids.each do |dom_id|
+        find("##{dom_id}", visible: false).text.must_be_empty "DOM id: #{dom_id}"
+      end
     end
-  end
   
-  def wont_be_editable
-    @dom_ids.each do |dom_id|
-      element = find("##{dom_id}", visible: false)
-      element[:contentEditable].wont_equal true, "DOM id: #{dom_id}"
-      element[:class].must_include 'view-mode', "DOM id: #{dom_id}"
-      element[:class].nil? or element[:class].wont_include 'edit-mode', "DOM id: #{dom_id}"
+    def must_be_editable
+      @dom_ids.each do |dom_id|
+        element = find("##{dom_id}", visible: false)
+        element[:contentEditable].must_equal 'true', "DOM id: #{dom_id}"
+        element[:class].must_include 'edit-mode', "DOM id: #{dom_id}"
+        element[:class].nil? or element[:class].wont_include 'view-mode', "DOM id: #{dom_id}"
+      end
     end
-  end
   
-  def must_be_visible
-    @dom_ids.each do |dom_id|
-      element = find("##{dom_id}", visible: false)
-      element[:class].must_include 'visible', "DOM id: #{dom_id}"
-      element[:class].nil? or element[:class].wont_include 'hidden', "DOM id: #{dom_id}"
+    def wont_be_editable
+      @dom_ids.each do |dom_id|
+        element = find("##{dom_id}", visible: false)
+        element[:contentEditable].wont_equal true, "DOM id: #{dom_id}"
+        element[:class].must_include 'view-mode', "DOM id: #{dom_id}"
+        element[:class].nil? or element[:class].wont_include 'edit-mode', "DOM id: #{dom_id}"
+      end
     end
-  end
   
-  def wont_be_visible
-    @dom_ids.each do |dom_id|
-      element = find("##{dom_id}", visible: false)
-      element[:class].must_include 'hidden', "DOM id: #{dom_id}"
-      element[:class].nil? or element[:class].wont_include 'visible', "DOM id: #{dom_id}"
+    def must_be_visible
+      @dom_ids.each do |dom_id|
+        element = find("##{dom_id}", visible: false)
+        element[:class].must_include 'visible', "DOM id: #{dom_id}"
+        element[:class].nil? or element[:class].wont_include 'hidden', "DOM id: #{dom_id}"
+      end
     end
-  end
   
-  def must_exist
-    @dom_ids.each do |dom_id|
-      page.must_have_css "##{dom_id}"
+    def wont_be_visible
+      @dom_ids.each do |dom_id|
+        element = find("##{dom_id}", visible: false)
+        element[:class].must_include 'hidden', "DOM id: #{dom_id}"
+        element[:class].nil? or element[:class].wont_include 'visible', "DOM id: #{dom_id}"
+      end
     end
-  end
   
-  def wont_exist
-    @dom_ids.each do |dom_id|
-      page.wont_have_css "##{dom_id}"
+    def must_exist
+      @dom_ids.each do |dom_id|
+        page.must_have_css "##{dom_id}"
+      end
     end
-  end
   
-  def change_text
-    @dom_ids.each do |dom_id|
-      find("##{dom_id}", visible: false).native.send_keys :End, Change
+    def wont_exist
+      @dom_ids.each do |dom_id|
+        page.wont_have_css "##{dom_id}"
+      end
     end
-  end
   
-  def must_be_changed
-    @dom_ids.each do |dom_id|
-      find("##{dom_id}", visible: false).text.must_match( /#{Change}\z/, "DOM id: #{dom_id}" )
+    def change_text
+      with_main_menu_hidden do
+        @dom_ids.each do |dom_id|
+          find("##{dom_id}", visible: false).native.send_keys :End, Change
+        end
+      end
     end
-  end
   
-  def wont_be_changed
-    @dom_ids.each do |dom_id|
-      find("##{dom_id}", visible: false).text.wont_match( /#{Change}\z/, "DOM id: #{dom_id}" )
+    def must_be_changed
+      @dom_ids.each do |dom_id|
+        find("##{dom_id}", visible: false).text.must_match( /#{Change}\z/, "DOM id: #{dom_id}" )
+      end
     end
-  end
   
-  def delete_text
-    @dom_ids.each do |dom_id|
-      element = find("##{dom_id}", visible: false)
-      # Yep, that's end, and backspace, and backspace, and backspace, and ...
-      element.native.send_keys :End, *( Array.new( element.text.length, :Backspace ) )
+    def wont_be_changed
+      @dom_ids.each do |dom_id|
+        find("##{dom_id}", visible: false).text.wont_match( /#{Change}\z/, "DOM id: #{dom_id}" )
+      end
     end
-  end
+  
+    def delete_text
+      with_main_menu_hidden do
+        @dom_ids.each do |dom_id|
+          element = find("##{dom_id}", visible: false)
+          # Yep, that's end, and backspace, and backspace, and backspace, and ...
+          element.native.send_keys :End, *( Array.new( element.text.length, :Backspace ) )
+        end
+      end
+    end
 
-  # TODO: rethink this; cumbersome that we have to pass in the record
-  def must_be_saved_to(record)
-    @dom_ids.each do |dom_id|
-      field_name = dom_id.underscore.sub(/\A[^_]*_/, '')
-      record.send(field_name).must_match( /#{Change}\z/, "DOM id: #{dom_id}" )
+    # TODO: rethink this; cumbersome that we have to pass in the record
+    def must_be_saved_to(record)
+      @dom_ids.each do |dom_id|
+        field_name = dom_id.underscore.sub(/\A[^_]*_/, '')
+        record.send(field_name).must_match( /#{Change}\z/, "DOM id: #{dom_id}" )
+      end
     end
-  end
+  
+  private
+
+    # Fixes a Capybara/Poltergeist/PhantomJS issue ('Poltergeist detected another element...at this position...')
+    # See https://github.com/teampoltergeist/poltergeist/issues/60
+    def with_main_menu_hidden(&block)
+      execute_script("$('nav#main-menu').css('display', 'none')")
+      block.call
+      execute_script("$('nav#main-menu').css('display', 'block')")
+    end
+  
 end
 
 

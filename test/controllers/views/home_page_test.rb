@@ -71,7 +71,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
       before do
         sign_out
         visit home_path
-        click_link 'sign in'
+        sign_in_link.click
       end
       it 'displays the sign in page' do
         current_path.must_equal new_session_path

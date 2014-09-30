@@ -61,6 +61,24 @@ module IntegrationHelper
   def home_link
     find(HomeLinkSelector)
   end
+  
+  def sign_in_link
+    find('a', text: 'sign in')
+  end
+  
+  def sign_out_link
+    link = find('a', text: 'sign out')
+    class << link
+      def click
+        # TODO: clean up these comments.
+        # The sign out link is on the main menu so we have to use this workaround.
+        # Fixes a Capybara/Poltergeist/PhantomJS issue ('Poltergeist detected another element...at this position...')
+        # See https://github.com/teampoltergeist/poltergeist/issues/60#issuecomment-13330261
+        trigger('click')
+      end
+    end
+    link
+  end
 
   def edit_mode_checkbox
     find(EditModeCheckboxSelector)
@@ -167,11 +185,11 @@ module IntegrationHelper
   #
 
   def sign_in(user)
+    visit home_path
     user = users(user) if user.is_a? Symbol
     sign_out    
     debug "sign_in: signing in as #{user.as_json}"
-    visit home_path
-    click_link 'sign in'
+    sign_in_link.click
     fill_in 'Email', :with => user.email
     fill_in 'Password', :with => 'Password1234'
     click_button 'Sign in'
@@ -180,7 +198,7 @@ module IntegrationHelper
   def sign_out
     if page.has_link? 'sign out'
       debug 'sign_out: signing out'
-      click_link 'sign out'
+      sign_out_link.click
     else
       debug 'sign_out: ignoring; not currently signed in'
     end

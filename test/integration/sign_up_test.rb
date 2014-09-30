@@ -16,23 +16,15 @@ class SignUpTest < ActionDispatch::IntegrationTest
       fill_in 'Confirm password', with: 'Password1234'
       click_button 'Sign up'
       current_path.must_equal home_path
-
-      # Was: click_link 'sign out'
-      # See https://github.com/teampoltergeist/poltergeist/issues/60#issuecomment-13330261
-      find('a', text: 'sign out').trigger('click')    
-
+      sign_out_link.click
       current_path.must_equal home_path
-      click_link 'sign in'
+      sign_in_link.click
       current_path.must_equal new_session_path
       fill_in 'Email', with: 'name@company.com'
       fill_in 'Password', with: 'Password1234'
       click_button 'Sign in'
       current_path.must_equal home_path
-
-      # Was: click_link 'sign out'
-      # See https://github.com/teampoltergeist/poltergeist/issues/60#issuecomment-13330261
-      find('a', text: 'sign out').trigger('click')    
-
+      sign_out_link.click
       current_path.must_equal home_path
     end
   end
