@@ -53,7 +53,7 @@ p.email {
   padding: 0;
 }
 
-ul {
+ul#IGNORE {
   // When in edit mode, the border around the text area will grow/shrink
   // to fit the content, but we limit how narrow it will shrink to; this 
   // seems to give a better user experience.
@@ -104,6 +104,54 @@ table#user-highlights {
 
   td.highlight-content {  
     font-size: 0.8rem !important;
+  }
+}
+
+table#user-jobs {
+  margin: auto;
+  margin-top: 2em;
+  width: 80%;
+
+  td {
+    xborder: 1px solid blue;
+    margin: 0;
+    padding: 1em;
+    vertical-align: top;
+  }
+  
+  td.job-info {
+  }
+  
+  td.task-info {
+  }
+  
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  p.company-name {
+    font-weight: bold;
+  }
+  
+  p.date-range {
+  }
+  
+  p.role {
+  }
+  
+  ul.task-list {
+    margin: 0;
+    margin-left: 1em;
+    padding: 0;
+    
+    li {
+      margin: 0;
+      margin-left: 3em;
+      margin-bottom: 0.3em;
+      padding: 0;
+      text-align: left;
+    }
   }
 }
 
