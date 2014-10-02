@@ -59,3 +59,8 @@ Retire fixtures (test/fixtures/users.yml).
 What about quotes (single and double) in the highlights field; how are they escaped in the JSON structures?
 
 Change all JSON embedded in tests to be consistent (use double quotes not single quotes, no whitespace after commas).
+
+In edit mode, always ensure there is one empty row at the end of lists so that the user can add a new row.  This in
+addition to pressing return at the end of a row to create a new row below the current one.
+
+Also allow entering return at the beginning of a row to create a new row above the current one.
