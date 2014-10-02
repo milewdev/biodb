@@ -47,7 +47,7 @@ h2 {
   font-weight: normal;
 }
 
-p.email {
+.email {
   margin: 0;
   margin-bottom: 1em;
   padding: 0;
@@ -107,52 +107,66 @@ table#user-highlights {
   }
 }
 
-table#user-jobs {
-  margin: auto;
-  margin-top: 2em;
-  width: 80%;
+.user-jobs {
+  margin: 0 auto;         // centered
+  margin-top: 3em;        // vertical space above for standoff   TODO: use sections with margins instead
+  margin-bottom: 3em;     // vertical space below for standoff
+  padding: 0;
+  width: 80%;             // TODO: needs to be a constant
+}
 
-  td {
-    xborder: 1px solid blue;
-    margin: 0;
-    padding: 1em;
-    vertical-align: top;
-  }
-  
-  td.job-info {
-  }
-  
-  td.task-info {
-  }
-  
-  p {
-    margin: 0;
-    padding: 0;
-  }
-  
-  p.company-name {
-    font-weight: bold;
-  }
-  
-  p.date-range {
-  }
-  
-  p.role {
-  }
-  
-  ul.task-list {
-    margin: 0;
-    margin-left: 1em;
-    padding: 0;
-    
-    li {
-      margin: 0;
-      margin-left: 3em;
-      margin-bottom: 0.3em;
-      padding: 0;
-      text-align: left;
-    }
-  }
+.left-column, .right-column {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 3em;    // vertical space between jobs
+  vertical-align: top;
+}
+
+.left-column {
+  padding-top: 0.2em;     // alignment by eye
+  padding-right: 1em;     // right whitespace for standoff
+  text-align: center;
+  width: 35%;
+}
+
+.right-column {
+  text-align: left;
+}
+
+.user-job:last-child {
+  .left-column, .right-column {
+    padding-bottom: 0;     // vertical space between jobs, not after them
+  }  
+}
+
+.company {
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.date-range {
+  margin: 0;
+  padding: 0;
+}
+
+.role {
+  margin: 0;
+  padding: 0;
+}
+
+.tasks {
+  list-style-type: disc;
+  margin: 0;
+  padding: 0;
+}
+
+.task {
+  margin: 0;
+  margin-left: 3em;
+  margin-bottom: 0.3em;
+  padding: 0;
+  text-align: left;
 }
 
 .view-mode {

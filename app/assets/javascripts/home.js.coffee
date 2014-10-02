@@ -39,6 +39,9 @@ user_email = ->
   
 user_highlights = ->
   $('#user-highlights')
+  
+user_jobs = ->
+  $('#user-jobs')
 
 
 #
@@ -66,9 +69,10 @@ is_populated = (element) ->
 
 save_data = ->
   user_patch = {
-    name: user_name().text(),               # TODO: does this need to be HTML, SQL, etc. escaped?
-    title: user_title().text(),             # TODO: does this need to be HTML, SQL, etc. escaped?
-    highlights: highlights_view_to_model()  # TODO: does this need to be HTML, SQL, etc. escaped?
+    name: user_name().text(),                 # TODO: does this need to be HTML, SQL, etc. escaped?
+    title: user_title().text(),               # TODO: does this need to be HTML, SQL, etc. escaped?
+    highlights: highlights_view_to_model(),   # TODO: does this need to be HTML, SQL, etc. escaped?
+    jobs: jobs_view_to_model()                # TODO: does this need to be HTML, SQL, etc. escaped?
   }
   $.ajax({
     url: "/users/#{user.id}.json",
@@ -104,6 +108,7 @@ set_fields_to_edit_mode = (is_in_edit_mode) ->
   set_field_to_edit_mode(user_title(), is_in_edit_mode)
   set_field_to_edit_mode(user_email(), false)           # always 'false' because email is not editable
   set_field_to_edit_mode($('.highlight-name, .highlight-content'), is_in_edit_mode)
+  set_field_to_edit_mode($('.company, .date-range, .role, .tasks'), is_in_edit_mode)
 
 set_field_to_edit_mode = (element, is_in_edit_mode) ->
   element.attr('contentEditable', is_in_edit_mode)
@@ -117,6 +122,7 @@ populate_data = ->
   populate_field(user_title(), user.title)
   populate_field(user_email(), user.email)
   populate_field(user_highlights(), highlights_model_to_view(user.highlights))
+  populate_field(user_jobs(), jobs_model_to_view(user.jobs))
 
 populate_field = (element, source)->
   element.html(source)
@@ -126,6 +132,7 @@ display_data = ->
   display_field(user_title())
   display_field(user_email())
   display_field(user_highlights())
+  display_field(user_jobs())
   
 display_field = (element) ->
   is_visible = is_populated(element) or is_edit_mode()
@@ -143,9 +150,9 @@ set_field_visibility = (element, is_visible) ->
 #
 
 # model_value = [ { name: 'languages', content: 'C, C++' }, ... ]
-highlights_model_to_view = (model_value) ->
-  model_value = [{name:'', content:''}] if model_value.length == 0
-  ( build_highlight_row(highlight) for highlight in model_value ).join()
+highlights_model_to_view = (highlights) ->
+  highlights = [{name:'', content:''}] if highlights.length == 0        # always want at least one row
+  ( build_highlight_row(highlight) for highlight in highlights ).join()
   
 build_highlight_row = (highlight) ->
   "<tr>" +
@@ -161,6 +168,19 @@ highlights_view_to_model = ->
     content = $($(this).children()[1]).text()
     list.push( {name:name, content:content} )
   JSON.stringify(list)
+  
+jobs_model_to_view = (jobs) ->
+  jobs = [{company:'', date_range: '', role: '', tasks: []}] if jobs.length == 0    # always want at least one row
+  ( build_job_row(job) for job in jobs ).join()
+
+build_job_row = (job) ->
+  "<tr>" +
+  "<td class='left-column'><p class='company'>#{job.company}</p><p class='date-range'>#{job.date_range}</p><p class='role'>#{job.role}</p></td>" +
+  "<td class='right-column'>TODO</td>" +
+  "</tr>"
+  
+jobs_view_to_model = ->
+  # TODO
 
 
 #
