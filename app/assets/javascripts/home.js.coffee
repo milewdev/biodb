@@ -162,25 +162,46 @@ build_highlight_row = (highlight) ->
 
 highlights_view_to_model = ->
   # TODO: clean this up
-  list = []
+  highlights = []
   user_highlights().find('tr').each ->
     name = $($(this).children()[0]).text()
     content = $($(this).children()[1]).text()
-    list.push( {name:name, content:content} )
-  JSON.stringify(list)
+    highlights.push( {name:name, content:content} )
+  JSON.stringify(highlights)
   
 jobs_model_to_view = (jobs) ->
   jobs = [{company:'', date_range: '', role: '', tasks: []}] if jobs.length == 0    # always want at least one row
-  ( build_job_row(job) for job in jobs ).join()
+  ( build_job_row(job) for job in jobs ).join('')
 
 build_job_row = (job) ->
   "<tr>" +
   "<td class='left-column'><p class='company'>#{job.company}</p><p class='date-range'>#{job.date_range}</p><p class='role'>#{job.role}</p></td>" +
-  "<td class='right-column'>TODO</td>" +
+  "<td class='right-column'>#{tasks_model_to_view(job.tasks)}</td>" +
   "</tr>"
   
+tasks_model_to_view = (tasks) ->
+  tasks = [''] if tasks.length == 0   # always want at least one row
+  "<ul class='tasks'>" + ( build_task_row(task) for task in tasks ).join('') + "</ul>"
+  
+build_task_row = (task) ->
+  "<li>#{task}</li>"
+  
 jobs_view_to_model = ->
-  # TODO
+  # TODO: clean this up
+  jobs = []
+  user_jobs().find('tr').each ->
+    company = $($(this).find('.company')).text()
+    date_range = $($(this).find('.date-range')).text()
+    role = $($(this).find('.role')).text()
+    tasks = tasks_view_to_model( $($(this).find('.tasks li')) )
+    jobs.push( {company:company, date_range:date_range, role:role, tasks:tasks} )
+  JSON.stringify(jobs)
+  
+tasks_view_to_model = (view_list) ->
+  tasks = []
+  view_list.each ->
+    tasks.push($(this).text())
+  tasks
 
 
 #
@@ -203,7 +224,10 @@ install_handlers = ->
   user_title().on 'input', ->                             # TODO: this will need to be applied to any editable page element
     set_dirty(true)
     
-  user_highlights().on 'input', ->
+  user_highlights().on 'input', ->                        # TODO: use a class selector instead, e.g. $('.edit-mode')
+    set_dirty(true)
+    
+  user_jobs().on 'input', ->                              # TODO: use a class selector instead, e.g. $('.edit-mode')
     set_dirty(true)
     
   $('#user-highlights').on 'keypress', ".#{HIGHLIGHT_NAME_CLASS}", (event) ->
