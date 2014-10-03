@@ -16,6 +16,11 @@ describe User do
     end
   end
   
+  describe "when a job is empty" do
+    let(:user) { User.create!(empty_job) }
+    specify { User.find(user.id).jobs.must_equal '[]' }
+  end
+  
   missing_values.each do |missing_value|
     describe "when the company name is missing: #{missing_value}" do
       let(:user) { User.create(missing_job_company_name(missing_value)) }
@@ -63,7 +68,7 @@ describe User do
     describe "when a task is missing: #{missing_value}" do
       let(:user) { User.create!(missing_job_task(missing_value)) }
       specify { user.errors[:jobs].must_be_empty }
-      # TODO: clean this up somehow; 'magic' string is from where?
+      # TODO: clean up somehow; this 'magic' string is from where?
       specify { user.jobs.must_equal '[{"company":"company","date_range":"2014","role":"role","tasks":[]}]' }
     end
   end
@@ -99,6 +104,18 @@ describe User do
       title: 'title',
       highlights: JSON.generate( [{name: "languanges", content: "C, C++, Ruby"}] ), 
       jobs: missing_value
+    }
+  end
+  
+  def empty_job
+    {
+      email: 'email@test.com',
+      password: 'Password1234',
+      password_confirmation: 'Password1234',
+      name: 'name',
+      title: 'title',
+      highlights: JSON.generate( [{name: "languanges", content: "C, C++, Ruby"}] ), 
+      jobs: JSON.generate( [{company: "", date_range: "", role: "", tasks: [""]}] )
     }
   end
   

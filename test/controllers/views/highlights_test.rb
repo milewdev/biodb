@@ -158,7 +158,6 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
       save_button.click
       sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
     end
-    # focus
     it 'deletes the row from the database when saved' do
       User.find(user.id).highlights.must_equal '[]'
     end

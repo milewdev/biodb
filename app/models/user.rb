@@ -60,6 +60,12 @@ class User < ActiveRecord::Base
         job['tasks'] = [] if job['tasks'].nil? or (job['tasks'].to_s.strip.length == 0)
         (job['tasks'].map! {|task| (task || '').strip }).select! {|task| task.length > 0 }
       end
+      jobs.select! do |job|
+        job['company'].length > 0 or
+        job['date_range'].length > 0 or
+        job['role'].length > 0 or
+        job['tasks'].length > 0
+      end
       jobs.each do |job|
         errors[:jobs] << 'job company name is missing' if job['company'].nil? or job['company'].strip.length == 0
         errors[:jobs] << 'job date range is missing' if job['date_range'].nil? or job['date_range'].strip.length == 0
