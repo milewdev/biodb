@@ -66,3 +66,5 @@ addition to pressing return at the end of a row to create a new row below the cu
 Also allow entering return at the beginning of a row to create a new row above the current one.
 
 Allow returns in company, range, and role fields?  What about name, title, and contact fields?  Probably no.
+
+Restyle the job task list so that it uses css fit-content.
