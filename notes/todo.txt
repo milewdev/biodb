@@ -64,3 +64,5 @@ In edit mode, always ensure there is one empty row at the end of lists so that t
 addition to pressing return at the end of a row to create a new row below the current one.
 
 Also allow entering return at the beginning of a row to create a new row above the current one.
+
+Allow returns in company, range, and role fields?  What about name, title, and contact fields?  Probably no.
