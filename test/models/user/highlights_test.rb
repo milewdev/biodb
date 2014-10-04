@@ -2,54 +2,72 @@ require 'test_helper'
 
 describe User do
 
-  # TODO: this is duplicated at the top of jobs_test, but 
-  # not convinced that is a bad thing; duplicating it allows
-  # you to see exactly what the test is about.  However, may
-  # consider renaming this to 'create_generic_user' which 
-  # may be enough to make it understandable.
-  def create_user!(attributes)
-    User.create!( {
-      email: 'email@test.com', 
-      password: 'Password1234', 
-      password_confirmation: 'Password1234', 
-      highlights: '[{"name":"languanges", "content":"C, C++, Ruby"}]', 
-      jobs: '[{"company":"company", "date_range":"2014", "role":"developer", "tasks":["wrote tests","wrote code","deployed app"]}]'
-    }.merge(attributes) )
-  end
-  
+  MISSING_VALUES = [ nil, '', ' ' * 3 ]
+
   describe 'when highlights is valid' do
-    let(:highlights) { '[{"name":"n","content":"c"}]' }
-    let(:user) { create_user!({ highlights: highlights }) }
-    specify { User.find(user.id).highlights.must_equal '[{"name":"n","content":"c"}]' }
+    let(:user) { User.create!(valid_highlights) }
+    it 'is saved' do
+      User.find(user.id).highlights.must_equal valid_highlights[:highlights]
+    end
   end
 
-  describe 'when highlights is null' do
-    let(:user) { create_user!({ highlights: nil }) }
-    specify { User.find(user.id).highlights.must_equal '[]' }
-  end
-
-  describe 'when highlights is empty' do
-    let(:user) { create_user!({ highlights: '' }) }
-    specify { User.find(user.id).highlights.must_equal '[]' }
-  end
-
-  describe 'when highlights is blank' do
-    let(:user) { create_user!({ highlights: '  ' }) }
-    specify { User.find(user.id).highlights.must_equal '[]' }
-  end
-
-  describe 'when highlights has blank lines' do
-    let(:user) { create_user!({ highlights: '[{"name":"n1","content":"c1"},{"name":"","content":""},{"name":"n3","content":"c3"}]' }) }
-    specify { User.find(user.id).highlights.must_equal '[{"name":"n1","content":"c1"},{"name":"n3","content":"c3"}]' }
+  MISSING_VALUES.each do |missing_value|
+    describe "when highlights is missing: #{missing_value}" do
+      let(:user) { User.create!(missing_highlights(missing_value)) }
+      it 'is saved as an empty array' do
+        User.find(user.id).highlights.must_equal '[]'
+      end
+    end
   end
   
-  describe 'when all the fields are empty' do
-    let(:user) { create_user!({ highlights: '[{"name":"","content":""}]' }) }
-    specify { User.find(user.id).highlights.must_equal '[]' }
+  describe 'when a highlight is empty' do
+    let(:user) { User.create!(empty_highlight) }
+    it 'is not saved' do
+      User.find(user.id).highlights.must_equal '[]'
+    end
   end
-  
-  # TODO
+
   describe 'when attributes have leading and/or trailing whitespace' do
+    let(:user) { User.create!(whitespaced_highlight_attributes)}
+    it 'trims the spaces before saving' do
+      User.find(user.id).highlights.must_equal stripped_highlight_attributes[:highlights]
+    end
   end
 
+  def valid_highlights
+    {
+      email: 'email@test.com',
+      password: 'Password1234',
+      password_confirmation: 'Password1234',
+      name: 'name',
+      title: 'title',
+      highlights: JSON.generate( [{name: "languanges", content: "C, C++, Ruby"}] ), 
+      jobs: JSON.generate( [{company: "company", date_range: "2014", role: "role", tasks: ["wrote tests", "wrote code", "deployed app"]}] )
+    }
+  end
+
+  def missing_highlights(missing_value)
+    valid_highlights.merge({
+      highlights: missing_value
+    })
+  end
+  
+  def empty_highlight
+    valid_highlights.merge({
+      highlights: JSON.generate( [{name: "", content: ""}] )
+    })
+  end
+
+  def whitespaced_highlight_attributes
+    valid_highlights.merge({
+      highlights: JSON.generate( [{name: " languanges ", content: " C, C++, Ruby "}] ), 
+    })
+  end
+
+  def stripped_highlight_attributes
+    valid_highlights.merge({
+      highlights: JSON.generate( [{name: "languanges", content: "C, C++, Ruby"}] ), 
+    })
+  end
+  
 end
