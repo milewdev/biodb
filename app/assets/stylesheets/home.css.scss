@@ -4,12 +4,25 @@
 
 @import 'library';
 
+// This is used to prevent field borders from touching each other or
+// the content they enclose.  Note the use of pixels; using em or rem 
+// can cause rounding errors which can result in gaps appearing to be of
+// different sizes.
+$border-margin: 1px;
+
+// This is used to provide a little space at the start and end of a field 
+// so that the user has a reasonable target area if they want to move the 
+// cursor there by clicking with the mouse.  Note the use of rem so that
+// the gap is always the same, regardless of the font size.
+$mouse-target-margin: 0.7rem;
+
+
 section.home-page {
   margin-top: 3em;
   margin-bottom: 3em;
   text-align: center;
   
-  // 'sign in' and 'sign up' links when no-one is signed in
+  // 'sign in' and 'sign up' links when no-one is signed in.
   nav {
     margin-top: 2em;
     
@@ -20,154 +33,6 @@ section.home-page {
   }
 }
 
-h1, h2 {
-  padding: 0.25em;
-  
-  // When in edit mode, the border around the text area will grow/shrink
-  // to fit the content, but we limit how narrow it will shrink to; this 
-  // seems to give a better user experience.
-  margin: auto;
-  min-width: 10em;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
-  
-  &.hidden {
-    display: none;
-  }
-}
-
-h1 {
-  font-size: 2rem;
-  font-weight: normal;
-}
-
-h2 {
-  font-size: 1.2rem;
-  font-weight: normal;
-}
-
-.email {
-  margin: 0;
-  margin-bottom: 1em;
-  padding: 0;
-}
-
-ul#IGNORE {
-  // When in edit mode, the border around the text area will grow/shrink
-  // to fit the content, but we limit how narrow it will shrink to; this 
-  // seems to give a better user experience.
-  margin: auto;
-  min-width: 10em;
-  max-width: 70%;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
-  
-  padding: 0;
-  padding-left: 2em;
-  padding-right: 1em;
-  text-align: left;
-
-  &.hidden {
-    display: none;
-  }
-  
-  li {
-    margin: 0;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    padding: 0;
-  }
-}
-
-table#user-highlights {
-  margin: auto;
-  margin-top: 2em;
-  width: 80%;
-
-  td {
-    padding: 0.5em;
-    padding-left: 0.8em;
-    padding-right: 0.8em;
-    text-align: left;
-    vertical-align: middle;
-  }
-
-  td.highlight-name {
-    color: #ccc;
-    font-size: 1.6rem !important;
-    line-height: 1.1em;
-    text-align: right;
-    width: 20%;
-  }
-
-  td.highlight-content {  
-    font-size: 0.8rem !important;
-  }
-}
-
-.user-jobs {
-  margin: 0 auto;         // centered
-  margin-top: 3em;        // vertical space above for standoff   TODO: use sections with margins instead
-  margin-bottom: 3em;     // vertical space below for standoff
-  padding: 0;
-  width: 80%;             // TODO: needs to be a constant
-}
-
-.left-column, .right-column {
-  margin: 0;
-  padding: 0;
-  padding-bottom: 3em;    // vertical space between jobs
-  vertical-align: top;
-}
-
-.left-column {
-  padding-top: 0.2em;     // alignment by eye
-  padding-right: 1em;     // right whitespace for standoff
-  text-align: center;
-  width: 35%;
-}
-
-.right-column {
-  text-align: left;
-}
-
-.user-job:last-child {
-  .left-column, .right-column {
-    padding-bottom: 0;     // vertical space between jobs, not after them
-  }  
-}
-
-.company {
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
-
-.date-range {
-  margin: 0;
-  padding: 0;
-}
-
-.role {
-  margin: 0;
-  padding: 0;
-}
-
-.tasks {
-  list-style-type: disc;
-  margin: 0;
-  padding: 0;
-}
-
-.task {
-  margin: 0;
-  margin-left: 3em;
-  margin-bottom: 0.3em;
-  padding: 0;
-  text-align: left;
-}
 
 .view-mode {
   // Specify a transparent border so that the element does not change
@@ -175,8 +40,202 @@ table#user-highlights {
   border: 1px solid transparent;
 }
 
+
 .edit-mode {
   // Place an unobtrusive border around items that the user can edit
   // when they are in edit mode.
-  border: 1px solid #eee;
+  border: 1px solid #ddd;
+  
+  // Not sure about this yet.
+  // background-color: rgba(187, 221, 221, 0.15); // #bdd
+}
+
+
+section {
+  // Resets.  Do this inside of section so that these value do not get overridden 
+  // by stylesheets loaded after this one (I'm looking at you scaffolds.css).
+  // TODO: can we do this somewhere globally? How about just retiring scaffolds.css?
+  p, h1, h2, ol, ul, li, td {
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Left and right page margins.
+  margin-left: 2em;
+  margin-right: 2em;
+  
+  // Vertical space between margins to make them stand out.
+  margin-top: 4em;
+  margin-bottom: 4em;
+  
+  text-align: center;
+}
+
+
+section.user-info {
+  h1, h2 {
+    // Do not make the name or profession too strong (debatable though).
+    font-weight: normal;
+
+    // In edit mode, allow the border to grow/shrink to fit the content.
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: fit-content;
+
+    // Some space between fields so that their borders do not collide in edit mode.
+    // Width of self and parent not known so use margin auto to center self.
+    margin: $border-margin auto;
+    
+    // Allow a border margin above and below so that the border does not collide
+    // with the lettering of the content.  Allow a mouse target margin at each 
+    // end of the field.
+    padding: $border-margin $mouse-target-margin;    // t&b l&r
+  
+    &.hidden {
+      display: none;
+    }
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+}
+
+
+section.user-highlights {
+  table {
+    // Force the table to be the width of its parent.
+    width: 100%;
+  }
+
+  td {
+    // Space between rows.
+    padding-bottom: 0.5em;
+
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    // No space after last row.
+    padding-bottom: 0;      
+  }
+
+  td.left-column {
+    width: 35%;
+  }
+  
+  td.right-column {
+    text-align: left;
+  }
+  
+  p {
+    // In edit mode, allow the border to grow/shrink to fit the content.
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: fit-content;
+    
+    // Some space between fields so that their borders do not collide in edit mode.
+    margin: $border-margin;
+    
+    // Allow a border margin above and below so that the border does not collide
+    // with the lettering of the content.  Allow a mouse target margin at each 
+    // end of the field.
+    padding: $border-margin $mouse-target-margin;    // t&b l&r  
+  }
+
+  p.highlight-name {
+    // Large and dim look.
+    color: #ccc;
+    font-size: 1.5rem;
+
+    // Width of self and parent not known so use margin-left auto to right justify self.
+    // BUT: when the content spans multiple lines, we need text-align right on self to
+    // justify it.
+    margin-left: auto;
+    text-align: right;
+    
+    // We want the gap between the left column and right column fields to $border-margin
+    // but because they are in two different td cells they do not collapes (is this true?),
+    // so here we remove the right margin from the left column.
+    margin-right: 0;
+  }
+}
+
+
+section.user-jobs {
+  table {
+    // Force the table to be the width of its parent.
+    width: 100%;
+  }
+
+  td {
+    // Space between rows.
+    padding-bottom: 3em;
+
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    // No space after last row.
+    padding-bottom: 0;      
+  }
+
+  td.left-column {
+    // Right whitespace for standoff.
+    padding-right: 1em;
+
+    text-align: center;
+    width: 40%;
+  }
+
+  td.right-column {
+    text-align: left;
+  }
+
+  p {
+    // In edit mode, allow the border to grow/shrink to fit the content.
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: fit-content;
+    
+    // Some space between fields so that their borders do not collide in edit mode.
+    // Width of self and parent not known so use margin auto to center self.
+    margin: $border-margin auto;
+    
+    // Allow a border margin above and below so that the border does not collide
+    // with the lettering of the content.  Allow a mouse target margin at each 
+    // end of the field.
+    padding: $border-margin $mouse-target-margin;    // t&b l&r  
+  }
+  
+  p:last-child {
+    // No space after the last child (separating space, not delimiting space).
+    margin-bottom: 0;
+  }
+
+  p.company {
+    font-weight: bold;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  li {
+    // Allow some space for the bullets and add some space between items.
+    margin-left: 2em;
+    margin-bottom: 0.3em;
+  
+    text-align: left;
+  }
+
+  li:last-child {
+    // No spacing after last item.
+    margin-bottom: 0;
+  }
 }

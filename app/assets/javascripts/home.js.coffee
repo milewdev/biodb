@@ -156,8 +156,8 @@ highlights_model_to_view = (highlights) ->
   
 build_highlight_row = (highlight) ->
   "<tr>" +
-  "<td class='#{HIGHLIGHT_NAME_CLASS}'>#{highlight.name}</td>" +
-  "<td class='#{HIGHLIGHT_CONTENT_CLASS}'>#{highlight.content}</td>" +
+  "<td class='left-column'><p class='#{HIGHLIGHT_NAME_CLASS}'>#{highlight.name}</p></td>" +
+  "<td class='right-column'><p class='#{HIGHLIGHT_CONTENT_CLASS}'>#{highlight.content}</p></td>" +
   "</tr>"
 
 highlights_view_to_model = ->
@@ -232,17 +232,26 @@ install_handlers = ->
     
   $('#user-highlights').on 'keypress', ".#{HIGHLIGHT_NAME_CLASS}", (event) ->
     return true unless event.which == 13
-    $(this).next().focus()
+    $(this).closest('tr').find(".#{HIGHLIGHT_CONTENT_CLASS}").focus()
     return false
 
   $('#user-highlights').on 'keypress', ".#{HIGHLIGHT_CONTENT_CLASS}", (event) ->
     return true unless event.which == 13
     current_row = $(this).closest('tr')
     new_row = current_row.clone(true)
-    new_row.find('td').text('')
+    new_row.find('p').text('')                            # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?
     current_row.after(new_row)
-    new_row.find('td:first').focus()
+    new_row.find(".#{HIGHLIGHT_NAME_CLASS}").focus()
     return false
+    
+  # TODO: this is a temporary quick implementation to make it easy to add new jobs
+  # $('#user-jobs').on 'keypress', "p.role", (event) ->
+  #   return true unless event.which == 13
+  #   current_row = $(this).closest('tr')
+  #   new_row = current_row.clone(true)
+  #   current_row.after(new_row)
+  #   new_row.find('td:first').focus()
+  #   return false
 
   window.onbeforeunload = ->
     return 'Data you have entered may not be saved.' if is_dirty()
