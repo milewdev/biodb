@@ -186,9 +186,6 @@ section.user-jobs {
   }
 
   td.left-column {
-    // Right whitespace for standoff.
-    padding-right: 1em;
-
     text-align: center;
     width: 40%;
   }
@@ -223,12 +220,26 @@ section.user-jobs {
   }
 
   ul {
+    // In edit mode, allow the border to grow/shrink to fit the content.
+    // TODO: use utility that generates -moz- and -webkit- prefixes
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: fit-content;
+    
+    // Some space between fields so that their borders do not collide in edit mode.
+    margin: $border-margin;
+    
+    // Allow a border margin above and below so that the border does not collide
+    // with the lettering of the content.  Allow a mouse target margin at each 
+    // end of the field.
+    padding: $border-margin $mouse-target-margin;    // t&b l&r  
+
     list-style-type: disc;
   }
 
   li {
     // Allow some space for the bullets and add some space between items.
-    margin-left: 2em;
+    margin-left: 1em;
     margin-bottom: 0.3em;
   
     text-align: left;
