@@ -109,6 +109,30 @@ set_fields_to_edit_mode = (is_in_edit_mode) ->
   set_field_to_edit_mode(user_email(), false)           # always 'false' because email is not editable
   set_field_to_edit_mode($('.highlight-name, .highlight-content'), is_in_edit_mode)
   set_field_to_edit_mode($('.company, .date-range, .role, .tasks'), is_in_edit_mode)
+  # TODO: use this technique in place of 'hidden' and 'visible' classes
+  if is_in_edit_mode
+    highlights_add_blank_last_row() unless highlights_has_blank_last_row()
+    show_all()
+  else
+    hide_if_empty()
+
+highlights_has_blank_last_row = ->
+  user_highlights().find('tr:last').text().length == 0
+
+highlights_add_blank_last_row = ->
+  last_row = user_highlights().find('tr:last')
+  new_row = last_row.clone(true)
+  new_row.find('p').text('')              # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?
+  last_row.after(new_row)
+  
+
+show_all = ->
+  $('.hide-if-empty').each ->
+    $(this).show()
+  
+hide_if_empty = ->
+  $('.hide-if-empty').each ->
+    $(this).hide() if $(this).text().trim().length == 0
 
 set_field_to_edit_mode = (element, is_in_edit_mode) ->
   element.attr('contentEditable', is_in_edit_mode)
@@ -155,7 +179,7 @@ highlights_model_to_view = (highlights) ->
   ( build_highlight_row(highlight) for highlight in highlights ).join()
   
 build_highlight_row = (highlight) ->
-  "<tr>" +
+  "<tr class='hide-if-empty'>" +
   "<td class='left-column'><p class='#{HIGHLIGHT_NAME_CLASS}'>#{highlight.name}</p></td>" +
   "<td class='right-column'><p class='#{HIGHLIGHT_CONTENT_CLASS}'>#{highlight.content}</p></td>" +
   "</tr>"
@@ -237,6 +261,7 @@ install_handlers = ->
 
   $('#user-highlights').on 'keypress', ".#{HIGHLIGHT_CONTENT_CLASS}", (event) ->
     return true unless event.which == 13
+    # TODO: duplicated elsewhere; extract method
     current_row = $(this).closest('tr')
     new_row = current_row.clone(true)
     new_row.find('p').text('')                            # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?

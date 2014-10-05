@@ -19,8 +19,8 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     end
   end
   
-  describe 'a nil highlight in view mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: nil ) }
+  describe 'an empty highlight in view mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[]' ) }
     before do
       sign_in user
       use_view_mode
@@ -30,8 +30,8 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     end
   end
   
-  describe 'a nil highlight in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: nil ) }
+  describe 'an empty highlight in edit mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[]' ) }
     before do
       sign_in user
       use_edit_mode
@@ -45,7 +45,7 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     end
   end
   
-  describe 'a nil highlight in view mode after editing' do
+  describe 'an empty highlight in view mode after editing' do
     let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
@@ -170,5 +170,60 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
       User.find(user.id).highlights.must_equal '[]'
     end
   end
+
+
+  #
+  # blank last row for adding new row
+  #
+  describe 'entering edit mode with existing highlights' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+    end
+    it 'will display a blank last row in addition to the existing highlights' do
+      user_highlights.cell(1,1).text.must_equal 'n'
+      user_highlights.cell(1,2).text.must_equal 'c'
+      user_highlights.cell(2,1).text.must_equal ''
+      user_highlights.cell(2,2).text.must_equal ''
+    end
+  end
   
+  describe 'entering edit mode with no highlights' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+    end
+    it 'will display a blank row' do
+      user_highlights.cell(1,1).text.must_equal ''
+      user_highlights.cell(1,2).text.must_equal ''
+    end
+  end
+  
+  describe 'entering edit mode when the last row is blank' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode   # adds a blank row
+      use_view_mode 
+      use_edit_mode   # must not add another blank row
+    end
+    it 'will not add another blank last row' do
+      all('table#user-highlights tr', visible: true).length.must_equal 2
+    end
+  end
+  
+  describe 'a blank line in view mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do 
+      sign_in user
+      use_edit_mode   # adds a blank row
+      use_view_mode
+    end
+    it 'is hidden' do
+      all('table#user-highlights tr', visible: true).length.must_equal 1
+    end
+  end
+
 end
