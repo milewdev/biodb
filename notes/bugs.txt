@@ -18,11 +18,17 @@ Pasting into title field in edit mode caused Safari to display an error and relo
 -----------
 
 
-
 -----------
 2014 Oct 3
 
 Refreshing the page in Safari turns off edit mode; doing the same in firefox does not.  Should likely remain in
 edit mode after a page refresh.  But what about leaving the page to go somewhere else and coming back?  In that
 case one should return to view mode.  But what about the back button?  Should it return to edit mode?
+-----------
+
+
+-----------
+2014 Oct 5
+
+Blank fields in FireFox are very short; they should be the same height as they would be if they were not blank.
 -----------
