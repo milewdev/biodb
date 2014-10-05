@@ -125,7 +125,6 @@ highlights_add_blank_last_row = ->
   new_row.find('p').text('')              # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?
   last_row.after(new_row)
   
-
 show_all = ->
   $('.hide-if-empty').each ->
     $(this).show()
@@ -167,6 +166,22 @@ set_field_visibility = (element, is_visible) ->
     element.removeClass('hidden').addClass('visible')
   else
     element.removeClass('visible').addClass('hidden')
+    
+ensure_one_blank_last_highlight_row = (current_row) ->
+  delete_last_highlight_row() if is_second_last_highlight_row(current_row) and is_blank_highlight_row(current_row)
+  highlights_add_blank_last_row() if is_last_highlight_row(current_row) and not is_blank_highlight_row(current_row)
+    
+delete_last_highlight_row = ->
+  user_highlights().find('tr:last-child').remove()
+  
+is_second_last_highlight_row = (row) ->
+  user_highlights().find('tr:nth-last-child(2)').is(row)
+  
+is_last_highlight_row = (row) ->
+  user_highlights().find('tr:nth-last-child(1)').is(row)
+  
+is_blank_highlight_row = (row) ->
+  row.text().trim().length == 0
   
 
 #
@@ -263,11 +278,24 @@ install_handlers = ->
     return true unless event.which == 13
     # TODO: duplicated elsewhere; extract method
     current_row = $(this).closest('tr')
-    new_row = current_row.clone(true)
-    new_row.find('p').text('')                            # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?
-    current_row.after(new_row)
-    new_row.find(".#{HIGHLIGHT_NAME_CLASS}").focus()
+    if is_second_last_highlight_row(current_row)
+      user_highlights().find("tr:last-child .#{HIGHLIGHT_NAME_CLASS}").focus()
+    else if is_last_highlight_row(current_row) and is_blank_highlight_row(current_row)
+      # do nothing
+    else
+      new_row = current_row.clone(true)
+      new_row.find('p').text('')                            # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?
+      current_row.after(new_row)
+      new_row.find(".#{HIGHLIGHT_NAME_CLASS}").focus()
     return false
+    
+  $('#user-highlights').on 'input', ".#{HIGHLIGHT_NAME_CLASS}", (event) ->
+    current_row = $(this).closest('tr')
+    ensure_one_blank_last_highlight_row(current_row)
+
+  $('#user-highlights').on 'input', ".#{HIGHLIGHT_CONTENT_CLASS}", (event) ->
+    current_row = $(this).closest('tr')
+    ensure_one_blank_last_highlight_row(current_row)
     
   # TODO: this is a temporary quick implementation to make it easy to add new jobs
   # $('#user-jobs').on 'keypress', "p.role", (event) ->

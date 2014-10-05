@@ -225,5 +225,53 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
       all('table#user-highlights tr', visible: true).length.must_equal 1
     end
   end
+  
+  describe 'entering text in the blank last row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(2,1).native.send_keys 'a'
+    end
+    it 'adds a new blank last row' do
+      user_highlights.cell(3,1).text.must_equal ''
+      user_highlights.cell(3,2).text.must_equal ''
+    end
+  end
+  
+  describe 'deleting all text from the second last row thereby making it a blank row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":""}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(1,1).native.send_keys :End, :Backspace
+    end
+    it 'removes the last blank row' do
+      all('table#user-highlights tr', visible: true).length.must_equal 1
+    end
+  end
+  
+  describe 'pressing Enter when on the second last highlight row' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(1,2).native.send_keys :Enter
+    end
+    it 'does not add another blank last highlight row' do
+      all('table#user-highlights tr', visible: true).length.must_equal 2
+    end
+    it 'moves the focus to the first field of the last row'
+  end
+  
+  describe 'pressing Enter on the last highlight row when it is blank' do
+    it 'does not add another blank last highlight row'
+    it 'does not move the focus'
+  end
+  
+  describe 'pressing Enter on a line when there are nothing but blank lines after it' do
+    it 'does not add another blank last highlight row'
+    it 'does not move the focus'
+  end
 
 end
