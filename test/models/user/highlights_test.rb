@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe User do
 
-  MISSING_VALUES = [ nil, '', ' ' * 3 ]
+  @MISSING_VALUES = [ nil, '', ' ' * 3 ]
 
   describe 'when highlights is valid' do
     let(:user) { User.create!(valid_highlights) }
@@ -11,7 +11,7 @@ describe User do
     end
   end
 
-  MISSING_VALUES.each do |missing_value|
+  @MISSING_VALUES.each do |missing_value|
     describe "when highlights is missing: #{missing_value}" do
       let(:user) { User.create!(missing_highlights(missing_value)) }
       it 'is saved as an empty array' do

@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe User do
   
-  MISSING_VALUES = [ nil, '', ' ' * 3 ]
+  @MISSING_VALUES = [ nil, '', ' ' * 3 ]
 
   describe 'when jobs is valid' do
     let(:user) { User.create!(valid_jobs) }
@@ -11,7 +11,7 @@ describe User do
     end
   end
   
-  MISSING_VALUES.each do |missing_value|
+  @MISSING_VALUES.each do |missing_value|
     describe "when jobs is missing: #{missing_value}" do
       let(:user) { User.create!(missing_jobs(missing_value)) }
       it 'is saved as an empty array' do
@@ -27,7 +27,7 @@ describe User do
     end
   end
   
-  MISSING_VALUES.each do |missing_value|
+  @MISSING_VALUES.each do |missing_value|
     describe "when the company name is missing: #{missing_value}" do
       let(:user) { User.create(missing_job_company_name(missing_value)) }
       it 'generates an error' do
@@ -36,7 +36,7 @@ describe User do
     end
   end
   
-  MISSING_VALUES.each do |missing_value|
+  @MISSING_VALUES.each do |missing_value|
     describe "when the date range is missing: #{missing_value}" do
       let(:user) { User.create(missing_job_date_range(missing_value)) }
       it 'generates an error' do
@@ -64,7 +64,7 @@ describe User do
     end
   end
   
-  MISSING_VALUES.each do |missing_value|
+  @MISSING_VALUES.each do |missing_value|
     describe "when the role is missing: #{missing_value}" do
       let(:user) { User.create!(missing_job_role(missing_value)) }
       it 'does not generate an error' do
@@ -76,7 +76,7 @@ describe User do
     end
   end
   
-  MISSING_VALUES.each do |missing_value|
+  @MISSING_VALUES.each do |missing_value|
     describe "when the tasks are missing: #{missing_value}" do
       let(:user) { User.create!(missing_job_tasks(missing_value)) }
       it 'does not generate an error' do
@@ -88,7 +88,7 @@ describe User do
     end
   end
   
-  MISSING_VALUES.each do |missing_value|
+  @MISSING_VALUES.each do |missing_value|
     describe "when a task is missing: #{missing_value}" do
       let(:user) { User.create!(missing_job_task(missing_value)) }
       it 'does not generates an erorr' do
