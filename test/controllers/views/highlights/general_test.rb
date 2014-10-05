@@ -59,35 +59,6 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     end
   end
   
-  describe 'pressing Enter in the name field in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
-    before do
-      sign_in user
-      use_edit_mode
-      user_highlights.cell(1,1).native.send_keys :Enter
-    end
-    it 'moves the cursor to the content field on the same row'
-  end
-  
-  describe 'pressing Enter in the content field in edit mode' do
-    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
-    before do
-      sign_in user
-      use_edit_mode
-      user_highlights.cell(1,2).native.send_keys :Enter
-    end
-    it 'adds a blank row below the current one' do
-      user_highlights.cell(1,1).text.must_equal 'n' 
-      user_highlights.cell(1,2).text.must_equal 'c' 
-      user_highlights.cell(2,1).text.must_equal '' 
-      user_highlights.cell(2,2).text.must_equal '' 
-    end
-    it 'does not enable the save button' do
-      save_button.wont_be_enabled
-    end
-    it 'moves the cursor to the name field of the new row'
-  end
-  
   describe 'a change to an existing row' do
     let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
@@ -169,6 +140,35 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     it 'deletes the row from the database when saved' do
       User.find(user.id).highlights.must_equal '[]'
     end
+  end
+  
+  describe 'pressing Enter in the name field in edit mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(1,1).native.send_keys :Enter
+    end
+    it 'moves the cursor to the content field on the same row'
+  end
+  
+  describe 'pressing Enter in the content field in edit mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(1,2).native.send_keys :Enter
+    end
+    it 'adds a blank row below the current one' do
+      user_highlights.cell(1,1).text.must_equal 'n' 
+      user_highlights.cell(1,2).text.must_equal 'c' 
+      user_highlights.cell(2,1).text.must_equal '' 
+      user_highlights.cell(2,2).text.must_equal '' 
+    end
+    it 'does not enable the save button' do
+      save_button.wont_be_enabled
+    end
+    it 'moves the cursor to the name field of the new row'
   end
 
 end
