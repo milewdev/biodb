@@ -128,7 +128,7 @@ module IntegrationHelper
       end
       
       def cell(row, col)
-        find("##{dom_id} tr:nth-child(#{row}) td:nth-child(#{col})")
+        find("##{dom_id} tr:nth-child(#{row}) td:nth-child(#{col}) p")
       end
       
       def must_be_visible
