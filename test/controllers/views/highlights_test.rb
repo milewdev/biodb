@@ -8,38 +8,44 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
       sign_in user
       use_view_mode
     end
-    specify { user_highlights.must_be_visible }
-    specify {
+    it 'will be visible' do
+      user_highlights.must_be_visible
+    end
+    it 'will display the field values' do
       user_highlights.cell(1,1).text.must_equal 'n1'
       user_highlights.cell(1,2).text.must_equal 'c1'
       user_highlights.cell(2,1).text.must_equal 'n2'
       user_highlights.cell(2,2).text.must_equal 'c2'
-    }
+    end
   end
   
-  describe 'nil highlights in view mode' do
+  describe 'a nil highlight in view mode' do
     let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: nil ) }
     before do
       sign_in user
       use_view_mode
     end
-    specify { user_highlights.wont_be_visible }
+    it 'will be hidden' do
+      user_highlights.wont_be_visible
+    end
   end
   
-  describe 'nil highlights in edit mode' do
+  describe 'a nil highlight in edit mode' do
     let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: nil ) }
     before do
       sign_in user
       use_edit_mode
     end
-    specify { user_highlights.must_be_visible }
-    specify { 
+    it 'will be visible' do
+      user_highlights.must_be_visible
+    end
+    it 'will have empty fields' do
       user_highlights.cell(1,1).text.must_equal '' 
       user_highlights.cell(1,2).text.must_equal '' 
-    }
+    end
   end
   
-  describe 'nil highlights in view mode after editing' do
+  describe 'a nil highlight in view mode after editing' do
     let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
@@ -48,7 +54,9 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
       user_highlights.cell(1,2).native.send_keys :End, :Backspace
       use_view_mode
     end
-    specify { user_highlights.wont_be_visible }
+    it 'will be hidden' do
+      user_highlights.wont_be_visible
+    end
   end
   
   describe 'pressing Enter in the name field in edit mode' do
