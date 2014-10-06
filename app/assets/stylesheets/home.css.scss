@@ -55,7 +55,7 @@ section {
   // Resets.  Do this inside of section so that these value do not get overridden 
   // by stylesheets loaded after this one (I'm looking at you scaffolds.css).
   // TODO: can we do this somewhere globally? How about just retiring scaffolds.css?
-  p, h1, h2, ol, ul, li, td {
+  p, h1, h2, h3, ol, ul, li, td {
     line-height: normal;
     margin: 0;
     padding: 0;
@@ -66,15 +66,22 @@ section {
   margin-right: 2em;
   
   // Vertical space between margins to make them stand out.
-  margin-top: 4em;
-  margin-bottom: 4em;
+  margin-top: 4.2em;
+  margin-bottom: 4.2em;
   
   text-align: center;
+
+  h1 {
+    color: #bbb;
+    font-size: 1.3em;
+    margin-bottom: 0.8em;
+    text-transform: uppercase;
+  }
 }
 
 
 section.user-info {
-  h1, h2 {
+  h2, h3 {
     // Do not make the name or profession too strong (debatable though).
     font-weight: normal;
 
@@ -97,11 +104,11 @@ section.user-info {
     }
   }
 
-  h1 {
+  h2 {
     font-size: 3em;
   }
 
-  h2 {
+  h3 {
     font-size: 1.2em;
   }
 }
@@ -149,9 +156,7 @@ section.user-highlights {
   }
 
   p.highlight-name {
-    // Large and dim look.
-    color: #ccc;
-    font-size: 1.5rem;
+    font-weight: bold;
 
     // Width of self and parent not known so use margin-left auto to right justify self.
     // BUT: when the content spans multiple lines, we need text-align right on self to
