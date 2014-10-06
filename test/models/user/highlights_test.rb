@@ -26,6 +26,21 @@ describe User do
       User.find(user.id).highlights.must_equal '[]'
     end
   end
+  
+  @MISSING_VALUES.each do |missing_value|
+    describe 'when name is missing' do
+      let(:user) { User.create!(empty_highlight_name(missing_value)) }
+      focus
+      it 'is saved as an empty string' do
+        JSON.parse(User.find(user.id).highlights)[0]['name'].must_equal ''
+      end
+    end
+  end
+  
+  @MISSING_VALUES.each do |missing_value|
+    describe 'when content is missing' do
+    end
+  end
 
   describe 'when attributes have leading and/or trailing whitespace' do
     let(:user) { User.create!(whitespaced_highlight_attributes)}
@@ -55,6 +70,12 @@ describe User do
   def empty_highlight
     valid_highlights.merge({
       highlights: JSON.generate( [{name: "", content: ""}] )
+    })
+  end
+  
+  def empty_highlight_name(missing_value)
+    valid_highlights.merge({
+      highlights: JSON.generate( [{name: missing_value, content: "C, C++, Ruby" }] )
     })
   end
 

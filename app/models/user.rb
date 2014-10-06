@@ -37,8 +37,7 @@ class User < ActiveRecord::Base
       self.highlights = '[]' if self.highlights.nil? or self.highlights.strip.length == 0
       highlights = JSON.parse(self.highlights)
       highlights.each do |highlight|
-        # TODO: what happens when these are nil?
-        highlight['name'].strip!          # TODO: loop through the attributes
+        (highlight['name'] ||= '').strip!          # TODO: loop through the attributes
         highlight['content'].strip!
       end
       highlights = highlights.select do |highlight|
