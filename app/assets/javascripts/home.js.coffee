@@ -186,6 +186,11 @@ is_blank_highlight_row = (row) ->
 is_next_highlight_row_blank = (row) ->
   is_blank_highlight_row(row.next())
   
+clone_highlights_row = (row) ->
+  new_row = row.clone(true)
+  new_row.find('p').text('')                          # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?  
+  new_row
+  
 
 #
 # view models?
@@ -274,7 +279,15 @@ install_handlers = ->
     
   $('#user-highlights').on 'keypress', ".#{HIGHLIGHT_NAME_CLASS}", (event) ->
     return true unless event.which == 13
-    $(this).closest('tr').find(".#{HIGHLIGHT_CONTENT_CLASS}").focus()
+    current_row = $(this).closest('tr')
+    if is_blank_highlight_row(current_row)
+      # do nothing
+    else if current_row.prev().length > 0 and is_blank_highlight_row(current_row.prev())
+      # do nothing
+    else
+      new_row = clone_highlights_row(current_row)
+      current_row.before(new_row)
+      new_row.find(".#{HIGHLIGHT_NAME_CLASS}").focus()
     return false
 
   $('#user-highlights').on 'keypress', ".#{HIGHLIGHT_CONTENT_CLASS}", (event) ->
@@ -287,7 +300,7 @@ install_handlers = ->
       current_row.next().find(".#{HIGHLIGHT_NAME_CLASS}").focus()
     else
       new_row = current_row.clone(true)
-      new_row.find('p').text('')                            # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?
+      new_row.find('p').text('')                          # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?
       current_row.after(new_row)
       new_row.find(".#{HIGHLIGHT_NAME_CLASS}").focus()
     return false

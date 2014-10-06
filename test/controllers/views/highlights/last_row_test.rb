@@ -115,7 +115,21 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     it 'does not add another blank last highlight row' do
       all('table#user-highlights tr', visible: true).length.must_equal 4
     end
-    it 'does not move the focus'
+    it 'moves the focus to the first field of the next row'
+  end
+  
+  describe 'pressing Enter on a line when there is a blank line before it' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n"}, {"name":"n"}, {"name":"n"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(2,1).native.send_keys :End, :Backspace   # make the second line blank
+      user_highlights.cell(3,1).native.send_keys :Enter             # press Enter in the first field of the third line
+    end
+    it 'does not add another blank line before the current one' do
+      all('table#user-highlights tr', visible: true).length.must_equal 4
+    end
+    it 'moves the focus to the first field of the previous row'
   end
 
 end

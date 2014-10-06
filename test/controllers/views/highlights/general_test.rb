@@ -103,8 +103,9 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     before do
       sign_in user
       use_edit_mode
-      # :Enter = move to content field of current row, :Enter = new row, insert 'n2', :Enter = move to content of new row, insert 'c2'
-      user_highlights.cell(1,1).native.send_keys :Enter, :Enter, 'n2', :Enter, 'c2'   
+      user_highlights.cell(1,2).native.send_keys :Enter
+      user_highlights.cell(2,1).native.send_keys 'n2'
+      user_highlights.cell(2,2).native.send_keys 'c2'
       save_button.click
       sleep(0.1)            # TODO: instead, wait for save_button to disable or 'saved' to appear somewhere
     end
@@ -142,17 +143,40 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
     end
   end
   
-  describe 'pressing Enter in the name field in edit mode' do
+  describe 'pressing Enter in a non-empty name field in edit mode' do
     let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
       use_edit_mode
       user_highlights.cell(1,1).native.send_keys :Enter
     end
-    it 'moves the cursor to the content field on the same row'
+    it 'adds a blank row above the current one' do
+      user_highlights.cell(1,1).text.must_equal '' 
+      user_highlights.cell(1,2).text.must_equal '' 
+      user_highlights.cell(2,1).text.must_equal 'n' 
+      user_highlights.cell(2,2).text.must_equal 'c' 
+    end
+    it 'does not enable the save button' do
+      save_button.wont_be_enabled
+    end
+    it 'moves the cursor to the name field of the new row'
   end
   
-  describe 'pressing Enter in the content field in edit mode' do
+  describe 'pressing Enter in an empty name field in edit mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(1,1).native.send_keys :Enter   # insert a new blank row above the current one
+      user_highlights.cell(1,1).native.send_keys :Enter   # should not insert a row
+    end
+    it 'does not add a blank row above the current one' do
+      all('table#user-highlights tr', visible: true).length.must_equal 3    # original row + blank last row + new row above
+    end
+    it 'does not move the cursor to another field'
+  end
+  
+  describe 'pressing Enter in a non-empty content field in edit mode' do
     let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
     before do
       sign_in user
@@ -169,6 +193,20 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
       save_button.wont_be_enabled
     end
     it 'moves the cursor to the name field of the new row'
+  end
+  
+  describe 'pressing Enter in an empty content field in edit mode' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(1,1).native.send_keys :Enter   # insert a new blank row above the current one
+      user_highlights.cell(2,1).native.send_keys :Enter   # should not insert a row (TODO: make the 2 stand out more, compared with test above)
+    end
+    it 'does not add a blank row above the current one' do
+      all('table#user-highlights tr', visible: true).length.must_equal 3    # original row + blank last row + new row above
+    end
+    it 'does not move the cursor to another field'
   end
 
 end
