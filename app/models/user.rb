@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
       highlights = JSON.parse(self.highlights)
       highlights.each do |highlight|
         (highlight['name'] ||= '').strip!          # TODO: loop through the attributes
-        highlight['content'].strip!
+        (highlight['content'] ||= '').strip!
       end
       highlights = highlights.select do |highlight|
         highlight['name'].length > 0 or highlight['content'].length > 0     # TODO: loop through the attributes

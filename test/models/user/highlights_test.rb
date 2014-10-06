@@ -30,7 +30,6 @@ describe User do
   @MISSING_VALUES.each do |missing_value|
     describe 'when name is missing' do
       let(:user) { User.create!(empty_highlight_name(missing_value)) }
-      focus
       it 'is saved as an empty string' do
         JSON.parse(User.find(user.id).highlights)[0]['name'].must_equal ''
       end
@@ -39,6 +38,10 @@ describe User do
   
   @MISSING_VALUES.each do |missing_value|
     describe 'when content is missing' do
+      let(:user) { User.create!(empty_highlight_content(missing_value)) }
+      it 'is saved as an empty string' do
+        JSON.parse(User.find(user.id).highlights)[0]['content'].must_equal ''
+      end
     end
   end
 
@@ -76,6 +79,12 @@ describe User do
   def empty_highlight_name(missing_value)
     valid_highlights.merge({
       highlights: JSON.generate( [{name: missing_value, content: "C, C++, Ruby" }] )
+    })
+  end
+  
+  def empty_highlight_content(missing_value)
+    valid_highlights.merge({
+      highlights: JSON.generate( [{name: "company", content: missing_value }] )
     })
   end
 
