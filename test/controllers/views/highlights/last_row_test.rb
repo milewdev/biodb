@@ -92,12 +92,29 @@ class FieldIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   describe 'pressing Enter on the last highlight row when it is blank' do
-    it 'does not add another blank last highlight row'
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n","content":"c"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(2,2).native.send_keys :Enter
+    end
+    it 'does not add another blank last highlight row' do
+      all('table#user-highlights tr', visible: true).length.must_equal 2
+    end
     it 'does not move the focus'
   end
   
-  describe 'pressing Enter on a line when there are nothing but blank lines after it' do
-    it 'does not add another blank last highlight row'
+  describe 'pressing Enter on a line when there is a blank line after it' do
+    let(:user) { User.create!( email: 'highlights@test.com', password: 'Password1234', highlights: '[{"name":"n"}, {"name":"n"}, {"name":"n"}]' ) }
+    before do
+      sign_in user
+      use_edit_mode
+      user_highlights.cell(2,1).native.send_keys :End, :Backspace   # make the second line blank
+      user_highlights.cell(1,2).native.send_keys :Enter             # press Enter on the first line
+    end
+    it 'does not add another blank last highlight row' do
+      all('table#user-highlights tr', visible: true).length.must_equal 4
+    end
     it 'does not move the focus'
   end
 

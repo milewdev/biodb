@@ -183,6 +183,9 @@ is_last_highlight_row = (row) ->
 is_blank_highlight_row = (row) ->
   row.text().trim().length == 0
   
+is_next_highlight_row_blank = (row) ->
+  is_blank_highlight_row(row.next())
+  
 
 #
 # view models?
@@ -278,10 +281,10 @@ install_handlers = ->
     return true unless event.which == 13
     # TODO: duplicated elsewhere; extract method
     current_row = $(this).closest('tr')
-    if is_second_last_highlight_row(current_row)
-      user_highlights().find("tr:last-child .#{HIGHLIGHT_NAME_CLASS}").focus()
-    else if is_last_highlight_row(current_row) and is_blank_highlight_row(current_row)
+    if is_blank_highlight_row(current_row)
       # do nothing
+    else if is_next_highlight_row_blank(current_row)
+      current_row.next().find(".#{HIGHLIGHT_NAME_CLASS}").focus()
     else
       new_row = current_row.clone(true)
       new_row.find('p').text('')                            # TODO: is there a way to avoid 'p'?  Use id's perhaps, or classes?
