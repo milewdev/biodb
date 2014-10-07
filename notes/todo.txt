@@ -70,3 +70,5 @@ Allow returns in company, range, and role fields?  What about name, title, and c
 [done] Restyle the job task list so that it uses css fit-content.
 
 Extract custom/common code from models into model helpers?  Is there such a thing?
+
+[done] Rename section name from Highlights to Skills
