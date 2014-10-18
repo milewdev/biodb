@@ -9,9 +9,9 @@ PROVIDER_NAME             = "vmware_fusion"
 PROJECT_NAME              = "biodb"
 VM_NAME                   = PROJECT_NAME
 HOST_HOME_DIR             = { host: "~/", guest: "/.vagrant_host_home" }
-PROJECT_GITHUB_URL        = "https://github.com/milewgit/#{PROJECT_NAME}.git"
+PROJECT_GITHUB_URL        = "https://github.com/milewdev/#{PROJECT_NAME}.git"
 PROJECT_VM_DIR            = "/Users/vagrant/Documents/#{PROJECT_NAME}"
-PROVISIONER_URL           = "https://raw.githubusercontent.com/milewgit/vm-provisioner/master/Provisioner.rb"
+PROVISIONER_URL           = "https://raw.githubusercontent.com/milewdev/vm-provisioner/master/Provisioner.rb"
 
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant_config|
